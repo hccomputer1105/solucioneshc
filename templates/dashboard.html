@@ -1,29 +1,36 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard de Proyectos | Soluciones Tecnológicas</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <title>Dashboard Ejecutivo | Soluciones Tecnológicas</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg-dark: #060D1A;
       --bg-surface: #0F172A;
-      --bg-card: #1E293B;
       --accent-cyan: #0EA5E9;
       --accent-emerald: #10B981;
-      --danger: #EF4444;
       --text-light: #F8FAFC;
       --text-gray: #94A3B8;
       --border: rgba(255, 255, 255, 0.09);
       --radius: 16px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-    body { background: var(--bg-dark); color: var(--text-light); min-height: 100vh; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
 
-    /* TOPBAR */
+    body {
+      background: var(--bg-dark);
+      color: var(--text-light);
+      min-height: 100vh;
+    }
+
     .topbar {
       background: var(--bg-surface);
       border-bottom: 1px solid var(--border);
@@ -35,13 +42,24 @@
       gap: 12px;
     }
 
-    .topbar-brand { font-weight: 800; font-size: 16px; }
-    .topbar-brand span { color: var(--accent-cyan); }
+    .topbar-brand {
+      font-weight: 800;
+      font-size: 16px;
+    }
 
-    .user-controls { display: flex; align-items: center; gap: 12px; font-size: 13.5px; }
+    .topbar-brand span {
+      color: var(--accent-cyan);
+    }
+
+    .user-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+    }
 
     .btn {
-      padding: 9px 15px;
+      padding: 9px 14px;
       border-radius: 9px;
       font-size: 13px;
       font-weight: 600;
@@ -51,23 +69,37 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      transition: 0.2s;
     }
 
-    .btn-cyan { background: var(--accent-cyan); color: #04101E; }
-    .btn-cyan:hover { background: #38BDF8; }
-    .btn-ghost { background: rgba(255,255,255,0.06); color: var(--text-light); border: 1px solid var(--border); }
-    .btn-ghost:hover { background: rgba(255,255,255,0.12); }
-    .btn-danger { background: rgba(239,68,68,0.15); color: #FCA5A5; border: 1px solid rgba(239,68,68,0.3); }
-    .btn-danger:hover { background: rgba(239,68,68,0.28); }
+    .btn-cyan {
+      background: var(--accent-cyan);
+      color: #04101E;
+    }
 
-    /* LAYOUT PRINCIPAL */
+    .btn-emerald {
+      background: var(--accent-emerald);
+      color: #041E14;
+    }
+
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-light);
+      border: 1px solid var(--border);
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.15);
+      color: #FCA5A5;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
     .main-grid {
-      max-width: 1260px;
-      margin: 32px auto;
-      padding: 0 5%;
+      width: 100%;
+      max-width: 100%;
+      margin: 24px 0;
+      padding: 0 3%;
       display: grid;
-      grid-template-columns: 380px 1fr;
+      grid-template-columns: 420px 1fr;
       gap: 28px;
       align-items: start;
     }
@@ -76,54 +108,79 @@
       background: var(--bg-surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 24px;
+      padding: 22px;
+      margin-bottom: 20px;
     }
 
-    .panel-box h2 { font-size: 18px; margin-bottom: 6px; }
-    .panel-box .sub { font-size: 13px; color: var(--text-gray); margin-bottom: 20px; }
+    .panel-box h2 {
+      font-size: 17px;
+      margin-bottom: 4px;
+    }
 
-    .field { margin-bottom: 14px; }
-    .field label { display: block; font-size: 12.5px; font-weight: 600; color: var(--text-gray); margin-bottom: 5px; }
+    .panel-box .sub {
+      font-size: 12.5px;
+      color: var(--text-gray);
+      margin-bottom: 16px;
+    }
 
-    input[type="text"], input[type="number"], select, textarea {
+    .field {
+      margin-bottom: 12px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-gray);
+      margin-bottom: 4px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="number"],
+    select,
+    textarea {
       width: 100%;
-      padding: 10px 12px;
+      padding: 9px 12px;
       border-radius: 9px;
       background: var(--bg-dark);
       border: 1px solid var(--border);
       color: white;
-      font-size: 13.5px;
+      font-size: 13px;
       outline: none;
     }
 
-    input:focus, select:focus, textarea:focus { border-color: var(--accent-cyan); }
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--accent-cyan);
+    }
 
-    .row-2 { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 10px; }
+    .row-2 {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 10px;
+    }
 
     .checkbox-row {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
+      gap: 9px;
+      padding: 9px 12px;
       background: rgba(16, 185, 129, 0.08);
       border: 1px solid rgba(16, 185, 129, 0.25);
       border-radius: 9px;
-      font-size: 13px;
-      margin-bottom: 16px;
+      font-size: 12.5px;
+      margin-bottom: 14px;
       cursor: pointer;
     }
 
-    .checkbox-row input { width: 16px; height: 16px; accent-color: var(--accent-emerald); }
-
-    /* LISTA DE PROYECTOS */
-    .projects-header {
+    .project-list {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 18px;
+      flex-direction: column;
+      gap: 14px;
     }
-
-    .project-list { display: flex; flex-direction: column; gap: 14px; }
 
     .project-item {
       background: var(--bg-surface);
@@ -132,33 +189,62 @@
       padding: 20px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 11px;
     }
 
     .item-top {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
-    .badges { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .badges {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
 
     .badge {
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 700;
       padding: 4px 10px;
       border-radius: 99px;
     }
 
-    .badge-status { background: rgba(14, 165, 233, 0.15); color: var(--accent-cyan); }
-    .badge-public { background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald); }
-    .badge-private { background: rgba(148, 163, 184, 0.15); color: var(--text-gray); }
+    .badge-status {
+      background: rgba(14, 165, 233, 0.15);
+      color: var(--accent-cyan);
+    }
+
+    .badge-public {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-emerald);
+    }
+
+    .badge-client {
+      background: rgba(168, 85, 247, 0.15);
+      color: #D8B4FE;
+    }
+
+    .case-preview {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      font-size: 12.5px;
+    }
+
+    .case-mini {
+      padding: 10px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+    }
 
     .progress-track {
       width: 100%;
-      height: 7px;
+      height: 6px;
       background: rgba(255, 255, 255, 0.08);
       border-radius: 99px;
       overflow: hidden;
@@ -177,170 +263,281 @@
       border-top: 1px solid var(--border);
     }
 
-    /* MODAL EDICIÓN */
     .modal-backdrop {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.72);
+      background: rgba(0, 0, 0, 0.75);
       backdrop-filter: blur(6px);
       z-index: 200;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 16px;
     }
-    .modal-backdrop.open { display: flex; }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
 
     .modal-box {
       width: 100%;
-      max-width: 460px;
+      max-width: 500px;
+      max-height: 92vh;
+      overflow-y: auto;
       background: var(--bg-surface);
       border: 1px solid var(--border);
       border-radius: 18px;
-      padding: 24px;
+      padding: 22px;
     }
 
     @media (max-width: 900px) {
-      .main-grid { grid-template-columns: 1fr; }
+
+      .main-grid,
+      .case-preview {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
+
 <body>
 
   <header class="topbar">
-    <div class="topbar-brand">SOLUCIONES <span>TECNOLÓGICAS</span> · Panel</div>
+    <div class="topbar-brand">SOLUCIONES <span>TECNOLÓGICAS</span> · Admin</div>
     <div class="user-controls">
-      <span style="color:var(--text-gray);">Hola, <strong style="color:white;">{{ request.user.username }}</strong></span>
-      <a href="/api/proyectos/" target="_blank" class="btn btn-ghost">Ver JSON API</a>
-      <a href="{% url 'logout' %}" class="btn btn-danger">Cerrar Sesión</a>
+      <a href="/" class="btn btn-ghost">Ver Web</a>
+      <a href="/api/proyectos/" target="_blank" class="btn btn-ghost">API JSON</a>
+      <a href="{% url 'logout' %}" class="btn btn-danger">Salir</a>
     </div>
   </header>
 
+  {% if mensaje %}
+  <div style="max-width:1280px; margin:16px auto 0; padding:0 5%;">
+    <div
+      style="padding:12px 16px; border-radius:10px; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); color:#6EE7B7; font-size:13.5px;">
+      {{ mensaje }}
+    </div>
+  </div>
+  {% endif %}
+
   <main class="main-grid">
+    <aside>
+      <!-- FORMULARIO NUEVO PROYECTO / CASO DE ÉXITO -->
+      <div class="panel-box">
+        <h2>Nuevo Proyecto / Caso de Éxito</h2>
+        <p class="sub">Publica avances en WordPress y asígnalos a un cliente.</p>
 
-    <!-- FORMULARIO NUEVO PROYECTO -->
-    <aside class="panel-box">
-      <h2>Nuevo Proyecto</h2>
-      <p class="sub">Se sincronizará automáticamente con tu web en WordPress.</p>
-
-      <form method="POST">
-        {% csrf_token %}
-        <div class="field">
-          <label>Título del Proyecto *</label>
-          <input type="text" name="titulo" placeholder="Ej. Blindaje Red Corporativa" required>
-        </div>
-
-        <div class="field">
-          <label>Cliente o Sector *</label>
-          <input type="text" name="cliente" placeholder="Ej. Clínica Privada · Valencia" required>
-        </div>
-
-        <div class="row-2">
+        <form method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="accion" value="crear_proyecto">
           <div class="field">
-            <label>Estado</label>
-            <select name="estado">
-              <option value="En progreso">En progreso</option>
-              <option value="En auditoría">En auditoría</option>
-              <option value="Completado">Completado</option>
-            </select>
+            <label>Título del Proyecto *</label>
+            <input type="text" name="titulo" placeholder="Ej. Auditoría y Blindaje ISO 27001" required>
+          </div>
+          <div class="row-2">
+            <div class="field">
+              <label>Empresa / Sector *</label>
+              <input type="text" name="cliente" placeholder="Ej. Grupo Logístico" required>
+            </div>
+            <div class="field">
+              <label>Portal Cliente (Opcional)</label>
+              <select name="cliente_usuario">
+                <option value="">-- Ninguno --</option>
+                {% for c in clientes %}
+                <option value="{{ c.id }}">{{ c.username }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="row-2">
+            <div class="field">
+              <label>Estado</label>
+              <select name="estado">
+                <option value="En progreso">En progreso</option>
+                <option value="En auditoría">En auditoría</option>
+                <option value="Completado">Completado</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Avance (%)</label>
+              <input type="number" name="progreso" min="0" max="100" value="30" required>
+            </div>
           </div>
           <div class="field">
-            <label>Avance (%)</label>
-            <input type="number" name="progreso" min="0" max="100" value="25" required>
+            <label>Problema Detectado (Vende más en la web)</label>
+            <textarea name="problema_detectado" rows="2"
+              placeholder="Ej. Falta de respaldos aislados y accesos sin 2FA..."></textarea>
           </div>
-        </div>
+          <div class="field">
+            <label>Solución / Resultado Obtenido</label>
+            <textarea name="resultado_obtenido" rows="2"
+              placeholder="Ej. Reducción del 90% en riesgo de parada y recuperación en 15 min..."></textarea>
+          </div>
+          <div class="field">
+            <label>Descripción técnica *</label>
+            <textarea name="descripcion" rows="2" placeholder="Alcance general de la implementación..."
+              required></textarea>
+          </div>
+          <div class="field">
+            <label>Tecnologías</label>
+            <input type="text" name="tecnologias" placeholder="Firewall, Linux, Backups, WordPress">
+          </div>
+          <label class="checkbox-row">
+            <input type="checkbox" name="visible_en_web" checked>
+            <span>Mostrar en el portafolio público de WordPress</span>
+          </label>
+          <button type="submit" class="btn btn-cyan" style="width:100%; justify-content:center; padding:11px;">
+            + Guardar Proyecto
+          </button>
+        </form>
+      </div>
 
-        <div class="field">
-          <label>Tecnologías / Alcance</label>
-          <input type="text" name="tecnologias" placeholder="Firewall, Linux, WordPress, CCTV">
-        </div>
+      <!-- CREAR USUARIO PARA CLIENTE -->
+      <div class="panel-box">
+        <h2>Crear Acceso para Cliente</h2>
+        <p class="sub">Genera credenciales para que un cliente vea su avance.</p>
+        <form method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="accion" value="crear_cliente">
+          <div class="row-2">
+            <div class="field">
+              <label>Usuario *</label>
+              <input type="text" name="nuevo_username" placeholder="cliente_empresa" required>
+            </div>
+            <div class="field">
+              <label>Contraseña *</label>
+              <input type="password" name="nuevo_password" placeholder="••••••••" required>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-emerald" style="width:100%; justify-content:center;">
+            + Crear Usuario Cliente
+          </button>
+        </form>
 
-        <div class="field">
-          <label>Descripción breve *</label>
-          <textarea name="descripcion" rows="3" placeholder="Resumen técnico de la solución implementada..." required></textarea>
-        </div>
-
-        <label class="checkbox-row">
-          <input type="checkbox" name="visible_en_web" checked>
-          <span>Mostrar públicamente en WordPress</span>
-        </label>
-
-        <button type="submit" class="btn btn-cyan" style="width:100%; justify-content:center; padding:12px;">
-          + Publicar Proyecto
-        </button>
-      </form>
+        <div style="margin-top:16px; border-top:1px solid var(--border); padding-top:12px;">
+          <span style="font-size:12px; color:var(--text-gray); display:block; margin-bottom:8px;">Clientes registrados
+            (Configurar Servicios):</span>
+          {% for c in clientes %}
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; font-size:13px;">
+            <span>{{ c.username }}</span>
+            <div style="display:flex; gap:6px;">
+              <a href="{% url 'admin_gestionar_tarjeta' c.id %}" class="btn btn-ghost"
+                style="padding:5px 9px; font-size:11px;">Tarjeta</a>
+              <a href="{% url 'admin_gestionar_publicidad' c.id %}" class="btn btn-ghost"
+                style="padding:5px 9px; font-size:11px; color:#38BDF8;">Publicidad</a>
+            </div>
+          </div>
     </aside>
+    {% empty %}
+    <span style="font-size:12px; color:var(--text-gray);">Aún no hay clientes registrados.</span>
+    {% endfor %}
+    </div>
+    </div>
 
-    <!-- LISTADO DE PROYECTOS ACTIVOS -->
-    <section>
-      <div class="projects-header">
+    {% if pagos_pendientes %}
+    <div class="panel-box" style="border-color:rgba(245,158,11,0.45); background:rgba(245,158,11,0.07);">
+      <h3 style="font-size:16px; color:#FCD34D; margin-bottom:10px;">Pagos de Tarjetas Digitales por Validar ({{
+        pagos_pendientes|length }})</h3>
+      {% for pago in pagos_pendientes %}
+      <div
+        style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.08); font-size:13px;">
         <div>
-          <h2 style="font-size:20px;">Mis Proyectos ({{ proyectos|length }})</h2>
-          <p style="font-size:13px; color:var(--text-gray);">Administra el avance y visibilidad de cada implementación.</p>
+          <strong>{{ pago.tarjeta.codigo_suscripcion }}</strong> ({{ pago.tarjeta.nombre_completo }}) —
+          {{ pago.get_plan_solicitado_display }} · {{ pago.metodo_pago }} · Ref: <strong>{{ pago.referencia
+            }}</strong>
+          ({{ pago.monto }})
+          {% if pago.comprobante %}<a href="{{ pago.comprobante.url }}" target="_blank"
+            style="color:#38BDF8; margin-left:6px;">[Ver Capture]</a>{% endif %}
+        </div>
+        <div style="display:flex; gap:6px;">
+          <a href="{% url 'admin_validar_pago' pago.id 'aprobar' %}" class="btn btn-emerald"
+            style="padding:6px 12px; font-size:12px;">Aprobar y Renovar</a>
+          <a href="{% url 'admin_validar_pago' pago.id 'rechazar' %}" class="btn btn-danger"
+            style="padding:6px 12px; font-size:12px;">Rechazar</a>
         </div>
       </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <!-- LISTADO DE PROYECTOS -->
+    <section>
+      <h2 style="font-size:20px; margin-bottom:16px;">Proyectos y Casos de Éxito ({{ proyectos|length }})</h2>
 
       <div class="project-list">
         {% for p in proyectos %}
-          <article class="project-item">
-            <div class="item-top">
-              <div>
-                <span style="font-size:12px; color:var(--accent-cyan); font-weight:600;">{{ p.cliente }}</span>
-                <h3 style="font-size:17px; margin-top:2px;">{{ p.titulo }}</h3>
-              </div>
-              <div class="badges">
-                <span class="badge badge-status">{{ p.estado }} · {{ p.progreso }}%</span>
-                {% if p.visible_en_web %}
-                  <span class="badge badge-public">Visible en Web</span>
-                {% else %}
-                  <span class="badge badge-private">Oculto (Privado)</span>
-                {% endif %}
-              </div>
+        <article class="project-item">
+          <div class="item-top">
+            <div>
+              <span style="font-size:12px; color:var(--accent-cyan); font-weight:600;">{{ p.cliente }}</span>
+              <h3 style="font-size:17px; margin-top:2px;">{{ p.titulo }}</h3>
             </div>
-
-            <p style="font-size:13.5px; color:var(--text-gray); line-height:1.5;">{{ p.descripcion }}</p>
-
-            <div class="progress-track">
-              <div class="progress-fill" style="width: {{ p.progreso }}%;"></div>
+            <div class="badges">
+              <span class="badge badge-status">{{ p.estado }} · {{ p.progreso }}%</span>
+              {% if p.cliente_usuario %}
+              <span class="badge badge-client">Portal: {{ p.cliente_usuario.username }}</span>
+              {% endif %}
+              {% if p.visible_en_web %}
+              <span class="badge badge-public">Público</span>
+              {% endif %}
             </div>
-
-            <div style="font-size:12px; color:var(--text-gray);">
-              <strong>Stack:</strong> {{ p.tecnologias|default:"No especificado" }}
-            </div>
-
-            <div class="item-actions">
-              <button type="button" class="btn btn-ghost"
-                onclick="openEditModal('{{ p.id }}', '{{ p.titulo|escapejs }}', '{{ p.cliente|escapejs }}', '{{ p.estado|escapejs }}', '{{ p.progreso }}', '{{ p.tecnologias|escapejs }}', '{{ p.descripcion|escapejs }}', {{ p.visible_en_web|yesno:'true,false' }})">
-                Editar Avance
-              </button>
-              <a href="{% url 'eliminar_proyecto' p.id %}" class="btn btn-danger" onclick="return confirm('¿Eliminar este proyecto permanentemente?');">
-                Eliminar
-              </a>
-            </div>
-          </article>
-        {% empty %}
-          <div class="panel-box" style="text-align:center; padding:40px;">
-            <p style="color:var(--text-gray);">Aún no has registrado proyectos. Crea el primero desde el formulario de la izquierda.</p>
           </div>
+
+          <p style="font-size:13.5px; color:var(--text-gray);">{{ p.descripcion }}</p>
+
+          {% if p.problema_detectado or p.resultado_obtenido %}
+          <div class="case-preview">
+            <div class="case-mini">
+              <strong style="color:#FCA5A5;">Problema:</strong> {{ p.problema_detectado|default:"-" }}
+            </div>
+            <div class="case-mini">
+              <strong style="color:#6EE7B7;">Solución:</strong> {{ p.resultado_obtenido|default:"-" }}
+            </div>
+          </div>
+          {% endif %}
+
+          <div class="progress-track">
+            <div class="progress-fill" style="width: {{ p.progreso }}%;"></div>
+          </div>
+
+          <div class="item-actions">
+            <button type="button" class="btn btn-ghost"
+              onclick="openEditModal('{{ p.id }}', '{{ p.titulo|escapejs }}', '{{ p.cliente|escapejs }}', '{{ p.cliente_usuario.id|default:'' }}', '{{ p.estado|escapejs }}', '{{ p.progreso }}', '{{ p.tecnologias|escapejs }}', '{{ p.descripcion|escapejs }}', '{{ p.problema_detectado|escapejs }}', '{{ p.resultado_obtenido|escapejs }}', {{ p.visible_en_web|yesno:'true,false' }})">
+              Editar
+            </button>
+            <a href="{% url 'eliminar_proyecto' p.id %}" class="btn btn-danger"
+              onclick="return confirm('¿Eliminar este proyecto?');">
+              Eliminar
+            </a>
+          </div>
+        </article>
+        {% empty %}
+        <div class="panel-box" style="text-align:center; padding:36px;">
+          <p style="color:var(--text-gray);">Aún no hay proyectos registrados.</p>
+        </div>
         {% endfor %}
       </div>
     </section>
-
   </main>
 
-  <!-- MODAL PARA EDITAR PROYECTO -->
+  <!-- MODAL EDICIÓN -->
   <div class="modal-backdrop" id="editModal">
     <div class="modal-box">
-      <h3 style="margin-bottom:16px;">Actualizar Proyecto</h3>
+      <h3 style="margin-bottom:14px;">Editar Proyecto</h3>
       <form method="POST" id="editForm">
         {% csrf_token %}
-        <div class="field">
-          <label>Título</label>
-          <input type="text" name="titulo" id="edit-titulo" required>
-        </div>
-        <div class="field">
-          <label>Cliente / Sector</label>
-          <input type="text" name="cliente" id="edit-cliente" required>
+        <div class="field"><label>Título</label><input type="text" name="titulo" id="edit-titulo" required></div>
+        <div class="row-2">
+          <div class="field"><label>Empresa / Sector</label><input type="text" name="cliente" id="edit-cliente"
+              required></div>
+          <div class="field">
+            <label>Cliente Asignado</label>
+            <select name="cliente_usuario" id="edit-cliente-usuario">
+              <option value="">-- Ninguno --</option>
+              {% for c in clientes %}
+              <option value="{{ c.id }}">{{ c.username }}</option>
+              {% endfor %}
+            </select>
+          </div>
         </div>
         <div class="row-2">
           <div class="field">
@@ -351,19 +548,16 @@
               <option value="Completado">Completado</option>
             </select>
           </div>
-          <div class="field">
-            <label>Avance (%)</label>
-            <input type="number" name="progreso" id="edit-progreso" min="0" max="100" required>
-          </div>
+          <div class="field"><label>Avance (%)</label><input type="number" name="progreso" id="edit-progreso" min="0"
+              max="100" required></div>
         </div>
-        <div class="field">
-          <label>Tecnologías</label>
-          <input type="text" name="tecnologias" id="edit-tecnologias">
-        </div>
-        <div class="field">
-          <label>Descripción</label>
-          <textarea name="descripcion" id="edit-descripcion" rows="3" required></textarea>
-        </div>
+        <div class="field"><label>Problema Detectado</label><textarea name="problema_detectado" id="edit-problema"
+            rows="2"></textarea></div>
+        <div class="field"><label>Solución / Resultado Obtenido</label><textarea name="resultado_obtenido"
+            id="edit-resultado" rows="2"></textarea></div>
+        <div class="field"><label>Descripción</label><textarea name="descripcion" id="edit-descripcion" rows="2"
+            required></textarea></div>
+        <div class="field"><label>Tecnologías</label><input type="text" name="tecnologias" id="edit-tecnologias"></div>
         <label class="checkbox-row">
           <input type="checkbox" name="visible_en_web" id="edit-visible">
           <span>Visible públicamente en WordPress</span>
@@ -377,22 +571,24 @@
   </div>
 
   <script>
-    function openEditModal(id, titulo, cliente, estado, progreso, tecnologias, descripcion, visible) {
+    function openEditModal(id, titulo, cliente, clienteUsuarioId, estado, progreso, tecnologias, descripcion, problema, resultado, visible) {
       document.getElementById('editForm').action = `/editar/${id}/`;
       document.getElementById('edit-titulo').value = titulo;
       document.getElementById('edit-cliente').value = cliente;
+      document.getElementById('edit-cliente-usuario').value = clienteUsuarioId;
       document.getElementById('edit-estado').value = estado;
       document.getElementById('edit-progreso').value = progreso;
       document.getElementById('edit-tecnologias').value = tecnologias;
       document.getElementById('edit-descripcion').value = descripcion;
+      document.getElementById('edit-problema').value = problema;
+      document.getElementById('edit-resultado').value = resultado;
       document.getElementById('edit-visible').checked = visible;
       document.getElementById('editModal').classList.add('open');
     }
-
     function closeEditModal() {
       document.getElementById('editModal').classList.remove('open');
     }
   </script>
-
 </body>
+
 </html>

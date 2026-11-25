@@ -1,18 +1,30 @@
+from datetime import datetime, timedelta
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
-from .models import Proyecto
+from django.contrib.auth.models import User
+from django.http import JsonResponse, HttpResponse
+from django.utils import timezone
+from django.utils.text import slugify
+from .models import (
+    Proyecto,
+    TarjetaDigital,
+    ReportePagoTarjeta,
+    PublicidadBanner,
+    ReportePagoPublicidad,
+)
 
-# 1. PÁGINA PRINCIPAL (LANDING PAGE)
+
+# 1. PÁGINA PRINCIPAL Y TARJETA DE DEMOSTRACIÓN
 def home_view(request):
     return render(request, "index.html")
 
-# 2. TARJETA DIGITAL
+
 def tarjeta_view(request):
     return render(request, "tarjeta.html")
 
-# 3. API PÚBLICA QUE CONSUME WORDPRESS
+
+# 2. APIS PÚBLICAS PARA LA WEB / WORDPRESS
 def api_proyectos(request):
     proyectos = Proyecto.objects.filter(visible_en_web=True)
     data = [
@@ -21,6 +33,8 @@ def api_proyectos(request):
             "titulo": p.titulo,
             "cliente": p.cliente,
             "descripcion": p.descripcion,
+            "problema_detectado": p.problema_detectado,
+            "resultado_obtenido": p.resultado_obtenido,
             "estado": p.estado,
             "progreso": p.progreso,
             "tecnologias": p.tecnologias,
@@ -31,14 +45,36 @@ def api_proyectos(request):
     response["Access-Control-Allow-Origin"] = "*"
     return response
 
-# 4. VISTA DE LOGIN
+
+def api_publicidad(request):
+    anuncios = [b for b in PublicidadBanner.objects.all() if b.esta_activa]
+    data = [
+        {
+            "id": b.id,
+            "ubicacion": b.ubicacion,
+            "titulo": b.titulo,
+            "texto": b.texto,
+            "texto_boton": b.texto_boton,
+            "enlace_destino": b.enlace_destino,
+            "imagen_url": request.build_absolute_uri(b.imagen.url) if b.imagen else "",
+            "usar_html": b.usar_html_personalizado,
+            "html": b.codigo_html_personalizado if b.usar_html_personalizado else "",
+        }
+        for b in anuncios
+    ]
+    response = JsonResponse(data, safe=False)
+    response["Access-Control-Allow-Origin"] = "*"
+    return response
+
+
+# 3. AUTENTICACIÓN (LOGIN / LOGOUT)
 def login_view(request):
     error = None
     if request.method == "POST":
         user = authenticate(
             request,
             username=request.POST.get("username"),
-            password=request.POST.get("password")
+            password=request.POST.get("password"),
         )
         if user:
             login(request, user)
@@ -46,32 +82,86 @@ def login_view(request):
         error = "Usuario o contraseña incorrectos"
     return render(request, "login.html", {"error": error})
 
-# 5. PANEL PRIVADO PARA CREAR PROYECTOS
+
+def logout_view(request):
+    logout(request)
+    return redirect("login")
+
+
+# 4. DASHBOARD PRINCIPAL (ADMIN VS CLIENTE)
 @login_required(login_url="/login/")
 def dashboard_view(request):
+    # Portal del Cliente
+    if not request.user.is_staff:
+        mis_proyectos = Proyecto.objects.filter(cliente_usuario=request.user)
+        return render(request, "cliente_portal.html", {"proyectos": mis_proyectos})
+
+    # Panel del Administrador
+    mensaje = None
     if request.method == "POST":
-        Proyecto.objects.create(
-            titulo=request.POST.get("titulo"),
-            cliente=request.POST.get("cliente"),
-            descripcion=request.POST.get("descripcion"),
-            estado=request.POST.get("estado"),
-            progreso=int(request.POST.get("progreso", 0)),
-            tecnologias=request.POST.get("tecnologias"),
-            visible_en_web=bool(request.POST.get("visible_en_web"))
-        )
-        return redirect("dashboard")
+        accion = request.POST.get("accion")
+
+        if accion == "crear_cliente":
+            nuevo_user = request.POST.get("nuevo_username", "").strip()
+            nueva_pass = request.POST.get("nuevo_password", "").strip()
+            email_cliente = request.POST.get("nuevo_email", "").strip()
+            if nuevo_user and nueva_pass:
+                if not User.objects.filter(username=nuevo_user).exists():
+                    User.objects.create_user(
+                        username=nuevo_user,
+                        password=nueva_pass,
+                        email=email_cliente,
+                        is_staff=False,
+                    )
+                    mensaje = f"Acceso creado para el cliente '{nuevo_user}'."
+                else:
+                    mensaje = f"El usuario '{nuevo_user}' ya existe."
+        else:
+            cliente_id = request.POST.get("cliente_usuario")
+            usuario_asignado = User.objects.filter(id=cliente_id).first() if cliente_id else None
+
+            Proyecto.objects.create(
+                titulo=request.POST.get("titulo"),
+                cliente=request.POST.get("cliente"),
+                cliente_usuario=usuario_asignado,
+                descripcion=request.POST.get("descripcion"),
+                problema_detectado=request.POST.get("problema_detectado", ""),
+                resultado_obtenido=request.POST.get("resultado_obtenido", ""),
+                estado=request.POST.get("estado"),
+                progreso=int(request.POST.get("progreso", 0)),
+                tecnologias=request.POST.get("tecnologias"),
+                visible_en_web=bool(request.POST.get("visible_en_web")),
+            )
+            return redirect("dashboard")
 
     proyectos = Proyecto.objects.all()
-    return render(request, "dashboard.html", {"proyectos": proyectos})
+    clientes = User.objects.filter(is_staff=False)
+    pagos_pendientes = ReportePagoTarjeta.objects.filter(estado="pendiente")
+    pagos_pub_pendientes = ReportePagoPublicidad.objects.filter(estado="pendiente")
 
-# 6. EDITAR PROYECTO
+    return render(request, "dashboard.html", {
+        "proyectos": proyectos,
+        "clientes": clientes,
+        "pagos_pendientes": pagos_pendientes,
+        "pagos_pub_pendientes": pagos_pub_pendientes,
+        "mensaje": mensaje,
+    })
+
+
+# 5. CRUD DE PROYECTOS (SOLO ADMIN)
 @login_required(login_url="/login/")
 def editar_proyecto(request, pk):
+    if not request.user.is_staff:
+        return redirect("dashboard")
     proyecto = get_object_or_404(Proyecto, pk=pk)
     if request.method == "POST":
+        cliente_id = request.POST.get("cliente_usuario")
+        proyecto.cliente_usuario = User.objects.filter(id=cliente_id).first() if cliente_id else None
         proyecto.titulo = request.POST.get("titulo")
         proyecto.cliente = request.POST.get("cliente")
         proyecto.descripcion = request.POST.get("descripcion")
+        proyecto.problema_detectado = request.POST.get("problema_detectado", "")
+        proyecto.resultado_obtenido = request.POST.get("resultado_obtenido", "")
         proyecto.estado = request.POST.get("estado")
         proyecto.progreso = int(request.POST.get("progreso", 0))
         proyecto.tecnologias = request.POST.get("tecnologias")
@@ -79,14 +169,233 @@ def editar_proyecto(request, pk):
         proyecto.save()
     return redirect("dashboard")
 
-# 7. ELIMINAR PROYECTO
+
 @login_required(login_url="/login/")
 def eliminar_proyecto(request, pk):
+    if not request.user.is_staff:
+        return redirect("dashboard")
     proyecto = get_object_or_404(Proyecto, pk=pk)
     proyecto.delete()
     return redirect("dashboard")
 
-# 8. CERRAR SESIÓN
-def logout_view(request):
-    logout(request)
-    return redirect("login")
+
+# 6. TARJETAS DIGITALES: VISTA PÚBLICA
+def ver_tarjeta_publica(request, slug):
+    tarjeta = get_object_or_404(TarjetaDigital, slug=slug)
+
+    if not tarjeta.esta_activa:
+        return render(request, "tarjeta_suspendida.html", {"t": tarjeta})
+
+    if tarjeta.usar_html_personalizado and tarjeta.codigo_html_personalizado.strip():
+        return HttpResponse(tarjeta.codigo_html_personalizado)
+
+    return render(request, "tarjeta_publica.html", {"t": tarjeta})
+
+
+# 7. TARJETAS DIGITALES: ADMIN Y CLIENTE
+@login_required(login_url="/login/")
+def admin_gestionar_tarjeta(request, user_id):
+    if not request.user.is_staff:
+        return redirect("dashboard")
+
+    cliente = get_object_or_404(User, id=user_id, is_staff=False)
+    tarjeta, _ = TarjetaDigital.objects.get_or_create(
+        usuario=cliente,
+        defaults={
+            "slug": slugify(cliente.username),
+            "nombre_completo": cliente.username,
+            "cargo": "Consultor / Especialista",
+            "telefono": "+58",
+            "whatsapp": "58",
+            "correo": cliente.email or "contacto@empresa.com",
+            "fecha_vencimiento": timezone.localdate() + timedelta(days=30),
+        },
+    )
+
+    if request.method == "POST":
+        tarjeta.habilitada = bool(request.POST.get("habilitada"))
+        tarjeta.plan = request.POST.get("plan", "mensual")
+
+        fecha_str = request.POST.get("fecha_vencimiento")
+        if fecha_str:
+            tarjeta.fecha_vencimiento = datetime.strptime(fecha_str, "%Y-%m-%d").date()
+
+        tarjeta.slug = slugify(request.POST.get("slug") or cliente.username)
+        tarjeta.plantilla = request.POST.get("plantilla", "cyber_dark")
+        tarjeta.nombre_completo = request.POST.get("nombre_completo", "")
+        tarjeta.cargo = request.POST.get("cargo", "")
+        tarjeta.empresa = request.POST.get("empresa", "")
+        tarjeta.lema_especialidades = request.POST.get("lema_especialidades", "")
+        tarjeta.telefono = request.POST.get("telefono", "")
+        tarjeta.whatsapp = request.POST.get("whatsapp", "")
+        tarjeta.correo = request.POST.get("correo", "")
+        tarjeta.sitio_web = request.POST.get("sitio_web", "")
+        tarjeta.link_agenda = request.POST.get("link_agenda", "")
+        tarjeta.linkedin = request.POST.get("linkedin", "")
+        tarjeta.instagram = request.POST.get("instagram", "")
+        tarjeta.youtube = request.POST.get("youtube", "")
+        tarjeta.facebook = request.POST.get("facebook", "")
+        tarjeta.usar_html_personalizado = bool(request.POST.get("usar_html_personalizado"))
+        tarjeta.codigo_html_personalizado = request.POST.get("codigo_html_personalizado", "")
+
+        if request.FILES.get("foto"):
+            tarjeta.foto = request.FILES["foto"]
+
+        tarjeta.save()
+        return redirect("dashboard")
+
+    return render(request, "admin_tarjeta_form.html", {"cliente": cliente, "t": tarjeta})
+
+
+@login_required(login_url="/login/")
+def admin_validar_pago(request, pago_id, accion):
+    if not request.user.is_staff:
+        return redirect("dashboard")
+
+    pago = get_object_or_404(ReportePagoTarjeta, id=pago_id)
+    if accion == "aprobar" and pago.estado == "pendiente":
+        pago.estado = "aprobado"
+        pago.save()
+        pago.tarjeta.renovar_plan(pago.plan_solicitado)
+    elif accion == "rechazar" and pago.estado == "pendiente":
+        pago.estado = "rechazado"
+        pago.save()
+
+    return redirect("dashboard")
+
+
+@login_required(login_url="/login/")
+def cliente_reportar_pago(request):
+    tarjeta = get_object_or_404(TarjetaDigital, usuario=request.user)
+    if request.method == "POST":
+        ReportePagoTarjeta.objects.create(
+            tarjeta=tarjeta,
+            plan_solicitado=request.POST.get("plan_solicitado", "mensual"),
+            metodo_pago=request.POST.get("metodo_pago", ""),
+            referencia=request.POST.get("referencia", ""),
+            monto=request.POST.get("monto", ""),
+            comprobante=request.FILES.get("comprobante"),
+        )
+    return redirect("dashboard")
+
+
+@login_required(login_url="/login/")
+def cliente_editar_tarjeta(request):
+    tarjeta = get_object_or_404(TarjetaDigital, usuario=request.user)
+    if not tarjeta.esta_activa or tarjeta.usar_html_personalizado:
+        return redirect("dashboard")
+
+    guardado = False
+    if request.method == "POST":
+        tarjeta.plantilla = request.POST.get("plantilla", tarjeta.plantilla)
+        tarjeta.nombre_completo = request.POST.get("nombre_completo", tarjeta.nombre_completo)
+        tarjeta.cargo = request.POST.get("cargo", tarjeta.cargo)
+        tarjeta.empresa = request.POST.get("empresa", tarjeta.empresa)
+        tarjeta.lema_especialidades = request.POST.get("lema_especialidades", tarjeta.lema_especialidades)
+        tarjeta.telefono = request.POST.get("telefono", tarjeta.telefono)
+        tarjeta.whatsapp = request.POST.get("whatsapp", tarjeta.whatsapp)
+        tarjeta.correo = request.POST.get("correo", tarjeta.correo)
+        tarjeta.sitio_web = request.POST.get("sitio_web", tarjeta.sitio_web)
+        tarjeta.link_agenda = request.POST.get("link_agenda", tarjeta.link_agenda)
+        tarjeta.linkedin = request.POST.get("linkedin", tarjeta.linkedin)
+        tarjeta.instagram = request.POST.get("instagram", tarjeta.instagram)
+        tarjeta.youtube = request.POST.get("youtube", tarjeta.youtube)
+        tarjeta.facebook = request.POST.get("facebook", tarjeta.facebook)
+        if request.FILES.get("foto"):
+            tarjeta.foto = request.FILES["foto"]
+        tarjeta.save()
+        guardado = True
+
+    return render(request, "cliente_editar_tarjeta.html", {"t": tarjeta, "guardado": guardado})
+
+
+# 8. PUBLICIDAD B2B: ADMIN Y CLIENTE
+@login_required(login_url="/login/")
+def admin_gestionar_publicidad(request, user_id):
+    if not request.user.is_staff:
+        return redirect("dashboard")
+
+    cliente = get_object_or_404(User, id=user_id, is_staff=False)
+    banner, _ = PublicidadBanner.objects.get_or_create(
+        usuario=cliente,
+        defaults={
+            "titulo": f"Servicios de {cliente.username}",
+            "fecha_vencimiento": timezone.localdate() + timedelta(days=30),
+        },
+    )
+
+    if request.method == "POST":
+        banner.habilitada = bool(request.POST.get("habilitada"))
+        banner.ubicacion = request.POST.get("ubicacion", "estandar")
+        banner.plan = request.POST.get("plan", "mensual")
+
+        fecha_str = request.POST.get("fecha_vencimiento")
+        if fecha_str:
+            banner.fecha_vencimiento = datetime.strptime(fecha_str, "%Y-%m-%d").date()
+
+        banner.titulo = request.POST.get("titulo", "")
+        banner.texto = request.POST.get("texto", "")
+        banner.texto_boton = request.POST.get("texto_boton", "Conocer más →")
+        banner.enlace_destino = request.POST.get("enlace_destino", "")
+        banner.usar_html_personalizado = bool(request.POST.get("usar_html_personalizado"))
+        banner.codigo_html_personalizado = request.POST.get("codigo_html_personalizado", "")
+
+        if request.FILES.get("imagen"):
+            banner.imagen = request.FILES["imagen"]
+
+        banner.save()
+        return redirect("dashboard")
+
+    return render(request, "admin_publicidad_form.html", {"cliente": cliente, "b": banner})
+
+
+@login_required(login_url="/login/")
+def admin_validar_pago_pub(request, pago_id, accion):
+    if not request.user.is_staff:
+        return redirect("dashboard")
+
+    pago = get_object_or_404(ReportePagoPublicidad, id=pago_id)
+    if accion == "aprobar" and pago.estado == "pendiente":
+        pago.estado = "aprobado"
+        pago.save()
+        pago.publicidad.renovar_plan(pago.plan_solicitado)
+    elif accion == "rechazar" and pago.estado == "pendiente":
+        pago.estado = "rechazado"
+        pago.save()
+
+    return redirect("dashboard")
+
+
+@login_required(login_url="/login/")
+def cliente_editar_publicidad(request):
+    banner = get_object_or_404(PublicidadBanner, usuario=request.user)
+    if not banner.esta_activa or banner.usar_html_personalizado:
+        return redirect("dashboard")
+
+    guardado = False
+    if request.method == "POST":
+        banner.titulo = request.POST.get("titulo", banner.titulo)
+        banner.texto = request.POST.get("texto", banner.texto)
+        banner.texto_boton = request.POST.get("texto_boton", banner.texto_boton)
+        banner.enlace_destino = request.POST.get("enlace_destino", banner.enlace_destino)
+        if request.FILES.get("imagen"):
+            banner.imagen = request.FILES["imagen"]
+        banner.save()
+        guardado = True
+
+    return render(request, "cliente_editar_publicidad.html", {"b": banner, "guardado": guardado})
+
+
+@login_required(login_url="/login/")
+def cliente_reportar_pago_pub(request):
+    banner = get_object_or_404(PublicidadBanner, usuario=request.user)
+    if request.method == "POST":
+        ReportePagoPublicidad.objects.create(
+            publicidad=banner,
+            plan_solicitado=request.POST.get("plan_solicitado", "mensual"),
+            metodo_pago=request.POST.get("metodo_pago", ""),
+            referencia=request.POST.get("referencia", ""),
+            monto=request.POST.get("monto", ""),
+            comprobante=request.FILES.get("comprobante"),
+        )
+    return redirect("dashboard")

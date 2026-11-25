@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tarjeta Temporalmente Suspendida</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      min-height: 100vh; background: #060D1A; color: #F8FAFC; font-family: 'Inter', sans-serif;
+      display: flex; align-items: center; justify-content: center; padding: 20px; text-align: center;
+    }
+    .box {
+      max-width: 420px; background: #0F172A; border: 1px solid rgba(239,68,68,0.35);
+      border-radius: 22px; padding: 34px 26px;
+    }
+    .code-pill {
+      display: inline-block; padding: 5px 12px; border-radius: 99px;
+      background: rgba(239,68,68,0.14); color: #FCA5A5; font-size: 12px; font-weight: 700; margin-bottom: 14px;
+    }
+    .btn {
+      display: inline-block; margin-top: 20px; padding: 12px 20px; border-radius: 10px;
+      background: #0EA5E9; color: #04101E; font-weight: 700; text-decoration: none; font-size: 13.5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <span class="code-pill">CÓDIGO: {{ t.codigo_suscripcion }} · SUSPENDIDA</span>
+    <h1 style="font-size:21px; margin-bottom:10px;">Tarjeta Digital No Disponible</h1>
+    <p style="font-size:14px; color:#94A3B8; line-height:1.6;">
+      El plan de suscripción asociado a esta tarjeta digital ha vencido. Si eres el titular, inicia sesión en tu portal para reportar tu renovación y reactivarla de inmediato.
+    </p>
+    <a href="{% url 'login' %}" class="btn">Ir al Portal de Renovación →</a>
+  </div>
+</body>
+</html>

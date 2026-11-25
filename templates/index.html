@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
   <title>Soluciones Tecnológicas | Blindaje Integral Empresarial</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -20,131 +21,546 @@
       --radius: 16px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-    html { scroll-behavior: smooth; }
-    body { background: #FFFFFF; color: var(--text-dark); line-height: 1.6; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #FFFFFF;
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
 
     /* NAVBAR */
     .navbar {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(6, 13, 26, 0.94); backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(6, 13, 26, 0.94);
+      backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border-dark);
-      padding: 14px 5%; display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
-    .brand { display: flex; align-items: center; gap: 10px; color: white; text-decoration: none; font-weight: 800; font-size: 16px; }
-    .brand span { color: var(--accent-cyan); }
-    .nav-links { display: flex; gap: 24px; align-items: center; }
-    .nav-links a { color: var(--text-gray); text-decoration: none; font-size: 14px; font-weight: 500; transition: 0.2s; }
-    .nav-links a:hover { color: white; }
-    .nav-actions { display: flex; gap: 10px; align-items: center; }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: white;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 16px;
+    }
+
+    .brand span {
+      color: var(--accent-cyan);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--text-gray);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: white;
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
 
     .btn {
-      padding: 10px 18px; border-radius: 10px; font-size: 13.5px; font-weight: 600;
-      text-decoration: none; cursor: pointer; transition: 0.2s; border: none; display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: 0.2s;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
-    .btn-cyan { background: var(--accent-cyan); color: #04101E; }
-    .btn-cyan:hover { background: #38BDF8; }
-    .btn-outline { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.2); }
-    .btn-outline:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
-    .btn-emerald { background: var(--accent-emerald); color: #041E14; }
+
+    .btn-cyan {
+      background: var(--accent-cyan);
+      color: #04101E;
+    }
+
+    .btn-cyan:hover {
+      background: #38BDF8;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+    }
+
+    .btn-emerald {
+      background: var(--accent-emerald);
+      color: #041E14;
+    }
 
     /* HERO */
     .hero {
-      background: radial-gradient(circle at 80% 20%, rgba(14,165,233,0.16), transparent 45%),
-                  linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-surface) 100%);
-      color: white; padding: 80px 5% 90px;
+      background: radial-gradient(circle at 80% 20%, rgba(14, 165, 233, 0.16), transparent 45%),
+        linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-surface) 100%);
+      color: white;
+      padding: 80px 5% 90px;
     }
-    .hero-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 48px; align-items: center; }
+
+    .hero-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 48px;
+      align-items: center;
+    }
+
     .pill-tag {
-      display: inline-block; padding: 6px 14px; border-radius: 99px;
-      background: rgba(14,165,233,0.14); color: var(--accent-cyan);
-      font-size: 12.5px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 18px;
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 99px;
+      background: rgba(14, 165, 233, 0.14);
+      color: var(--accent-cyan);
+      font-size: 12.5px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 18px;
     }
-    .hero h1 { font-size: 42px; line-height: 1.15; font-weight: 800; margin-bottom: 20px; }
-    .hero p { color: var(--text-gray); font-size: 17px; margin-bottom: 30px; max-width: 600px; }
-    .hero-btns { display: flex; flex-wrap: wrap; gap: 12px; }
+
+    .hero h1 {
+      font-size: 42px;
+      line-height: 1.15;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      color: var(--text-gray);
+      font-size: 17px;
+      margin-bottom: 30px;
+      max-width: 600px;
+    }
+
+    .hero-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
 
     /* FORMULARIO GLASSMORPHISM EN HERO */
     .lead-card {
-      background: rgba(30, 41, 59, 0.75); backdrop-filter: blur(16px);
-      border: 1px solid rgba(255,255,255,0.12); border-radius: 20px;
-      padding: 28px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+      background: rgba(30, 41, 59, 0.75);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     }
-    .lead-card h3 { font-size: 20px; margin-bottom: 6px; }
-    .lead-card p { font-size: 13px; color: var(--text-gray); margin-bottom: 18px; }
+
+    .lead-card h3 {
+      font-size: 20px;
+      margin-bottom: 6px;
+    }
+
+    .lead-card p {
+      font-size: 13px;
+      color: var(--text-gray);
+      margin-bottom: 18px;
+    }
+
     .form-control {
-      width: 100%; padding: 12px 14px; border-radius: 10px;
-      background: rgba(6, 13, 26, 0.7); border: 1px solid rgba(255,255,255,0.15);
-      color: white; font-size: 14px; margin-bottom: 12px; outline: none;
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: rgba(6, 13, 26, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: white;
+      font-size: 14px;
+      margin-bottom: 12px;
+      outline: none;
     }
-    .form-control:focus { border-color: var(--accent-cyan); }
+
+    .form-control:focus {
+      border-color: var(--accent-cyan);
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .quiz-opt {
+      width: 100%;
+      text-align: left;
+      padding: 12px 14px;
+      border-radius: 11px;
+      background: rgba(6, 13, 26, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #F8FAFC;
+      font-size: 13.5px;
+      line-height: 1.4;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .quiz-opt:hover {
+      border-color: var(--accent-cyan);
+      background: rgba(14, 165, 233, 0.14);
+      transform: translateX(3px);
+    }
 
     /* SECCIÓN GENERAL */
-    section { padding: 80px 5%; }
-    .container { max-width: 1200px; margin: 0 auto; }
-    .section-header { text-align: center; max-width: 720px; margin: 0 auto 50px; }
-    .section-header h2 { font-size: 32px; font-weight: 800; margin-bottom: 12px; color: var(--bg-dark); }
-    .section-header p { color: #475569; font-size: 16px; }
+    section {
+      padding: 80px 5%;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 50px;
+    }
+
+    .section-header h2 {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: var(--bg-dark);
+    }
+
+    .section-header p {
+      color: #475569;
+      font-size: 16px;
+    }
 
     /* COMPARATIVA RIESGOS VS BLINDAJE */
-    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 60px; }
-    .compare-box { padding: 32px; border-radius: var(--radius); border: 1px solid #E2E8F0; }
-    .compare-box.risk { background: #FFF1F2; border-color: #FECDD3; }
-    .compare-box.shield { background: #F0FDF4; border-color: #BBF7D0; }
-    .compare-box h3 { font-size: 20px; margin-bottom: 16px; }
-    .compare-box ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .compare-box li { font-size: 15px; display: flex; align-items: center; gap: 10px; }
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+
+    .compare-box {
+      padding: 32px;
+      border-radius: var(--radius);
+      border: 1px solid #E2E8F0;
+    }
+
+    .compare-box.risk {
+      background: #FFF1F2;
+      border-color: #FECDD3;
+    }
+
+    .compare-box.shield {
+      background: #F0FDF4;
+      border-color: #BBF7D0;
+    }
+
+    .compare-box h3 {
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+
+    .compare-box ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .compare-box li {
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
     /* BENTO GRID 5 PILARES */
-    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 24px; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 24px;
+    }
+
     .service-card {
-      border: 1px solid #E2E8F0; border-radius: var(--radius); padding: 28px;
-      transition: 0.25s; display: flex; flex-direction: column; background: white;
+      border: 1px solid #E2E8F0;
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: 0.25s;
+      display: flex;
+      flex-direction: column;
+      background: white;
     }
-    .service-card:hover { transform: translateY(-4px); border-color: var(--accent-cyan); box-shadow: 0 15px 30px rgba(15,23,42,0.07); }
+
+    .service-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-cyan);
+      box-shadow: 0 15px 30px rgba(15, 23, 42, 0.07);
+    }
+
     .s-icon {
-      width: 46px; height: 46px; border-radius: 12px; background: rgba(14,165,233,0.1);
-      color: var(--accent-cyan); display: flex; align-items: center; justify-content: center; font-weight: 800; margin-bottom: 18px;
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: rgba(14, 165, 233, 0.1);
+      color: var(--accent-cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      margin-bottom: 18px;
     }
-    .service-card h3 { font-size: 19px; margin-bottom: 10px; }
-    .service-card p { font-size: 14px; color: #475569; margin-bottom: 16px; }
-    .service-card ul { list-style: none; margin-bottom: 22px; flex: 1; }
-    .service-card li { font-size: 13.5px; color: #334155; padding: 4px 0; }
-    .service-card li::before { content: "✓ "; color: var(--accent-emerald); font-weight: 700; }
+
+    .service-card h3 {
+      font-size: 19px;
+      margin-bottom: 10px;
+    }
+
+    .service-card p {
+      font-size: 14px;
+      color: #475569;
+      margin-bottom: 16px;
+    }
+
+    .service-card ul {
+      list-style: none;
+      margin-bottom: 22px;
+      flex: 1;
+    }
+
+    .service-card li {
+      font-size: 13.5px;
+      color: #334155;
+      padding: 4px 0;
+    }
+
+    .service-card li::before {
+      content: "✓ ";
+      color: var(--accent-emerald);
+      font-weight: 700;
+    }
 
     /* SECCIÓN PROYECTOS CONECTADA A DJANGO */
-    .projects-section { background: var(--bg-dark); color: white; }
-    .projects-section .section-header h2 { color: white; }
-    .projects-section .section-header p { color: var(--text-gray); }
-    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+    .projects-section {
+      background: var(--bg-dark);
+      color: white;
+    }
+
+    .projects-section .section-header h2 {
+      color: white;
+    }
+
+    .projects-section .section-header p {
+      color: var(--text-gray);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
     .project-card {
-      background: var(--bg-surface); border: 1px solid var(--border-dark);
-      border-radius: var(--radius); padding: 24px; display: flex; flex-direction: column; gap: 14px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
-    .project-top { display: flex; justify-content: space-between; align-items: center; }
+
+    .project-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
     .status-badge {
-      font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 99px;
-      background: rgba(16,185,129,0.15); color: var(--accent-emerald);
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 99px;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-emerald);
     }
-    .progress-wrap { background: rgba(255,255,255,0.08); height: 7px; border-radius: 99px; overflow: hidden; }
-    .progress-bar { height: 100%; background: linear-gradient(90deg, var(--accent-cyan), var(--accent-emerald)); }
-    .tech-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-    .tech-tag { font-size: 11px; padding: 3px 9px; border-radius: 6px; background: rgba(255,255,255,0.06); color: var(--text-gray); }
+
+    .progress-wrap {
+      background: rgba(255, 255, 255, 0.08);
+      height: 7px;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-emerald));
+    }
+
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tech-tag {
+      font-size: 11px;
+      padding: 3px 9px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-gray);
+    }
 
     /* PERFIL CONSULTOR */
-    .about-grid { display: grid; grid-template-columns: 0.7fr 1.3fr; gap: 48px; align-items: center; }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 0.7fr 1.3fr;
+      gap: 48px;
+      align-items: center;
+    }
+
     .about-photo {
-      width: 100%; max-width: 340px; border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(15,23,42,0.15); border: 4px solid #F1F5F9;
+      width: 100%;
+      max-width: 340px;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15);
+      border: 4px solid #F1F5F9;
+    }
+
+    /* EVITAR DESBORDAMIENTO HORIZONTAL EN MÓVIL */
+    html,
+    body {
+      max-width: 100%;
+      overflow-x: hidden;
     }
 
     @media (max-width: 900px) {
-      .hero-grid, .compare-grid, .about-grid { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
-      .hero h1 { font-size: 32px; }
+      .navbar {
+        padding: 12px 4%;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .brand {
+        font-size: 14px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .nav-actions {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .nav-actions .btn {
+        justify-content: center;
+        padding: 9px 10px;
+        font-size: 12px;
+        text-align: center;
+      }
+
+      .hero {
+        padding: 40px 4% 50px;
+      }
+
+      .hero-grid,
+      .compare-grid,
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .hero h1 {
+        font-size: 26px;
+        line-height: 1.25;
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+
+      .hero-btns {
+        flex-direction: column;
+      }
+
+      .hero-btns .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .lead-card {
+        padding: 20px 16px;
+      }
+
+      section {
+        padding: 48px 4%;
+      }
+
+      .section-header h2 {
+        font-size: 24px;
+      }
+
+      .services-grid,
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .compare-box,
+      .service-card,
+      .project-card {
+        padding: 20px 16px;
+      }
+
+      .about-photo {
+        max-width: 240px;
+        margin: 0 auto;
+        display: block;
+      }
     }
   </style>
 </head>
+
 <body>
 
   <!-- NAVEGACIÓN PRINCIPAL -->
@@ -170,7 +586,8 @@
       <div>
         <span class="pill-tag">BLINDAJE INTEGRAL EMPRESARIAL</span>
         <h1>Protegemos tu empresa desde adentro hacia afuera</h1>
-        <p>Combinamos consultoría organizacional, ciberseguridad e infraestructura técnica para reducir riesgos operativos y garantizar la continuidad de tu negocio.</p>
+        <p>Combinamos consultoría organizacional, ciberseguridad e infraestructura técnica para reducir riesgos
+          operativos y garantizar la continuidad de tu negocio.</p>
         <div class="hero-btns">
           <a href="#servicios" class="btn btn-cyan">Explorar Soluciones</a>
           <a href="/tarjeta/" class="btn btn-emerald">Ver Tarjeta Digital Ejecutiva</a>
@@ -178,24 +595,131 @@
       </div>
 
       <div class="lead-card" id="contacto">
-        <h3>Solicitar evaluación gratuita</h3>
-        <p>Diagnóstico inicial de riesgos técnicos y organizacionales.</p>
-        <form id="consultoria-form" onsubmit="enviarYAgendar(event)">
-          <input type="text" id="c-nombre" class="form-control" placeholder="Nombre completo" required>
-          <input type="email" id="c-correo" class="form-control" placeholder="Correo corporativo" required>
-          <select id="c-servicio" class="form-control">
-            <option value="Blindaje Integral (General)">Área de interés: Blindaje Integral</option>
-            <option value="Consultoría Organizacional">Consultoría Organizacional</option>
-            <option value="Seguridad Informática">Seguridad Informática</option>
-            <option value="Formación del Personal">Formación del Personal</option>
-            <option value="Implementación Técnica">Implementación Técnica</option>
-            <option value="Acompañamiento Estratégico">Acompañamiento Estratégico</option>
-          </select>
-          <textarea id="c-necesidad" class="form-control" rows="3" placeholder="Cuéntanos brevemente tu necesidad..." required></textarea>
-          <button type="submit" id="btn-agendar" class="btn btn-cyan" style="width:100%; justify-content:center;">
-            Agendar Consultoría →
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <span class="pill-tag" style="margin:0; font-size:11px;">DIAGNÓSTICO EXPRESS · 45 SEG</span>
+          <span id="quiz-step-label" style="font-size:12px; color:var(--accent-cyan); font-weight:700;">Paso 1 de
+            6</span>
+        </div>
+
+        <!-- BARRA DE PROGRESO DEL TEST -->
+        <div
+          style="background:rgba(255,255,255,0.08); height:5px; border-radius:99px; margin-bottom:18px; overflow:hidden;">
+          <div id="quiz-progress"
+            style="height:100%; width:16%; background:linear-gradient(90deg, var(--accent-cyan), var(--accent-emerald)); transition:0.3s;">
+          </div>
+        </div>
+
+        <!-- PASO 1: RESPALDOS -->
+        <div class="quiz-step" data-step="1">
+          <h3>1. Respaldos y Continuidad</h3>
+          <p>Si hoy ocurre un ataque de ransomware o falla el servidor principal, ¿en cuánto tiempo recupera su empresa
+            la operación?</p>
+          <div class="quiz-options">
+            <button type="button" class="quiz-opt"
+              onclick="selectAnswer(1, 0, 'Respaldos automatizados y probados (menos de 4h)')">En menos de 4 horas
+              (copias aisladas y probadas)</button>
+            <button type="button" class="quiz-opt"
+              onclick="selectAnswer(1, 15, 'Respaldos manuales sin pruebas periódicas')">En 1 a 3 días (hacemos copias
+              manuales)</button>
+            <button type="button" class="quiz-opt"
+              onclick="selectAnswer(1, 25, 'Sin protocolo claro de recuperación')">No tenemos certeza / perderíamos
+              información crítica</button>
+          </div>
+        </div>
+
+        <!-- PASO 2: ACCESOS Y CONTRASEÑAS -->
+        <div class="quiz-step" data-step="2" style="display:none;">
+          <h3>2. Control de Accesos y Credenciales</h3>
+          <p>¿Cómo gestionan las contraseñas administrativas, correos y accesos cuando un empleado sale de la empresa?
+          </p>
+          <div class="quiz-options">
+            <button type="button" class="quiz-opt"
+              onclick="selectAnswer(2, 0, 'MFA activo y protocolo de baja inmediata')">Usamos doble factor (2FA) y
+              revocación inmediata</button>
+            <button type="button" class="quiz-opt"
+              onclick="selectAnswer(2, 15, 'Sin 2FA obligatorio en cuentas clave')">Se cambian manualmente, pero sin 2FA
+              obligatorio</button>
+            <button type="button" class="quiz-opt"
+              onclick="selectAnswer(2, 25, 'Claves compartidas entre el personal')">Se comparten claves entre varios
+              colaboradores</button>
+          </div>
+        </div>
+
+        <!-- PASO 3: PROCESOS Y DOCUMENTACIÓN -->
+        <div class="quiz-step" data-step="3" style="display:none;">
+          <h3>3. Orden de Procesos Internos</h3>
+          <p>¿Están documentados los procedimientos operativos y de seguridad tecnológica de cada área?</p>
+          <div class="quiz-options">
+            <button type="button" class="quiz-opt" onclick="selectAnswer(3, 0, 'Procesos documentados y auditados')">Sí,
+              tenemos manuales y protocolos claros</button>
+            <button type="button" class="quiz-opt"
+              onclick="selectAnswer(3, 10, 'Documentación parcial o desactualizada')">Parcialmente, dependen de personas
+              clave</button>
+            <button type="button" class="quiz-opt"
+              onclick="selectAnswer(3, 20, 'Operación informal sin protocolos')">No, resolvemos sobre la marcha día a
+              día</button>
+          </div>
+        </div>
+
+        <!-- PASO 4: CAPACITACIÓN DEL PERSONAL -->
+        <div class="quiz-step" data-step="4" style="display:none;">
+          <h3>4. Factor Humano y Phishing</h3>
+          <p>¿Cuándo fue la última vez que su equipo recibió capacitación práctica sobre fraudes digitales y seguridad?
+          </p>
+          <div class="quiz-options">
+            <button type="button" class="quiz-opt"
+              onclick="selectAnswer(4, 0, 'Capacitación continua en los últimos 6 meses')">En los últimos 6
+              meses</button>
+            <button type="button" class="quiz-opt" onclick="selectAnswer(4, 10, 'Hace más de un año')">Hace más de un
+              año</button>
+            <button type="button" class="quiz-opt"
+              onclick="selectAnswer(4, 15, 'Nunca se ha capacitado al personal')">Nunca hemos realizado formación en
+              seguridad</button>
+          </div>
+        </div>
+
+        <!-- PASO 5: SEGURIDAD PERIMETRAL Y WEB -->
+        <div class="quiz-step" data-step="5" style="display:none;">
+          <h3>5. Infraestructura y Plataforma Web</h3>
+          <p>¿Cuentan con monitoreo activo, firewall configurado y auditoría periódica de su red y sitio web?</p>
+          <div class="quiz-options">
+            <button type="button" class="quiz-opt"
+              onclick="selectAnswer(5, 0, 'Monitoreo y auditoría periódica activa')">Sí, auditamos y monitoreamos
+              constantemente</button>
+            <button type="button" class="quiz-opt" onclick="selectAnswer(5, 10, 'Solo antivirus básico')">Solo contamos
+              con antivirus básico en equipos</button>
+            <button type="button" class="quiz-opt"
+              onclick="selectAnswer(5, 15, 'Sin auditoría ni firewall gestionado')">No se ha auditado nuestra
+              infraestructura</button>
+          </div>
+        </div>
+
+        <!-- PASO 6: RESULTADO + DATOS PARA AGENDAR -->
+        <div class="quiz-step" data-step="6" style="display:none;">
+          <div id="risk-result-box"
+            style="padding:14px; border-radius:12px; margin-bottom:14px; border:1px solid rgba(255,255,255,0.12);">
+            <span style="font-size:11.5px; text-transform:uppercase; font-weight:700; letter-spacing:0.5px;">Resultado
+              Preliminar</span>
+            <h4 id="risk-title" style="font-size:18px; margin:4px 0;"></h4>
+            <p id="risk-desc" style="font-size:12.5px; margin:0; color:#E2E8F0;"></p>
+          </div>
+
+          <form id="consultoria-form" onsubmit="enviarYAgendar(event)">
+            <input type="text" id="c-nombre" class="form-control" placeholder="Tu nombre y empresa" required>
+            <input type="email" id="c-correo" class="form-control" placeholder="Correo corporativo" required>
+            <button type="submit" id="btn-agendar" class="btn btn-cyan" style="width:100%; justify-content:center;">
+              Guardar Informe y Agendar Cita →
+            </button>
+          </form>
+        </div>
+
+        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+          <button type="button" id="btn-quiz-back" onclick="prevStep()"
+            style="display:none; background:none; border:none; color:var(--text-gray); font-size:12.5px; cursor:pointer;">
+            ← Pregunta anterior
           </button>
-        </form>
+          <span style="font-size:11.5px; color:var(--text-gray); margin-left:auto;">100% Confidencial</span>
+        </div>
       </div>
     </div>
   </section>
@@ -304,7 +828,8 @@
 
       <!-- Contenedor donde JavaScript inyecta los proyectos desde Django -->
       <div class="projects-grid" id="django-projects-container">
-        <p style="color:var(--text-gray); text-align:center; grid-column:1/-1;">Cargando proyectos desde el servidor...</p>
+        <p style="color:var(--text-gray); text-align:center; grid-column:1/-1;">Cargando proyectos desde el servidor...
+        </p>
       </div>
     </div>
   </section>
@@ -314,16 +839,20 @@
     <div class="container about-grid">
       <div style="text-align:center;">
         <!-- Reemplazar con la URL real de la foto de Hector -->
-        <img src="https://ui-avatars.com/api/?name=Hector+Canongo&background=0F172A&color=38BDF8&size=400" alt="Hector Cañongo" class="about-photo">
+        <img src="https://ui-avatars.com/api/?name=Hector+Canongo&background=0F172A&color=38BDF8&size=400"
+          alt="Hector Cañongo" class="about-photo">
       </div>
       <div>
         <span class="pill-tag">CONSULTOR PRINCIPAL</span>
         <h2 style="font-size:32px; margin-bottom:14px;">Hector Cañongo</h2>
         <p style="color:#475569; margin-bottom:16px;">
-          Con más de <strong>20 años de experiencia en tecnología y gestión digital</strong>, combino ingeniería de soporte técnico (incluyendo trayectoria en soporte de software para firma canadiense) con coaching organizacional.
+          Con más de <strong>20 años de experiencia en tecnología y gestión digital</strong>, combino ingeniería de
+          soporte técnico (incluyendo trayectoria en soporte de software para firma canadiense) con coaching
+          organizacional.
         </p>
         <p style="color:#475569; margin-bottom:24px;">
-          Mi enfoque integra el factor humano con arquitecturas tecnológicas robustas para que las empresas crezcan sin fricciones ni vulnerabilidades.
+          Mi enfoque integra el factor humano con arquitecturas tecnológicas robustas para que las empresas crezcan sin
+          fricciones ni vulnerabilidades.
         </p>
         <a href="/tarjeta/" class="btn btn-cyan">Abrir Tarjeta Digital de Contacto</a>
       </div>
@@ -331,10 +860,11 @@
   </section>
 
   <script>
-    // URL DE LA API DE TU PROYECTO DJANGO
-    const DJANGO_API_URL = "http://127.0.0.1:8000/api/proyectos/";
+    // =========================================================
+    // 1. CARGA DE PROYECTOS DESDE DJANGO
+    // =========================================================
+    const DJANGO_API_URL = "/api/proyectos/";
 
-    // Proyectos de respaldo por si Django aún no está encendido en local
     const FALLBACK_PROJECTS = [
       {
         titulo: "Blindaje de Red y Servidores Corporativos",
@@ -356,14 +886,15 @@
 
     async function loadDjangoProjects() {
       const container = document.getElementById("django-projects-container");
+      if (!container) return;
       let projects = [];
 
       try {
         const res = await fetch(DJANGO_API_URL);
         if (!res.ok) throw new Error("API no disponible");
         projects = await res.json();
+        if (!projects.length) projects = FALLBACK_PROJECTS;
       } catch (err) {
-        console.warn("Usando proyectos de muestra mientras se conecta Django:", err);
         projects = FALLBACK_PROJECTS;
       }
 
@@ -388,54 +919,161 @@
 
     loadDjangoProjects();
 
-    // 1. PEGA AQUÍ LA URL DE TU GOOGLE APPS SCRIPT (/exec)
+    // =========================================================
+    // 2. TEST INTERACTIVO DE DIAGNÓSTICO + GOOGLE SHEETS + CALENDAR
+    // =========================================================
     const SHEETS_CONSULTORIA_URL = "https://script.google.com/macros/s/AKfycbw-KvT5vv8ztdLFxzE6FwoCBeqf0AVS8cHbAb-fcL6I4M8CIE5OkLWIEkvy7h49aiI/exec";
-
-    // 2. PEGA AQUÍ EL ENLACE DE TU AGENDA DE CITAS DE GOOGLE CALENDAR
     const GOOGLE_CALENDAR_BOOKING_URL = "https://calendar.app.google/deNoKCbMZe9Gysxd8";
 
-    // Función para preseleccionar servicio desde las tarjetas de abajo
+    let currentStep = 1;
+    const quizScores = {};
+    const quizLabels = {};
+    let finalRiskLevel = "";
+    let finalTotalScore = 0;
+
+    function showStep(step) {
+      currentStep = step;
+      document.querySelectorAll(".quiz-step").forEach(el => {
+        el.style.display = Number(el.dataset.step) === step ? "block" : "none";
+      });
+      document.getElementById("quiz-step-label").textContent = `Paso ${step} de 6`;
+      document.getElementById("quiz-progress").style.width = `${Math.round((step / 6) * 100)}%`;
+      document.getElementById("btn-quiz-back").style.display = step > 1 ? "inline-block" : "none";
+    }
+
+    function selectAnswer(step, points, label) {
+      quizScores[step] = points;
+      quizLabels[step] = label;
+
+      if (step < 5) {
+        showStep(step + 1);
+      } else {
+        calculateRisk();
+        showStep(6);
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 1) showStep(currentStep - 1);
+    }
+
+    function calculateRisk() {
+      finalTotalScore = Object.values(quizScores).reduce((a, b) => a + b, 0);
+      const box = document.getElementById("risk-result-box");
+      const title = document.getElementById("risk-title");
+      const desc = document.getElementById("risk-desc");
+
+      if (finalTotalScore >= 60) {
+        finalRiskLevel = "RIESGO CRÍTICO";
+        box.style.background = "rgba(239, 68, 68, 0.16)";
+        box.style.borderColor = "rgba(239, 68, 68, 0.45)";
+        title.style.color = "#FCA5A5";
+        title.textContent = `⚠️ Riesgo Crítico (${finalTotalScore}/100 pts)`;
+        desc.textContent = "Tu operación presenta brechas altas en continuidad y accesos. Agenda tu sesión gratuita para revisar un plan de contención inmediato.";
+      } else if (finalTotalScore >= 30) {
+        finalRiskLevel = "RIESGO MODERADO";
+        box.style.background = "rgba(245, 158, 11, 0.16)";
+        box.style.borderColor = "rgba(245, 158, 11, 0.45)";
+        title.style.color = "#FCD34D";
+        title.textContent = `⚡ Riesgo Moderado (${finalTotalScore}/100 pts)`;
+        desc.textContent = "Tienes bases operativas, pero existen puntos ciegos en procesos o prevención. Revisemos cómo blindarlos en 30 minutos.";
+      } else {
+        finalRiskLevel = "RIESGO CONTROLADO";
+        box.style.background = "rgba(16, 185, 129, 0.16)";
+        box.style.borderColor = "rgba(16, 185, 129, 0.45)";
+        title.style.color = "#6EE7B7";
+        title.textContent = `🛡️ Riesgo Controlado (${finalTotalScore}/100 pts)`;
+        desc.textContent = "Buen nivel de madurez. Podemos ayudarte a auditar y certificar tus controles para escalar con seguridad.";
+      }
+    }
+
     function seleccionarServicio(nombreServicio) {
-      const select = document.getElementById("c-servicio");
-      if (select) select.value = nombreServicio;
-      document.getElementById("contacto").scrollIntoView({ behavior: "smooth" });
+      const target = document.getElementById("contacto");
+      if (target) target.scrollIntoView({ behavior: "smooth" });
     }
 
     async function enviarYAgendar(e) {
       e.preventDefault();
       const btn = document.getElementById("btn-agendar");
       btn.disabled = true;
-      btn.textContent = "Guardando y abriendo agenda...";
+      btn.textContent = "Guardando diagnóstico...";
+
+      const resumen = Object.entries(quizLabels)
+        .map(([k, v]) => `P${k}: ${v}`)
+        .join(" | ");
 
       const datos = new URLSearchParams({
         fecha: new Date().toLocaleString("es-VE"),
         nombre: document.getElementById("c-nombre").value.trim(),
         correo: document.getElementById("c-correo").value.trim(),
-        servicio: document.getElementById("c-servicio").value,
-        necesidad: document.getElementById("c-necesidad").value.trim()
+        nivel_riesgo: finalRiskLevel || "Evaluación Directa",
+        puntaje: `${finalTotalScore}/100`,
+        resumen_respuestas: resumen
       });
 
-      // Guardar en Google Sheets
-      if (SHEETS_CONSULTORIA_URL.startsWith("http")) {
-        try {
-          await fetch(SHEETS_CONSULTORIA_URL, {
-            method: "POST",
-            mode: "no-cors",
-            body: datos
-          });
-        } catch (err) {
-          console.error("Error guardando en Google Sheets:", err);
-        }
+      try {
+        await fetch(SHEETS_CONSULTORIA_URL, {
+          method: "POST",
+          mode: "no-cors",
+          body: datos
+        });
+      } catch (err) {
+        console.error("Error guardando en Google Sheets:", err);
       }
 
-      // Redirigir a la agenda de Google Calendar para elegir día y hora
       setTimeout(() => {
-        window.open(GOOGLE_CALENDAR_BOOKING_URL, "_blank");
-        btn.disabled = false;
-        btn.textContent = "Agendar Consultoría →";
-        document.getElementById("consultoria-form").reset();
+        window.location.href = GOOGLE_CALENDAR_BOOKING_URL;
       }, 600);
     }
+
+    async function loadPublicidad() {
+      try {
+        const res = await fetch("/api/publicidad/");
+        const ads = await res.json();
+        const sec = document.getElementById("aliados");
+        if (!ads.length) {
+          if (sec) sec.style.display = "none";
+          return;
+        }
+        const destacados = ads.filter(a => a.ubicacion === "destacado");
+        const estandar = ads.filter(a => a.ubicacion !== "destacado");
+
+        document.getElementById("publicidad-destacada").innerHTML = destacados.map(a =>
+          a.usar_html ? a.html : `
+        <div style="background:var(--bg-surface); border:1px solid rgba(14,165,233,0.35); border-radius:20px; padding:24px; display:flex; gap:22px; align-items:center; flex-wrap:wrap;">
+          ${a.imagen_url ? `<img src="${a.imagen_url}" alt="${a.titulo}" style="width:280px; max-width:100%; height:150px; object-fit:cover; border-radius:12px;">` : ""}
+          <div style="flex:1; min-width:240px;">
+            <span style="font-size:11px; color:var(--accent-cyan); font-weight:700;">ESPACIO PATROCINADO</span>
+            <h3 style="font-size:20px; margin:4px 0 8px;">${a.titulo}</h3>
+            <p style="font-size:14px; color:var(--text-gray); margin-bottom:14px;">${a.texto}</p>
+            <a href="${a.enlace_destino}" target="_blank" rel="noopener" class="btn btn-cyan">${a.texto_boton}</a>
+          </div>
+        </div>`
+        ).join("");
+
+        document.getElementById("publicidad-grid").innerHTML = estandar.map(a =>
+          a.usar_html ? a.html : `
+        <article class="project-card">
+          ${a.imagen_url ? `<img src="${a.imagen_url}" alt="${a.titulo}" style="width:100%; height:150px; object-fit:cover; border-radius:12px;">` : ""}
+          <span style="font-size:11px; color:var(--accent-emerald); font-weight:700;">ALIADO VERIFICADO</span>
+          <h3 style="font-size:17px;">${a.titulo}</h3>
+          <p style="font-size:13.5px; color:var(--text-gray); flex:1;">${a.texto}</p>
+          <a href="${a.enlace_destino}" target="_blank" rel="noopener" class="btn btn-outline" style="justify-content:center;">${a.texto_boton}</a>
+        </article>`
+        ).join("");
+      } catch (e) { console.error(e); }
+    }
+    loadPublicidad();
   </script>
+  <section id="aliados" style="background:rgba(15, 23, 42, 0.45); border-top:1px solid var(--border);">
+    <div class="section-header">
+      <span class="pill-tag">RED DE ALIADOS B2B</span>
+      <h2>Empresas y Soluciones Recomendadas</h2>
+      <p>Organizaciones y servicios verificados que forman parte de nuestro ecosistema empresarial.</p>
+    </div>
+    <div id="publicidad-destacada" style="max-width:1180px; margin:0 auto 24px;"></div>
+    <div id="publicidad-grid" class="projects-grid"></div>
+  </section>
 </body>
+
 </html>
