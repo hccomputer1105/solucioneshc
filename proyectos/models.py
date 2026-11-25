@@ -215,11 +215,6 @@ class AppDemoRender(models.Model):
         help_text="Opcional: Usuario/clave de prueba para tus demos en vivo"
     )
     categoria = models.CharField(max_length=80, default="SaaS / Web App")
+    visible_en_web = models.BooleanField(default=True)
     orden = models.PositiveIntegerField(default=1)
     creado = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ['orden', '-creado']
-
-    def __str__(self):
-        return f"{self.nombre} ({self.url})"

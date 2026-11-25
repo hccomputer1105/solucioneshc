@@ -69,7 +69,7 @@ def api_publicidad(request):
 
 
 def api_apps_publicas(request):
-    apps = AppDemoRender.objects.all()
+    apps = AppDemoRender.objects.filter(visible_en_web=True)
     data = [
         {
             "nombre": a.nombre,
@@ -134,14 +134,15 @@ def dashboard_view(request):
                     mensaje = f"El usuario '{nuevo_user}' ya existe."
 
         elif accion == "crear_app_demo":
-            AppDemoRender.objects.create(
-                nombre=request.POST.get("app_nombre", "").strip(),
-                url=request.POST.get("app_url", "").strip(),
-                descripcion=request.POST.get("app_descripcion", "").strip(),
-                credenciales_demo=request.POST.get("app_credenciales", "").strip(),
-                categoria=request.POST.get("app_categoria", "SaaS / Render").strip(),
-            )
-            return redirect("dashboard")
+         AppDemoRender.objects.create(
+             nombre=request.POST.get("app_nombre", "").strip(),
+             url=request.POST.get("app_url", "").strip(),
+             descripcion=request.POST.get("app_descripcion", "").strip(),
+             credenciales_demo=request.POST.get("app_credenciales", "").strip(),
+             categoria=request.POST.get("app_categoria", "SaaS / Render").strip(),
+             visible_en_web=bool(request.POST.get("app_visible_en_web")),
+         )
+         return redirect("dashboard")
 
         elif accion == "crear_proyecto" or not accion:
             cliente_id = request.POST.get("cliente_usuario")
@@ -446,4 +447,13 @@ def cliente_reportar_pago_pub(request):
             monto=request.POST.get("monto", ""),
             comprobante=request.FILES.get("comprobante"),
         )
+    return redirect("dashboard")
+
+@login_required(login_url="/login/")
+def toggle_app_demo_web(request, pk):
+    if not request.user.is_staff:
+        return redirect("dashboard")
+    app_demo = get_object_or_404(AppDemoRender, pk=pk)
+    app_demo.visible_en_web = not app_demo.visible_en_web
+    app_demo.save()
     return redirect("dashboard")

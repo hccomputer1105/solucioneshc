@@ -1,371 +1,979 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard Ejecutivo | Soluciones Tecnológicas</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg-dark: #060D1A;
-      --bg-surface: #0F172A;
-      --accent-cyan: #0EA5E9;
-      --accent-emerald: #10B981;
-      --text-light: #F8FAFC;
-      --text-gray: #94A3B8;
-      --border: rgba(255, 255, 255, 0.09);
-      --radius: 16px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Inter', sans-serif;
-    }
-
-    body {
-      background: var(--bg-dark);
-      color: var(--text-light);
-      min-height: 100vh;
-    }
-
-    .topbar {
-      background: var(--bg-surface);
-      border-bottom: 1px solid var(--border);
-      padding: 16px 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .topbar-brand {
-      font-weight: 800;
-      font-size: 16px;
-    }
-
-    .topbar-brand span {
-      color: var(--accent-cyan);
-    }
-
-    .user-controls {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-    }
-
-    .btn {
-      padding: 9px 14px;
-      border-radius: 9px;
-      font-size: 13px;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .btn-cyan {
-      background: var(--accent-cyan);
-      color: #04101E;
-    }
-
-    .btn-emerald {
-      background: var(--accent-emerald);
-      color: #041E14;
-    }
-
-    .btn-ghost {
-      background: rgba(255, 255, 255, 0.06);
-      color: var(--text-light);
-      border: 1px solid var(--border);
-    }
-
-    .btn-danger {
-      background: rgba(239, 68, 68, 0.15);
-      color: #FCA5A5;
-      border: 1px solid rgba(239, 68, 68, 0.3);
-    }
-
-    /* LAYOUT RESPONSIVO: PC (2 columnas amplias) */
-    .main-grid {
-      width: 100%;
-      max-width: 100%;
-      margin: 24px 0;
-      padding: 0 3%;
-      display: grid;
-      grid-template-columns: 420px minmax(0, 1fr);
-      gap: 28px;
-      align-items: start;
-    }
-
-    .col-izquierda,
-    .col-derecha {
-      width: 100%;
-      min-width: 0;
-    }
-
-    .panel-box {
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 22px;
-      margin-bottom: 20px;
-    }
-
-    .panel-box h2 {
-      font-size: 17px;
-      margin-bottom: 4px;
-    }
-
-    .panel-box .sub {
-      font-size: 12.5px;
-      color: var(--text-gray);
-      margin-bottom: 16px;
-    }
-
-    .field {
-      margin-bottom: 12px;
-    }
-
-    .field label {
-      display: block;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-gray);
-      margin-bottom: 4px;
-    }
-
-    input[type="text"],
-    input[type="password"],
-    input[type="email"],
-    input[type="number"],
-    input[type="url"],
-    select,
-    textarea {
-      width: 100%;
-      padding: 9px 12px;
-      border-radius: 9px;
-      background: var(--bg-dark);
-      border: 1px solid var(--border);
-      color: white;
-      font-size: 13px;
-      outline: none;
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: var(--accent-cyan);
-    }
-
-    .row-2 {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 10px;
-    }
-
-    .checkbox-row {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      padding: 9px 12px;
-      background: rgba(16, 185, 129, 0.08);
-      border: 1px solid rgba(16, 185, 129, 0.25);
-      border-radius: 9px;
-      font-size: 12.5px;
-      margin-bottom: 14px;
-      cursor: pointer;
-    }
-
-    .project-list {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .project-item {
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 11px;
-    }
-
-    .item-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .badges {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .badge {
-      font-size: 11px;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 99px;
-    }
-
-    .badge-status {
-      background: rgba(14, 165, 233, 0.15);
-      color: var(--accent-cyan);
-    }
-
-    .badge-public {
-      background: rgba(16, 185, 129, 0.15);
-      color: var(--accent-emerald);
-    }
-
-    .badge-client {
-      background: rgba(168, 85, 247, 0.15);
-      color: #D8B4FE;
-    }
-
-    .case-preview {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      font-size: 12.5px;
-    }
-
-    .case-mini {
-      padding: 10px;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border);
-    }
-
-    .progress-track {
-      width: 100%;
-      height: 6px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 99px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-emerald));
-    }
-
-    .item-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      padding-top: 8px;
-      border-top: 1px solid var(--border);
-    }
-
-    .modal-backdrop {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(6px);
-      z-index: 200;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-    }
-
-    .modal-backdrop.open {
-      display: flex;
-    }
-
-    .modal-box {
-      width: 100%;
-      max-width: 500px;
-      max-height: 92vh;
-      overflow-y: auto;
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 22px;
-    }
-
-    /* TABLET (769px a 1100px: dos columnas proporcionales) */
-    @media (max-width: 1100px) {
-      .main-grid {
-        grid-template-columns: 340px minmax(0, 1fr);
-        gap: 20px;
-        padding: 0 2.5%;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Ejecutivo | Soluciones Tecnológicas</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-dark: #060d1a;
+        --bg-surface: #0f172a;
+        --accent-cyan: #0ea5e9;
+        --accent-emerald: #10b981;
+        --text-light: #f8fafc;
+        --text-gray: #94a3b8;
+        --border: rgba(255, 255, 255, 0.09);
+        --radius: 16px;
       }
-    }
 
-    /* TELÉFONO (768px o menos: una sola columna apilada al 100%) */
-    @media (max-width: 768px) {
-      .main-grid,
-      .case-preview,
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Inter", sans-serif;
+      }
+
+      body {
+        background: var(--bg-dark);
+        color: var(--text-light);
+        min-height: 100vh;
+      }
+
+      .topbar {
+        background: var(--bg-surface);
+        border-bottom: 1px solid var(--border);
+        padding: 16px 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .topbar-brand {
+        font-weight: 800;
+        font-size: 16px;
+      }
+
+      .topbar-brand span {
+        color: var(--accent-cyan);
+      }
+
+      .user-controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 13px;
+      }
+
+      .btn {
+        padding: 9px 14px;
+        border-radius: 9px;
+        font-size: 13px;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .btn-cyan {
+        background: var(--accent-cyan);
+        color: #04101e;
+      }
+
+      .btn-emerald {
+        background: var(--accent-emerald);
+        color: #041e14;
+      }
+
+      .btn-ghost {
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text-light);
+        border: 1px solid var(--border);
+      }
+
+      .btn-danger {
+        background: rgba(239, 68, 68, 0.15);
+        color: #fca5a5;
+        border: 1px solid rgba(239, 68, 68, 0.3);
+      }
+
+      /* LAYOUT RESPONSIVO: PC (2 columnas amplias) */
+      .main-grid {
+        width: 100%;
+        max-width: 100%;
+        margin: 24px 0;
+        padding: 0 3%;
+        display: grid;
+        grid-template-columns: 420px minmax(0, 1fr);
+        gap: 28px;
+        align-items: start;
+      }
+
+      .col-izquierda,
+      .col-derecha {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .panel-box {
+        background: var(--bg-surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 22px;
+        margin-bottom: 20px;
+      }
+
+      .panel-box h2 {
+        font-size: 17px;
+        margin-bottom: 4px;
+      }
+
+      .panel-box .sub {
+        font-size: 12.5px;
+        color: var(--text-gray);
+        margin-bottom: 16px;
+      }
+
+      .field {
+        margin-bottom: 12px;
+      }
+
+      .field label {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-gray);
+        margin-bottom: 4px;
+      }
+
+      input[type="text"],
+      input[type="password"],
+      input[type="email"],
+      input[type="number"],
+      input[type="url"],
+      select,
+      textarea {
+        width: 100%;
+        padding: 9px 12px;
+        border-radius: 9px;
+        background: var(--bg-dark);
+        border: 1px solid var(--border);
+        color: white;
+        font-size: 13px;
+        outline: none;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        border-color: var(--accent-cyan);
+      }
+
       .row-2 {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 10px;
       }
 
-      .main-grid {
-        padding: 0 4%;
-        gap: 20px;
+      .checkbox-row {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 9px 12px;
+        background: rgba(16, 185, 129, 0.08);
+        border: 1px solid rgba(16, 185, 129, 0.25);
+        border-radius: 9px;
+        font-size: 12.5px;
+        margin-bottom: 14px;
+        cursor: pointer;
       }
-    }
-  </style>
-</head>
 
-<body>
+      .project-list {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
 
-  <header class="topbar">
-    <div class="topbar-brand">SOLUCIONES <span>TECNOLÓGICAS</span> · Admin</div>
-    <div class="user-controls">
-      <a href="/" class="btn btn-ghost">Ver Web</a>
-      <a href="/api/proyectos/" target="_blank" class="btn btn-ghost">API JSON</a>
-      <a href="{% url 'logout' %}" class="btn btn-danger">Salir</a>
+      .project-item {
+        background: var(--bg-surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 11px;
+      }
+
+      .item-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .badges {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+
+      .badge {
+        font-size: 11px;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 99px;
+      }
+
+      .badge-status {
+        background: rgba(14, 165, 233, 0.15);
+        color: var(--accent-cyan);
+      }
+
+      .badge-public {
+        background: rgba(16, 185, 129, 0.15);
+        color: var(--accent-emerald);
+      }
+
+      .badge-client {
+        background: rgba(168, 85, 247, 0.15);
+        color: #d8b4fe;
+      }
+
+      .case-preview {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        font-size: 12.5px;
+      }
+
+      .case-mini {
+        padding: 10px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+      }
+
+      .progress-track {
+        width: 100%;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          var(--accent-cyan),
+          var(--accent-emerald)
+        );
+      }
+
+      .item-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        padding-top: 8px;
+        border-top: 1px solid var(--border);
+      }
+
+      .modal-backdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(6px);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+      }
+
+      .modal-backdrop.open {
+        display: flex;
+      }
+
+      .modal-box {
+        width: 100%;
+        max-width: 500px;
+        max-height: 92vh;
+        overflow-y: auto;
+        background: var(--bg-surface);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 22px;
+      }
+
+      /* TABLET (769px a 1100px: dos columnas proporcionales) */
+      @media (max-width: 1100px) {
+        .main-grid {
+          grid-template-columns: 340px minmax(0, 1fr);
+          gap: 20px;
+          padding: 0 2.5%;
+        }
+      }
+
+      /* TELÉFONO (768px o menos: una sola columna apilada al 100%) */
+      @media (max-width: 768px) {
+        .main-grid,
+        .case-preview,
+        .row-2 {
+          grid-template-columns: 1fr;
+        }
+
+        .main-grid {
+          padding: 0 4%;
+          gap: 20px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="topbar">
+      <div class="topbar-brand">
+        SOLUCIONES <span>TECNOLÓGICAS</span> · Admin
+      </div>
+      <div class="user-controls">
+        <a href="/" class="btn btn-ghost">Ver Web</a>
+        <a href="/api/proyectos/" target="_blank" class="btn btn-ghost"
+          >API JSON</a
+        >
+        <a href="{% url 'logout' %}" class="btn btn-danger">Salir</a>
+      </div>
+    </header>
+
+    {% if mensaje %}
+    <div style="width: 100%; margin: 16px 0 0; padding: 0 3%">
+      <div
+        style="
+          padding: 12px 16px;
+          border-radius: 10px;
+          background: rgba(16, 185, 129, 0.15);
+          border: 1px solid rgba(16, 185, 129, 0.4);
+          color: #6ee7b7;
+          font-size: 13.5px;
+        "
+      >
+        {{ mensaje }}
+      </div>
     </div>
-  </header>
+    {% endif %}
 
-  {% if mensaje %}
-  <div style="width:100%; margin:16px 0 0; padding:0 3%;">
-    <div style="padding:12px 16px; border-radius:10px; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); color:#6EE7B7; font-size:13.5px;">
-      {{ mensaje }}
-    </div>
-  </div>
-  {% endif %}
+    <main class="main-grid">
+      <!-- COLUMNA IZQUIERDA: FORMULARIOS Y CLIENTES -->
+      <aside class="col-izquierda">
+        <!-- FORMULARIO NUEVO PROYECTO / CASO DE ÉXITO -->
+        <div class="panel-box">
+          <h2>Nuevo Proyecto / Caso de Éxito</h2>
+          <p class="sub">
+            Publica avances en WordPress y asígnalos a un cliente.
+          </p>
 
-  <main class="main-grid">
+          <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="accion" value="crear_proyecto" />
+            <div class="field">
+              <label>Título del Proyecto *</label>
+              <input
+                type="text"
+                name="titulo"
+                placeholder="Ej. Auditoría y Blindaje ISO 27001"
+                required
+              />
+            </div>
+            <div class="row-2">
+              <div class="field">
+                <label>Empresa / Sector *</label>
+                <input
+                  type="text"
+                  name="cliente"
+                  placeholder="Ej. Grupo Logístico"
+                  required
+                />
+              </div>
+              <div class="field">
+                <label>Portal Cliente (Opcional)</label>
+                <select name="cliente_usuario">
+                  <option value="">-- Ninguno --</option>
+                  {% for c in clientes %}
+                  <option value="{{ c.id }}">{{ c.username }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="row-2">
+              <div class="field">
+                <label>Estado</label>
+                <select name="estado">
+                  <option value="En progreso">En progreso</option>
+                  <option value="En auditoría">En auditoría</option>
+                  <option value="Completado">Completado</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Avance (%)</label>
+                <input
+                  type="number"
+                  name="progreso"
+                  min="0"
+                  max="100"
+                  value="30"
+                  required
+                />
+              </div>
+            </div>
+            <div class="field">
+              <label>Problema Detectado (Vende más en la web)</label>
+              <textarea
+                name="problema_detectado"
+                rows="2"
+                placeholder="Ej. Falta de respaldos aislados y accesos sin 2FA..."
+              ></textarea>
+            </div>
+            <div class="field">
+              <label>Solución / Resultado Obtenido</label>
+              <textarea
+                name="resultado_obtenido"
+                rows="2"
+                placeholder="Ej. Reducción del 90% en riesgo de parada y recuperación en 15 min..."
+              ></textarea>
+            </div>
+            <div class="field">
+              <label>Descripción técnica *</label>
+              <textarea
+                name="descripcion"
+                rows="2"
+                placeholder="Alcance general de la implementación..."
+                required
+              ></textarea>
+            </div>
+            <div class="field">
+              <label>Tecnologías</label>
+              <input
+                type="text"
+                name="tecnologias"
+                placeholder="Firewall, Linux, Backups, WordPress"
+              />
+            </div>
+            <label class="checkbox-row">
+              <input type="checkbox" name="visible_en_web" checked />
+              <span>Mostrar en el portafolio público de WordPress</span>
+            </label>
+            <button
+              type="submit"
+              class="btn btn-cyan"
+              style="width: 100%; justify-content: center; padding: 11px"
+            >
+              + Guardar Proyecto
+            </button>
+          </form>
+        </div>
 
-    <!-- COLUMNA IZQUIERDA: FORMULARIOS Y CLIENTES -->
-    <aside class="col-izquierda">
-      <!-- FORMULARIO NUEVO PROYECTO / CASO DE ÉXITO -->
-      <div class="panel-box">
-        <h2>Nuevo Proyecto / Caso de Éxito</h2>
-        <p class="sub">Publica avances en WordPress y asígnalos a un cliente.</p>
+        <!-- CREAR USUARIO PARA CLIENTE -->
+        <div class="panel-box">
+          <h2>Crear Acceso para Cliente</h2>
+          <p class="sub">
+            Genera credenciales para que un cliente vea su avance.
+          </p>
+          <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="accion" value="crear_cliente" />
+            <div class="row-2">
+              <div class="field">
+                <label>Usuario *</label>
+                <input
+                  type="text"
+                  name="nuevo_username"
+                  placeholder="cliente_empresa"
+                  required
+                />
+              </div>
+              <div class="field">
+                <label>Contraseña *</label>
+                <input
+                  type="password"
+                  name="nuevo_password"
+                  placeholder="••••••••"
+                  required
+                />
+              </div>
+            </div>
+            <button
+              type="submit"
+              class="btn btn-emerald"
+              style="width: 100%; justify-content: center"
+            >
+              + Crear Usuario Cliente
+            </button>
+          </form>
 
-        <form method="POST">
+          <div
+            style="
+              margin-top: 16px;
+              border-top: 1px solid var(--border);
+              padding-top: 12px;
+            "
+          >
+            <span
+              style="
+                font-size: 12px;
+                color: var(--text-gray);
+                display: block;
+                margin-bottom: 8px;
+              "
+              >Clientes registrados (Configurar Servicios):</span
+            >
+            {% for c in clientes %}
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 6px 0;
+                font-size: 13px;
+              "
+            >
+              <span>{{ c.username }}</span>
+              <div style="display: flex; gap: 6px">
+                <a
+                  href="{% url 'admin_gestionar_tarjeta' c.id %}"
+                  class="btn btn-ghost"
+                  style="padding: 5px 9px; font-size: 11px"
+                  >Tarjeta</a
+                >
+                <a
+                  href="{% url 'admin_gestionar_publicidad' c.id %}"
+                  class="btn btn-ghost"
+                  style="padding: 5px 9px; font-size: 11px; color: #38bdf8"
+                  >Publicidad</a
+                >
+              </div>
+            </div>
+            {% empty %}
+            <span style="font-size: 12px; color: var(--text-gray)"
+              >Aún no hay clientes registrados.</span
+            >
+            {% endfor %}
+          </div>
+        </div>
+      </aside>
+
+      <!-- COLUMNA DERECHA: PAGOS PENDIENTES, APPS EN RENDER Y PROYECTOS -->
+      <section class="col-derecha">
+        {% if pagos_pendientes %}
+        <div
+          class="panel-box"
+          style="
+            border-color: rgba(245, 158, 11, 0.45);
+            background: rgba(245, 158, 11, 0.07);
+          "
+        >
+          <h3 style="font-size: 16px; color: #fcd34d; margin-bottom: 10px">
+            Pagos de Tarjetas Digitales por Validar ({{ pagos_pendientes|length
+            }})
+          </h3>
+          {% for pago in pagos_pendientes %}
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              flex-wrap: wrap;
+              gap: 10px;
+              padding: 10px 0;
+              border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+              font-size: 13px;
+            "
+          >
+            <div>
+              <strong>{{ pago.tarjeta.codigo_suscripcion }}</strong> ({{
+              pago.tarjeta.nombre_completo }}) — {{
+              pago.get_plan_solicitado_display }} · {{ pago.metodo_pago }} ·
+              Ref: <strong>{{ pago.referencia }}</strong>
+              ({{ pago.monto }}) {% if pago.comprobante %}
+              <a
+                href="{{ pago.comprobante.url }}"
+                target="_blank"
+                style="color: #38bdf8; margin-left: 6px"
+                >[Ver Capture]</a
+              >
+              {% endif %}
+            </div>
+            <div style="display: flex; gap: 6px">
+              <a
+                href="{% url 'admin_validar_pago' pago.id 'aprobar' %}"
+                class="btn btn-emerald"
+                style="padding: 6px 12px; font-size: 12px"
+                >Aprobar y Renovar</a
+              >
+              <a
+                href="{% url 'admin_validar_pago' pago.id 'rechazar' %}"
+                class="btn btn-danger"
+                style="padding: 6px 12px; font-size: 12px"
+                >Rechazar</a
+              >
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- SECCIÓN EXCLUSIVA ADMIN GENERAL: MIS APPS Y DEMOS EN RENDER -->
+        <div
+          class="panel-box"
+          style="
+            margin-bottom: 24px;
+            border: 1px solid rgba(14, 165, 233, 0.35);
+            background: linear-gradient(145deg, #0f172a, #0b1528);
+          "
+        >
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              flex-wrap: wrap;
+              gap: 10px;
+              margin-bottom: 14px;
+            "
+          >
+            <div>
+              <span
+                style="
+                  font-size: 11px;
+                  font-weight: 800;
+                  color: #38bdf8;
+                  letter-spacing: 0.05em;
+                "
+                >PORTAFOLIO INTERACTIVO · SOLO ADMIN</span
+              >
+              <h2 style="font-size: 19px; margin-top: 2px">
+                Mis Aplicaciones en Render (Demos en Vivo)
+              </h2>
+            </div>
+            <details
+              style="
+                background: rgba(14, 165, 233, 0.12);
+                border: 1px solid rgba(14, 165, 233, 0.3);
+                border-radius: 10px;
+                padding: 7px 12px;
+              "
+            >
+              <summary
+                style="
+                  cursor: pointer;
+                  font-size: 12.5px;
+                  font-weight: 700;
+                  color: #38bdf8;
+                "
+              >
+                + Agregar Nueva App / Link
+              </summary>
+              <form
+                method="POST"
+                style="
+                  margin-top: 12px;
+                  display: grid;
+                  gap: 8px;
+                  min-width: 260px;
+                "
+              >
+                {% csrf_token %}
+                <input type="hidden" name="accion" value="crear_app_demo" />
+                <input
+                  type="text"
+                  name="app_nombre"
+                  placeholder="Nombre (Ej: AuditTech)"
+                  required
+                />
+                <input
+                  type="url"
+                  name="app_url"
+                  placeholder="https://tu-app.onrender.com/..."
+                  required
+                />
+                <input
+                  type="text"
+                  name="app_categoria"
+                  placeholder="Categoría (Ej: Auditoría / ERP)"
+                  value="SaaS / Render"
+                />
+                <input
+                  type="text"
+                  name="app_descripcion"
+                  placeholder="Breve descripción para presentar al cliente"
+                />
+                <input
+                  type="text"
+                  name="app_credenciales"
+                  placeholder="Credenciales demo (Opcional: user / pass)"
+                />
+                <label
+                  class="checkbox-row"
+                  style="margin-bottom: 4px; padding: 7px 10px; font-size: 12px"
+                >
+                  <input type="checkbox" name="app_visible_en_web" checked />
+                  <span>Mostrar en el portafolio público de WordPress</span>
+                </label>
+                <button
+                  type="submit"
+                  class="btn btn-cyan"
+                  style="
+                    justify-content: center;
+                    padding: 8px 12px;
+                    font-size: 12.5px;
+                  "
+                >
+                  Guardar App en Panel
+                </button>
+              </form>
+            </details>
+          </div>
+
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+              gap: 12px;
+            "
+          >
+            {% for app in apps_demo %}
+            <div
+              style="
+                background: #060d1a;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 12px;
+                padding: 14px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                gap: 10px;
+              "
+            >
+              <div>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 6px;
+                    margin-bottom: 4px;
+                    flex-wrap: wrap;
+                  "
+                >
+                  <div style="display: flex; align-items: center; gap: 6px">
+                    <span
+                      style="
+                        font-size: 10.5px;
+                        font-weight: 700;
+                        padding: 3px 8px;
+                        border-radius: 99px;
+                        background: rgba(16, 185, 129, 0.15);
+                        color: #6ee7b7;
+                      "
+                      >{{ app.categoria }}</span
+                    >
+                    {% if app.visible_en_web %}
+                    <span
+                      style="
+                        font-size: 10.5px;
+                        font-weight: 700;
+                        padding: 3px 8px;
+                        border-radius: 99px;
+                        background: rgba(14, 165, 233, 0.18);
+                        color: #38bdf8;
+                      "
+                      >Público en Web</span
+                    >
+                    {% else %}
+                    <span
+                      style="
+                        font-size: 10.5px;
+                        font-weight: 700;
+                        padding: 3px 8px;
+                        border-radius: 99px;
+                        background: rgba(148, 163, 184, 0.18);
+                        color: #94a3b8;
+                      "
+                      >Solo Admin</span
+                    >
+                    {% endif %}
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 8px">
+                    <a
+                      href="{% url 'toggle_app_demo_web' app.id %}"
+                      style="
+                        color: #38bdf8;
+                        font-size: 11px;
+                        text-decoration: none;
+                        font-weight: 600;
+                      "
+                    >
+                      {% if app.visible_en_web %}Ocultar en Web{% else %}Mostrar
+                      en Web{% endif %}
+                    </a>
+                    <a
+                      href="{% url 'eliminar_app_demo' app.id %}"
+                      onclick="
+                        return confirm('¿Quitar esta aplicación de tu lista?');
+                      "
+                      style="
+                        color: #f87171;
+                        font-size: 11px;
+                        text-decoration: none;
+                      "
+                      >Eliminar</a
+                    >
+                  </div>
+                </div>
+                <h3
+                  style="font-size: 15.5px; color: #ffffff; margin-bottom: 4px"
+                >
+                  {{ app.nombre }}
+                </h3>
+                {% if app.descripcion %}
+                <p style="font-size: 12.5px; color: #94a3b8; line-height: 1.4">
+                  {{ app.descripcion }}
+                </p>
+                {% endif %} {% if app.credenciales_demo %}
+                <div
+                  style="
+                    margin-top: 6px;
+                    font-size: 11.5px;
+                    padding: 5px 8px;
+                    border-radius: 6px;
+                    background: rgba(255, 255, 255, 0.05);
+                    color: #cbd5e1;
+                  "
+                >
+                  <strong>Acceso Demo:</strong> {{ app.credenciales_demo }}
+                </div>
+                {% endif %}
+              </div>
+              <a
+                href="{{ app.url }}"
+                target="_blank"
+                rel="noopener"
+                class="btn btn-cyan"
+                style="
+                  width: 100%;
+                  justify-content: center;
+                  padding: 8px 12px;
+                  font-size: 12.5px;
+                "
+              >
+                Abrir Aplicación en Vivo ↗
+              </a>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- LISTADO DE PROYECTOS Y CASOS DE ÉXITO -->
+        <h2 style="font-size: 20px; margin-bottom: 16px">
+          Proyectos y Casos de Éxito ({{ proyectos|length }})
+        </h2>
+
+        <div class="project-list">
+          {% for p in proyectos %}
+          <article class="project-item">
+            <div class="item-top">
+              <div>
+                <span
+                  style="
+                    font-size: 12px;
+                    color: var(--accent-cyan);
+                    font-weight: 600;
+                  "
+                  >{{ p.cliente }}</span
+                >
+                <h3 style="font-size: 17px; margin-top: 2px">{{ p.titulo }}</h3>
+              </div>
+              <div class="badges">
+                <span class="badge badge-status"
+                  >{{ p.estado }} · {{ p.progreso }}%</span
+                >
+                {% if p.cliente_usuario %}
+                <span class="badge badge-client"
+                  >Portal: {{ p.cliente_usuario.username }}</span
+                >
+                {% endif %} {% if p.visible_en_web %}
+                <span class="badge badge-public">Público</span>
+                {% endif %}
+              </div>
+            </div>
+
+            <p style="font-size: 13.5px; color: var(--text-gray)">
+              {{ p.descripcion }}
+            </p>
+
+            {% if p.problema_detectado or p.resultado_obtenido %}
+            <div class="case-preview">
+              <div class="case-mini">
+                <strong style="color: #fca5a5">Problema:</strong> {{
+                p.problema_detectado|default:"-" }}
+              </div>
+              <div class="case-mini">
+                <strong style="color: #6ee7b7">Solución:</strong> {{
+                p.resultado_obtenido|default:"-" }}
+              </div>
+            </div>
+            {% endif %}
+
+            <div class="progress-track">
+              <div
+                class="progress-fill"
+                style="width: {{ p.progreso }}%;"
+              ></div>
+            </div>
+
+            <div class="item-actions">
+              <button
+                type="button"
+                class="btn btn-ghost"
+                onclick="openEditModal('{{ p.id }}', '{{ p.titulo|escapejs }}', '{{ p.cliente|escapejs }}', '{{ p.cliente_usuario.id|default:'' }}', '{{ p.estado|escapejs }}', '{{ p.progreso }}', '{{ p.tecnologias|escapejs }}', '{{ p.descripcion|escapejs }}', '{{ p.problema_detectado|escapejs }}', '{{ p.resultado_obtenido|escapejs }}', {{ p.visible_en_web|yesno:'true,false' }})"
+              >
+                Editar
+              </button>
+              <a
+                href="{% url 'eliminar_proyecto' p.id %}"
+                class="btn btn-danger"
+                onclick="return confirm('¿Eliminar este proyecto?');"
+              >
+                Eliminar
+              </a>
+            </div>
+          </article>
+          {% empty %}
+          <div class="panel-box" style="text-align: center; padding: 36px">
+            <p style="color: var(--text-gray)">
+              Aún no hay proyectos registrados.
+            </p>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+    </main>
+
+    <!-- MODAL EDICIÓN -->
+    <div class="modal-backdrop" id="editModal">
+      <div class="modal-box">
+        <h3 style="margin-bottom: 14px">Editar Proyecto</h3>
+        <form method="POST" id="editForm">
           {% csrf_token %}
-          <input type="hidden" name="accion" value="crear_proyecto">
           <div class="field">
-            <label>Título del Proyecto *</label>
-            <input type="text" name="titulo" placeholder="Ej. Auditoría y Blindaje ISO 27001" required>
+            <label>Título</label
+            ><input type="text" name="titulo" id="edit-titulo" required />
           </div>
           <div class="row-2">
             <div class="field">
-              <label>Empresa / Sector *</label>
-              <input type="text" name="cliente" placeholder="Ej. Grupo Logístico" required>
+              <label>Empresa / Sector</label
+              ><input type="text" name="cliente" id="edit-cliente" required />
             </div>
             <div class="field">
-              <label>Portal Cliente (Opcional)</label>
-              <select name="cliente_usuario">
+              <label>Cliente Asignado</label>
+              <select name="cliente_usuario" id="edit-cliente-usuario">
                 <option value="">-- Ninguno --</option>
                 {% for c in clientes %}
                 <option value="{{ c.id }}">{{ c.username }}</option>
@@ -376,280 +984,102 @@
           <div class="row-2">
             <div class="field">
               <label>Estado</label>
-              <select name="estado">
+              <select name="estado" id="edit-estado">
                 <option value="En progreso">En progreso</option>
                 <option value="En auditoría">En auditoría</option>
                 <option value="Completado">Completado</option>
               </select>
             </div>
             <div class="field">
-              <label>Avance (%)</label>
-              <input type="number" name="progreso" min="0" max="100" value="30" required>
+              <label>Avance (%)</label
+              ><input
+                type="number"
+                name="progreso"
+                id="edit-progreso"
+                min="0"
+                max="100"
+                required
+              />
             </div>
           </div>
           <div class="field">
-            <label>Problema Detectado (Vende más en la web)</label>
-            <textarea name="problema_detectado" rows="2" placeholder="Ej. Falta de respaldos aislados y accesos sin 2FA..."></textarea>
+            <label>Problema Detectado</label
+            ><textarea
+              name="problema_detectado"
+              id="edit-problema"
+              rows="2"
+            ></textarea>
           </div>
           <div class="field">
-            <label>Solución / Resultado Obtenido</label>
-            <textarea name="resultado_obtenido" rows="2" placeholder="Ej. Reducción del 90% en riesgo de parada y recuperación en 15 min..."></textarea>
+            <label>Solución / Resultado Obtenido</label
+            ><textarea
+              name="resultado_obtenido"
+              id="edit-resultado"
+              rows="2"
+            ></textarea>
           </div>
           <div class="field">
-            <label>Descripción técnica *</label>
-            <textarea name="descripcion" rows="2" placeholder="Alcance general de la implementación..." required></textarea>
+            <label>Descripción</label
+            ><textarea
+              name="descripcion"
+              id="edit-descripcion"
+              rows="2"
+              required
+            ></textarea>
           </div>
           <div class="field">
-            <label>Tecnologías</label>
-            <input type="text" name="tecnologias" placeholder="Firewall, Linux, Backups, WordPress">
+            <label>Tecnologías</label
+            ><input type="text" name="tecnologias" id="edit-tecnologias" />
           </div>
           <label class="checkbox-row">
-            <input type="checkbox" name="visible_en_web" checked>
-            <span>Mostrar en el portafolio público de WordPress</span>
+            <input type="checkbox" name="visible_en_web" id="edit-visible" />
+            <span>Visible públicamente en WordPress</span>
           </label>
-          <button type="submit" class="btn btn-cyan" style="width:100%; justify-content:center; padding:11px;">
-            + Guardar Proyecto
-          </button>
-        </form>
-      </div>
-
-      <!-- CREAR USUARIO PARA CLIENTE -->
-      <div class="panel-box">
-        <h2>Crear Acceso para Cliente</h2>
-        <p class="sub">Genera credenciales para que un cliente vea su avance.</p>
-        <form method="POST">
-          {% csrf_token %}
-          <input type="hidden" name="accion" value="crear_cliente">
-          <div class="row-2">
-            <div class="field">
-              <label>Usuario *</label>
-              <input type="text" name="nuevo_username" placeholder="cliente_empresa" required>
-            </div>
-            <div class="field">
-              <label>Contraseña *</label>
-              <input type="password" name="nuevo_password" placeholder="••••••••" required>
-            </div>
-          </div>
-          <button type="submit" class="btn btn-emerald" style="width:100%; justify-content:center;">
-            + Crear Usuario Cliente
-          </button>
-        </form>
-
-        <div style="margin-top:16px; border-top:1px solid var(--border); padding-top:12px;">
-          <span style="font-size:12px; color:var(--text-gray); display:block; margin-bottom:8px;">Clientes registrados (Configurar Servicios):</span>
-          {% for c in clientes %}
-          <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; font-size:13px;">
-            <span>{{ c.username }}</span>
-            <div style="display:flex; gap:6px;">
-              <a href="{% url 'admin_gestionar_tarjeta' c.id %}" class="btn btn-ghost" style="padding:5px 9px; font-size:11px;">Tarjeta</a>
-              <a href="{% url 'admin_gestionar_publicidad' c.id %}" class="btn btn-ghost" style="padding:5px 9px; font-size:11px; color:#38BDF8;">Publicidad</a>
-            </div>
-          </div>
-          {% empty %}
-          <span style="font-size:12px; color:var(--text-gray);">Aún no hay clientes registrados.</span>
-          {% endfor %}
-        </div>
-      </div>
-    </aside>
-
-    <!-- COLUMNA DERECHA: PAGOS PENDIENTES, APPS EN RENDER Y PROYECTOS -->
-    <section class="col-derecha">
-
-      {% if pagos_pendientes %}
-      <div class="panel-box" style="border-color:rgba(245,158,11,0.45); background:rgba(245,158,11,0.07);">
-        <h3 style="font-size:16px; color:#FCD34D; margin-bottom:10px;">Pagos de Tarjetas Digitales por Validar ({{ pagos_pendientes|length }})</h3>
-        {% for pago in pagos_pendientes %}
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.08); font-size:13px;">
-          <div>
-            <strong>{{ pago.tarjeta.codigo_suscripcion }}</strong> ({{ pago.tarjeta.nombre_completo }}) —
-            {{ pago.get_plan_solicitado_display }} · {{ pago.metodo_pago }} · Ref: <strong>{{ pago.referencia }}</strong>
-            ({{ pago.monto }})
-            {% if pago.comprobante %}
-            <a href="{{ pago.comprobante.url }}" target="_blank" style="color:#38BDF8; margin-left:6px;">[Ver Capture]</a>
-            {% endif %}
-          </div>
-          <div style="display:flex; gap:6px;">
-            <a href="{% url 'admin_validar_pago' pago.id 'aprobar' %}" class="btn btn-emerald" style="padding:6px 12px; font-size:12px;">Aprobar y Renovar</a>
-            <a href="{% url 'admin_validar_pago' pago.id 'rechazar' %}" class="btn btn-danger" style="padding:6px 12px; font-size:12px;">Rechazar</a>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-      {% endif %}
-
-      <!-- SECCIÓN EXCLUSIVA ADMIN GENERAL: MIS APPS Y DEMOS EN RENDER -->
-      <div class="panel-box" style="margin-bottom: 24px; border: 1px solid rgba(14, 165, 233, 0.35); background: linear-gradient(145deg, #0F172A, #0B1528);">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
-          <div>
-            <span style="font-size:11px; font-weight:800; color:#38BDF8; letter-spacing:0.05em;">PORTAFOLIO INTERACTIVO · SOLO ADMIN</span>
-            <h2 style="font-size:19px; margin-top:2px;">Mis Aplicaciones en Render (Demos en Vivo)</h2>
-          </div>
-          <details style="background:rgba(14,165,233,0.12); border:1px solid rgba(14,165,233,0.3); border-radius:10px; padding:7px 12px;">
-            <summary style="cursor:pointer; font-size:12.5px; font-weight:700; color:#38BDF8;">+ Agregar Nueva App / Link</summary>
-            <form method="POST" style="margin-top:12px; display:grid; gap:8px; min-width:260px;">
-              {% csrf_token %}
-              <input type="hidden" name="accion" value="crear_app_demo">
-              <input type="text" name="app_nombre" placeholder="Nombre (Ej: AuditTech)" required>
-              <input type="url" name="app_url" placeholder="https://tu-app.onrender.com/..." required>
-              <input type="text" name="app_categoria" placeholder="Categoría (Ej: Auditoría / ERP)" value="SaaS / Render">
-              <input type="text" name="app_descripcion" placeholder="Breve descripción para presentar al cliente">
-              <input type="text" name="app_credenciales" placeholder="Credenciales demo (Opcional: user / pass)">
-              <button type="submit" class="btn btn-cyan" style="justify-content:center; padding:8px 12px; font-size:12.5px;">Guardar App en Panel</button>
-            </form>
-          </details>
-        </div>
-
-        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:12px;">
-          {% for app in apps_demo %}
-          <div style="background:#060D1A; border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:14px; display:flex; flex-direction:column; justify-content:space-between; gap:10px;">
-            <div>
-              <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; margin-bottom:4px;">
-                <span style="font-size:10.5px; font-weight:700; padding:3px 8px; border-radius:99px; background:rgba(16,185,129,0.15); color:#6EE7B7;">{{ app.categoria }}</span>
-                <a href="{% url 'eliminar_app_demo' app.id %}" onclick="return confirm('¿Quitar esta aplicación de tu lista?');" style="color:#F87171; font-size:11px; text-decoration:none;">Eliminar</a>
-              </div>
-              <h3 style="font-size:15.5px; color:#FFFFFF; margin-bottom:4px;">{{ app.nombre }}</h3>
-              {% if app.descripcion %}
-              <p style="font-size:12.5px; color:#94A3B8; line-height:1.4;">{{ app.descripcion }}</p>
-              {% endif %}
-              {% if app.credenciales_demo %}
-              <div style="margin-top:6px; font-size:11.5px; padding:5px 8px; border-radius:6px; background:rgba(255,255,255,0.05); color:#CBD5E1;">
-                <strong>Acceso Demo:</strong> {{ app.credenciales_demo }}
-              </div>
-              {% endif %}
-            </div>
-            <a href="{{ app.url }}" target="_blank" rel="noopener" class="btn btn-cyan" style="width:100%; justify-content:center; padding:8px 12px; font-size:12.5px;">
-              Abrir Aplicación en Vivo ↗
-            </a>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-
-      <!-- LISTADO DE PROYECTOS Y CASOS DE ÉXITO -->
-      <h2 style="font-size:20px; margin-bottom:16px;">Proyectos y Casos de Éxito ({{ proyectos|length }})</h2>
-
-      <div class="project-list">
-        {% for p in proyectos %}
-        <article class="project-item">
-          <div class="item-top">
-            <div>
-              <span style="font-size:12px; color:var(--accent-cyan); font-weight:600;">{{ p.cliente }}</span>
-              <h3 style="font-size:17px; margin-top:2px;">{{ p.titulo }}</h3>
-            </div>
-            <div class="badges">
-              <span class="badge badge-status">{{ p.estado }} · {{ p.progreso }}%</span>
-              {% if p.cliente_usuario %}
-              <span class="badge badge-client">Portal: {{ p.cliente_usuario.username }}</span>
-              {% endif %}
-              {% if p.visible_en_web %}
-              <span class="badge badge-public">Público</span>
-              {% endif %}
-            </div>
-          </div>
-
-          <p style="font-size:13.5px; color:var(--text-gray);">{{ p.descripcion }}</p>
-
-          {% if p.problema_detectado or p.resultado_obtenido %}
-          <div class="case-preview">
-            <div class="case-mini">
-              <strong style="color:#FCA5A5;">Problema:</strong> {{ p.problema_detectado|default:"-" }}
-            </div>
-            <div class="case-mini">
-              <strong style="color:#6EE7B7;">Solución:</strong> {{ p.resultado_obtenido|default:"-" }}
-            </div>
-          </div>
-          {% endif %}
-
-          <div class="progress-track">
-            <div class="progress-fill" style="width: {{ p.progreso }}%;"></div>
-          </div>
-
-          <div class="item-actions">
-            <button type="button" class="btn btn-ghost"
-              onclick="openEditModal('{{ p.id }}', '{{ p.titulo|escapejs }}', '{{ p.cliente|escapejs }}', '{{ p.cliente_usuario.id|default:'' }}', '{{ p.estado|escapejs }}', '{{ p.progreso }}', '{{ p.tecnologias|escapejs }}', '{{ p.descripcion|escapejs }}', '{{ p.problema_detectado|escapejs }}', '{{ p.resultado_obtenido|escapejs }}', {{ p.visible_en_web|yesno:'true,false' }})">
-              Editar
+          <div style="display: flex; gap: 10px; justify-content: flex-end">
+            <button
+              type="button"
+              class="btn btn-ghost"
+              onclick="closeEditModal()"
+            >
+              Cancelar
             </button>
-            <a href="{% url 'eliminar_proyecto' p.id %}" class="btn btn-danger"
-              onclick="return confirm('¿Eliminar este proyecto?');">
-              Eliminar
-            </a>
+            <button type="submit" class="btn btn-cyan">Guardar Cambios</button>
           </div>
-        </article>
-        {% empty %}
-        <div class="panel-box" style="text-align:center; padding:36px;">
-          <p style="color:var(--text-gray);">Aún no hay proyectos registrados.</p>
-        </div>
-        {% endfor %}
+        </form>
       </div>
-
-    </section>
-  </main>
-
-  <!-- MODAL EDICIÓN -->
-  <div class="modal-backdrop" id="editModal">
-    <div class="modal-box">
-      <h3 style="margin-bottom:14px;">Editar Proyecto</h3>
-      <form method="POST" id="editForm">
-        {% csrf_token %}
-        <div class="field"><label>Título</label><input type="text" name="titulo" id="edit-titulo" required></div>
-        <div class="row-2">
-          <div class="field"><label>Empresa / Sector</label><input type="text" name="cliente" id="edit-cliente" required></div>
-          <div class="field">
-            <label>Cliente Asignado</label>
-            <select name="cliente_usuario" id="edit-cliente-usuario">
-              <option value="">-- Ninguno --</option>
-              {% for c in clientes %}
-              <option value="{{ c.id }}">{{ c.username }}</option>
-              {% endfor %}
-            </select>
-          </div>
-        </div>
-        <div class="row-2">
-          <div class="field">
-            <label>Estado</label>
-            <select name="estado" id="edit-estado">
-              <option value="En progreso">En progreso</option>
-              <option value="En auditoría">En auditoría</option>
-              <option value="Completado">Completado</option>
-            </select>
-          </div>
-          <div class="field"><label>Avance (%)</label><input type="number" name="progreso" id="edit-progreso" min="0" max="100" required></div>
-        </div>
-        <div class="field"><label>Problema Detectado</label><textarea name="problema_detectado" id="edit-problema" rows="2"></textarea></div>
-        <div class="field"><label>Solución / Resultado Obtenido</label><textarea name="resultado_obtenido" id="edit-resultado" rows="2"></textarea></div>
-        <div class="field"><label>Descripción</label><textarea name="descripcion" id="edit-descripcion" rows="2" required></textarea></div>
-        <div class="field"><label>Tecnologías</label><input type="text" name="tecnologias" id="edit-tecnologias"></div>
-        <label class="checkbox-row">
-          <input type="checkbox" name="visible_en_web" id="edit-visible">
-          <span>Visible públicamente en WordPress</span>
-        </label>
-        <div style="display:flex; gap:10px; justify-content:flex-end;">
-          <button type="button" class="btn btn-ghost" onclick="closeEditModal()">Cancelar</button>
-          <button type="submit" class="btn btn-cyan">Guardar Cambios</button>
-        </div>
-      </form>
     </div>
-  </div>
 
-  <script>
-    function openEditModal(id, titulo, cliente, clienteUsuarioId, estado, progreso, tecnologias, descripcion, problema, resultado, visible) {
-      document.getElementById('editForm').action = `/editar/${id}/`;
-      document.getElementById('edit-titulo').value = titulo;
-      document.getElementById('edit-cliente').value = cliente;
-      document.getElementById('edit-cliente-usuario').value = clienteUsuarioId;
-      document.getElementById('edit-estado').value = estado;
-      document.getElementById('edit-progreso').value = progreso;
-      document.getElementById('edit-tecnologias').value = tecnologias;
-      document.getElementById('edit-descripcion').value = descripcion;
-      document.getElementById('edit-problema').value = problema;
-      document.getElementById('edit-resultado').value = resultado;
-      document.getElementById('edit-visible').checked = visible;
-      document.getElementById('editModal').classList.add('open');
-    }
-    function closeEditModal() {
-      document.getElementById('editModal').classList.remove('open');
-    }
-  </script>
-</body>
-
+    <script>
+      function openEditModal(
+        id,
+        titulo,
+        cliente,
+        clienteUsuarioId,
+        estado,
+        progreso,
+        tecnologias,
+        descripcion,
+        problema,
+        resultado,
+        visible,
+      ) {
+        document.getElementById("editForm").action = `/editar/${id}/`;
+        document.getElementById("edit-titulo").value = titulo;
+        document.getElementById("edit-cliente").value = cliente;
+        document.getElementById("edit-cliente-usuario").value =
+          clienteUsuarioId;
+        document.getElementById("edit-estado").value = estado;
+        document.getElementById("edit-progreso").value = progreso;
+        document.getElementById("edit-tecnologias").value = tecnologias;
+        document.getElementById("edit-descripcion").value = descripcion;
+        document.getElementById("edit-problema").value = problema;
+        document.getElementById("edit-resultado").value = resultado;
+        document.getElementById("edit-visible").checked = visible;
+        document.getElementById("editModal").classList.add("open");
+      }
+      function closeEditModal() {
+        document.getElementById("editModal").classList.remove("open");
+      }
+    </script>
+  </body>
 </html>
