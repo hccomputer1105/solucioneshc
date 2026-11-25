@@ -1,23 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <title>Soluciones Tecnológicas | Blindaje Integral Empresarial</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Soluciones Tecnológicas | Consultoría, Ciberseguridad e Infraestructura</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg-dark: #060D1A;
       --bg-surface: #0F172A;
-      --bg-card: #1E293B;
+      --bg-card: #111C33;
       --accent-cyan: #0EA5E9;
       --accent-emerald: #10B981;
-      --text-light: #F8FAFC;
-      --text-gray: #94A3B8;
-      --text-dark: #0F172A;
-      --border-dark: rgba(255, 255, 255, 0.08);
+      --text-light: #FFFFFF;
+      --text-gray: #E2E8F0;
+      --border: rgba(255, 255, 255, 0.14);
       --radius: 16px;
     }
 
@@ -25,1055 +22,713 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
-    html {
-      scroll-behavior: smooth;
+    /* BLINDAJE TOTAL CONTRA ESTILOS CLAROS DE WORDPRESS */
+    html, body, .shc-wrapper, main, article, section,
+    .wp-block-group, .entry-content, .site-main {
+      background-color: #060D1A !important;
+      color: #FFFFFF !important;
+      line-height: 1.65 !important;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
-    body {
-      background: #FFFFFF;
-      color: var(--text-dark);
-      line-height: 1.6;
+    h1, h2, h3, h4,
+    section h1, section h2, section h3,
+    .section-header h2, .pillar-card h3, .project-card h3 {
+      color: #FFFFFF !important;
+      font-weight: 800 !important;
+      letter-spacing: -0.02em;
+      text-shadow: none !important;
     }
 
-    /* NAVBAR */
-    .navbar {
+    p, section p, .section-header p, .pillar-card p, .project-card p {
+      color: #E2E8F0 !important;
+      font-size: 15.5px !important;
+    }
+
+    /* NAVEGACIÓN SUPERIOR */
+    .shc-header {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(6, 13, 26, 0.94);
+      background: rgba(6, 13, 26, 0.96) !important;
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border-dark);
+      border-bottom: 1px solid var(--border);
       padding: 14px 5%;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
     }
 
-    .brand {
+    .shc-brand {
+      font-size: 18px !important;
+      font-weight: 800 !important;
+      color: #FFFFFF !important;
+      text-decoration: none !important;
+      letter-spacing: -0.02em;
+    }
+
+    .shc-brand span {
+      color: #0EA5E9 !important;
+    }
+
+    .shc-nav-links {
       display: flex;
       align-items: center;
-      gap: 10px;
-      color: white;
-      text-decoration: none;
-      font-weight: 800;
-      font-size: 16px;
+      gap: 20px;
+      flex-wrap: wrap;
     }
 
-    .brand span {
-      color: var(--accent-cyan);
+    .shc-nav-links a {
+      color: #F1F5F9 !important;
+      text-decoration: none !important;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      transition: color 0.2s;
     }
 
-    .nav-links {
-      display: flex;
-      gap: 24px;
-      align-items: center;
+    .shc-nav-links a:hover {
+      color: #38BDF8 !important;
     }
 
-    .nav-links a {
-      color: var(--text-gray);
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-      transition: 0.2s;
-    }
-
-    .nav-links a:hover {
-      color: white;
-    }
-
-    .nav-actions {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
+    /* BOTONES GENERALES */
     .btn {
-      padding: 10px 18px;
-      border-radius: 10px;
-      font-size: 13.5px;
-      font-weight: 600;
-      text-decoration: none;
-      cursor: pointer;
-      transition: 0.2s;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px;
+      padding: 12px 20px !important;
+      border-radius: 10px !important;
+      font-size: 14px !important;
+      font-weight: 700 !important;
+      text-decoration: none !important;
       border: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
     }
 
     .btn-cyan {
-      background: var(--accent-cyan);
-      color: #04101E;
+      background: #0EA5E9 !important;
+      color: #04101E !important;
+      box-shadow: 0 4px 16px rgba(14, 165, 233, 0.35);
     }
 
     .btn-cyan:hover {
-      background: #38BDF8;
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: white;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .btn-outline:hover {
-      border-color: var(--accent-cyan);
-      color: var(--accent-cyan);
+      background: #38BDF8 !important;
+      transform: translateY(-1px);
     }
 
     .btn-emerald {
-      background: var(--accent-emerald);
-      color: #041E14;
+      background: #10B981 !important;
+      color: #041E14 !important;
     }
 
-    /* HERO */
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.08) !important;
+      color: #FFFFFF !important;
+      border: 1px solid rgba(255, 255, 255, 0.24) !important;
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.16) !important;
+      border-color: #0EA5E9 !important;
+    }
+
+    /* HERO + DIAGNÓSTICO */
     .hero {
-      background: radial-gradient(circle at 80% 20%, rgba(14, 165, 233, 0.16), transparent 45%),
-        linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-surface) 100%);
-      color: white;
-      padding: 80px 5% 90px;
-    }
-
-    .hero-grid {
-      max-width: 1200px;
+      max-width: 1220px;
       margin: 0 auto;
+      padding: 56px 5%;
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 48px;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 36px;
       align-items: center;
+      background: #060D1A !important;
     }
 
     .pill-tag {
       display: inline-block;
       padding: 6px 14px;
       border-radius: 99px;
-      background: rgba(14, 165, 233, 0.14);
-      color: var(--accent-cyan);
-      font-size: 12.5px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      margin-bottom: 18px;
+      font-size: 11.5px !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.05em;
+      background: rgba(14, 165, 233, 0.18) !important;
+      color: #38BDF8 !important;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      margin-bottom: 14px;
     }
 
     .hero h1 {
-      font-size: 42px;
-      line-height: 1.15;
-      font-weight: 800;
-      margin-bottom: 20px;
+      font-size: 40px !important;
+      line-height: 1.18 !important;
+      margin-bottom: 16px !important;
     }
 
-    .hero p {
-      color: var(--text-gray);
-      font-size: 17px;
-      margin-bottom: 30px;
-      max-width: 600px;
-    }
-
-    .hero-btns {
+    .hero-actions {
       display: flex;
+      gap: 12px;
       flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    /* TARJETAS (DIAGNÓSTICO, 5 PILARES, PROYECTOS) */
+    .diagnostic-box, .pillar-card, .project-card {
+      background: #111C33 !important;
+      border: 1px solid rgba(255, 255, 255, 0.16) !important;
+      border-radius: var(--radius) !important;
+      padding: 24px !important;
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.4) !important;
+      display: flex;
+      flex-direction: column;
       gap: 12px;
     }
 
-    /* FORMULARIO GLASSMORPHISM EN HERO */
-    .lead-card {
-      background: rgba(30, 41, 59, 0.75);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 20px;
-      padding: 28px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    }
-
-    .lead-card h3 {
-      font-size: 20px;
-      margin-bottom: 6px;
-    }
-
-    .lead-card p {
-      font-size: 13px;
-      color: var(--text-gray);
-      margin-bottom: 18px;
-    }
-
-    .form-control {
-      width: 100%;
-      padding: 12px 14px;
-      border-radius: 10px;
-      background: rgba(6, 13, 26, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: white;
-      font-size: 14px;
-      margin-bottom: 12px;
-      outline: none;
-    }
-
-    .form-control:focus {
-      border-color: var(--accent-cyan);
-    }
-
-    .quiz-options {
+    .quiz-header {
       display: flex;
-      flex-direction: column;
-      gap: 9px;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px !important;
+      font-weight: 700 !important;
+      color: #38BDF8 !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 10px;
     }
 
-    .quiz-opt {
+    .quiz-option {
       width: 100%;
       text-align: left;
-      padding: 12px 14px;
+      padding: 13px 16px;
+      margin-top: 8px;
       border-radius: 11px;
-      background: rgba(6, 13, 26, 0.72);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #F8FAFC;
-      font-size: 13.5px;
-      line-height: 1.4;
+      background: #081122 !important;
+      border: 1px solid rgba(255, 255, 255, 0.16) !important;
+      color: #FFFFFF !important;
+      font-size: 14px !important;
+      font-weight: 500;
       cursor: pointer;
-      transition: 0.2s;
+      transition: all 0.2s;
     }
 
-    .quiz-opt:hover {
-      border-color: var(--accent-cyan);
-      background: rgba(14, 165, 233, 0.14);
-      transform: translateX(3px);
+    .quiz-option:hover {
+      border-color: #0EA5E9 !important;
+      background: rgba(14, 165, 233, 0.18) !important;
     }
 
-    /* SECCIÓN GENERAL */
-    section {
-      padding: 80px 5%;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
+    /* SECCIONES */
+    .shc-section {
+      padding: 60px 5% !important;
+      background: #060D1A !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
     }
 
     .section-header {
       text-align: center;
       max-width: 720px;
-      margin: 0 auto 50px;
+      margin: 0 auto 40px;
     }
 
     .section-header h2 {
-      font-size: 32px;
-      font-weight: 800;
-      margin-bottom: 12px;
-      color: var(--bg-dark);
+      font-size: 32px !important;
+      margin-bottom: 12px !important;
     }
 
-    .section-header p {
-      color: #475569;
-      font-size: 16px;
-    }
-
-    /* COMPARATIVA RIESGOS VS BLINDAJE */
-    .compare-grid {
+    .pillars-grid, .projects-grid {
+      max-width: 1220px;
+      margin: 0 auto;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      margin-bottom: 60px;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 20px;
     }
 
-    .compare-box {
-      padding: 32px;
-      border-radius: var(--radius);
-      border: 1px solid #E2E8F0;
-    }
-
-    .compare-box.risk {
-      background: #FFF1F2;
-      border-color: #FECDD3;
-    }
-
-    .compare-box.shield {
-      background: #F0FDF4;
-      border-color: #BBF7D0;
-    }
-
-    .compare-box h3 {
-      font-size: 20px;
-      margin-bottom: 16px;
-    }
-
-    .compare-box ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .compare-box li {
-      font-size: 15px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    /* BENTO GRID 5 PILARES */
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
-      gap: 24px;
-    }
-
-    .service-card {
-      border: 1px solid #E2E8F0;
-      border-radius: var(--radius);
-      padding: 28px;
-      transition: 0.25s;
-      display: flex;
-      flex-direction: column;
-      background: white;
-    }
-
-    .service-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--accent-cyan);
-      box-shadow: 0 15px 30px rgba(15, 23, 42, 0.07);
-    }
-
-    .s-icon {
-      width: 46px;
-      height: 46px;
-      border-radius: 12px;
-      background: rgba(14, 165, 233, 0.1);
-      color: var(--accent-cyan);
-      display: flex;
+    .pillar-num {
+      display: inline-flex !important;
       align-items: center;
       justify-content: center;
-      font-weight: 800;
-      margin-bottom: 18px;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(14, 165, 233, 0.18) !important;
+      color: #38BDF8 !important;
+      font-weight: 800 !important;
+      font-size: 14px !important;
+      border: 1px solid rgba(56, 189, 248, 0.35);
     }
 
-    .service-card h3 {
-      font-size: 19px;
-      margin-bottom: 10px;
-    }
-
-    .service-card p {
-      font-size: 14px;
-      color: #475569;
-      margin-bottom: 16px;
-    }
-
-    .service-card ul {
-      list-style: none;
-      margin-bottom: 22px;
+    .pillar-list {
+      list-style: none !important;
+      padding: 0 !important;
+      margin: 6px 0 12px !important;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
       flex: 1;
     }
 
-    .service-card li {
-      font-size: 13.5px;
-      color: #334155;
-      padding: 4px 0;
-    }
-
-    .service-card li::before {
-      content: "✓ ";
-      color: var(--accent-emerald);
-      font-weight: 700;
-    }
-
-    /* SECCIÓN PROYECTOS CONECTADA A DJANGO */
-    .projects-section {
-      background: var(--bg-dark);
-      color: white;
-    }
-
-    .projects-section .section-header h2 {
-      color: white;
-    }
-
-    .projects-section .section-header p {
-      color: var(--text-gray);
-    }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 24px;
-    }
-
-    .project-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-dark);
-      border-radius: var(--radius);
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
+    .pillar-list li {
+      color: #F1F5F9 !important;
+      font-size: 14.5px !important;
     }
 
     .project-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
-    .status-badge {
-      font-size: 11.5px;
-      font-weight: 700;
+    .project-client {
+      font-size: 12px !important;
+      font-weight: 700 !important;
+      color: #38BDF8 !important;
+    }
+
+    .project-badge {
+      font-size: 11.5px !important;
+      font-weight: 700 !important;
       padding: 4px 10px;
       border-radius: 99px;
-      background: rgba(16, 185, 129, 0.15);
-      color: var(--accent-emerald);
+      background: rgba(16, 185, 129, 0.18) !important;
+      color: #6EE7B7 !important;
     }
 
-    .progress-wrap {
-      background: rgba(255, 255, 255, 0.08);
+    .progress-bar {
+      width: 100%;
       height: 7px;
+      background: rgba(255, 255, 255, 0.12);
       border-radius: 99px;
       overflow: hidden;
     }
 
-    .progress-bar {
+    .progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-emerald));
+      background: linear-gradient(90deg, #0EA5E9, #10B981);
     }
 
     .tech-tags {
+      font-size: 12.5px !important;
+      color: #CBD5E1 !important;
+      font-weight: 600;
+    }
+
+    /* FAQ */
+    .faq-list {
+      max-width: 820px;
+      margin: 0 auto;
       display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
+      flex-direction: column;
+      gap: 12px;
     }
 
-    .tech-tag {
-      font-size: 11px;
-      padding: 3px 9px;
-      border-radius: 6px;
-      background: rgba(255, 255, 255, 0.06);
-      color: var(--text-gray);
+    details.faq-item {
+      background: #111C33 !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      border-radius: 12px;
+      padding: 16px 20px;
     }
 
-    /* PERFIL CONSULTOR */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 0.7fr 1.3fr;
-      gap: 48px;
+    details.faq-item summary {
+      color: #FFFFFF !important;
+      font-weight: 700 !important;
+      font-size: 15.5px !important;
+      cursor: pointer;
+    }
+
+    details.faq-item p {
+      margin-top: 10px !important;
+      color: #E2E8F0 !important;
+      font-size: 14.5px !important;
+    }
+
+    /* FOOTER */
+    .shc-footer {
+      background: #040914 !important;
+      border-top: 1px solid var(--border);
+      padding: 40px 5% !important;
+      color: #E2E8F0 !important;
+      font-size: 14px !important;
+    }
+
+    .footer-grid {
+      max-width: 1220px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
     }
 
-    .about-photo {
-      width: 100%;
-      max-width: 340px;
-      border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15);
-      border: 4px solid #F1F5F9;
-    }
-
-    /* EVITAR DESBORDAMIENTO HORIZONTAL EN MÓVIL */
-    html,
-    body {
-      max-width: 100%;
-      overflow-x: hidden;
-    }
-
+    /* RESPONSIVO TELÉFONOS */
     @media (max-width: 900px) {
-      .navbar {
-        padding: 12px 4%;
-        flex-wrap: wrap;
-        gap: 10px;
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 36px 5%;
       }
+    }
 
-      .brand {
-        font-size: 14px;
-      }
-
-      .nav-links {
-        display: none;
-      }
-
-      .nav-actions {
-        width: 100%;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-      }
-
-      .nav-actions .btn {
+    @media (max-width: 768px) {
+      .shc-header {
         justify-content: center;
-        padding: 9px 10px;
-        font-size: 12px;
         text-align: center;
       }
 
-      .hero {
-        padding: 40px 4% 50px;
-      }
-
-      .hero-grid,
-      .compare-grid,
-      .about-grid {
-        grid-template-columns: 1fr;
-        gap: 28px;
+      .shc-nav-links {
+        justify-content: center;
+        gap: 14px;
       }
 
       .hero h1 {
-        font-size: 26px;
-        line-height: 1.25;
-      }
-
-      .hero p {
-        font-size: 15px;
-      }
-
-      .hero-btns {
-        flex-direction: column;
-      }
-
-      .hero-btns .btn {
-        width: 100%;
-        justify-content: center;
-      }
-
-      .lead-card {
-        padding: 20px 16px;
-      }
-
-      section {
-        padding: 48px 4%;
+        font-size: 27px !important;
+        line-height: 1.25 !important;
       }
 
       .section-header h2 {
-        font-size: 24px;
+        font-size: 25px !important;
       }
 
-      .services-grid,
-      .projects-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .compare-box,
-      .service-card,
-      .project-card {
-        padding: 20px 16px;
-      }
-
-      .about-photo {
-        max-width: 240px;
-        margin: 0 auto;
-        display: block;
+      .hero-actions .btn,
+      .pillar-card .btn {
+        width: 100% !important;
       }
     }
   </style>
 </head>
-
 <body>
+  <div class="shc-wrapper">
+    <!-- BARRA DE NAVEGACIÓN -->
+    <header class="shc-header">
+      <a href="#" class="shc-brand">SOLUCIONES <span>TECNOLÓGICAS</span></a>
 
-  <!-- NAVEGACIÓN PRINCIPAL -->
-  <header class="navbar">
-    <a href="#" class="brand">SOLUCIONES <span>TECNOLÓGICAS</span></a>
-    <nav class="nav-links">
-      <a href="#servicios">Servicios</a>
-      <a href="#proyectos">Proyectos</a>
-      <a href="#consultor">Hector Cañongo</a>
-      <a href="#faq">Preguntas Frecuentes</a>
-    </nav>
-    <div class="nav-actions">
-      <!-- Enlace a tu Tarjeta Digital -->
-      <a href="/tarjeta/" class="btn btn-outline">Tarjeta Digital</a>
-      <!-- Enlace al Login de Django -->
-      <a href="http://127.0.0.1:8000/login/" class="btn btn-cyan">Acceso Clientes / Admin</a>
-    </div>
-  </header>
+      <nav class="shc-nav-links">
+        <a href="#servicios">Servicios</a>
+        <a href="#proyectos">Proyectos</a>
+        <a href="#aliados">Aliados B2B</a>
+        <a href="#faq">Preguntas Frecuentes</a>
+      </nav>
 
-  <!-- HERO + FORMULARIO DE EVALUACIÓN -->
-  <section class="hero">
-    <div class="hero-grid">
+      <!-- BOTONES BLINDADOS CONTRA ESTILOS DE WORDPRESS -->
+      <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:center;">
+        <a href="/tarjeta/" style="display:inline-flex; align-items:center; justify-content:center; padding:9px 15px; border-radius:9px; font-size:13px; font-weight:700; text-decoration:none; background:rgba(255,255,255,0.08); color:#FFFFFF; border:1px solid rgba(255,255,255,0.25); white-space:nowrap;">
+          Tarjeta Digital
+        </a>
+        <a href="https://solucioneshc-app.onrender.com/login/" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; justify-content:center; padding:9px 15px; border-radius:9px; font-size:13px; font-weight:700; text-decoration:none; background:#0EA5E9; color:#04101E; border:1px solid #38BDF8; box-shadow:0 4px 14px rgba(14,165,233,0.35); white-space:nowrap;">
+          Portal Clientes
+        </a>
+        <a href="https://solucioneshc-app.onrender.com/dashboard/" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; justify-content:center; padding:9px 15px; border-radius:9px; font-size:13px; font-weight:700; text-decoration:none; background:rgba(16,185,129,0.16); color:#6EE7B7; border:1px solid rgba(16,185,129,0.45); white-space:nowrap;">
+          Acceso Admin
+        </a>
+      </div>
+    </header>
+
+    <!-- HERO + DIAGNÓSTICO EXPRESS -->
+    <section class="hero">
       <div>
         <span class="pill-tag">BLINDAJE INTEGRAL EMPRESARIAL</span>
         <h1>Protegemos tu empresa desde adentro hacia afuera</h1>
-        <p>Combinamos consultoría organizacional, ciberseguridad e infraestructura técnica para reducir riesgos
-          operativos y garantizar la continuidad de tu negocio.</p>
-        <div class="hero-btns">
+        <p>Combinamos consultoría organizacional, ciberseguridad e infraestructura técnica para reducir riesgos operativos y garantizar la continuidad de tu negocio.</p>
+        <div class="hero-actions">
           <a href="#servicios" class="btn btn-cyan">Explorar Soluciones</a>
           <a href="/tarjeta/" class="btn btn-emerald">Ver Tarjeta Digital Ejecutiva</a>
         </div>
       </div>
 
-      <div class="lead-card" id="contacto">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-          <span class="pill-tag" style="margin:0; font-size:11px;">DIAGNÓSTICO EXPRESS · 45 SEG</span>
-          <span id="quiz-step-label" style="font-size:12px; color:var(--accent-cyan); font-weight:700;">Paso 1 de
-            6</span>
+      <div class="diagnostic-box" id="quiz-container">
+        <div class="quiz-header">
+          <span>DIAGNÓSTICO EXPRESS · 60 SEG</span>
+          <span id="quiz-step">Paso 1 de 3</span>
         </div>
-
-        <!-- BARRA DE PROGRESO DEL TEST -->
-        <div
-          style="background:rgba(255,255,255,0.08); height:5px; border-radius:99px; margin-bottom:18px; overflow:hidden;">
-          <div id="quiz-progress"
-            style="height:100%; width:16%; background:linear-gradient(90deg, var(--accent-cyan), var(--accent-emerald)); transition:0.3s;">
-          </div>
+        <h3 id="quiz-question" style="font-size:18px;">1. Respaldos y Continuidad</h3>
+        <p id="quiz-desc" style="font-size:14px !important;">Si hoy ocurre un ataque de ransomware o falla el servidor principal, ¿en cuánto tiempo recupera su empresa la operación?</p>
+        <div id="quiz-options">
+          <button class="quiz-option" onclick="nextQuiz(3)">En menos de 4 horas (copias aisladas y probadas)</button>
+          <button class="quiz-option" onclick="nextQuiz(2)">En 1 a 3 días (hacemos copias manuales)</button>
+          <button class="quiz-option" onclick="nextQuiz(1)">No tenemos certeza / perderíamos información crítica</button>
         </div>
-
-        <!-- PASO 1: RESPALDOS -->
-        <div class="quiz-step" data-step="1">
-          <h3>1. Respaldos y Continuidad</h3>
-          <p>Si hoy ocurre un ataque de ransomware o falla el servidor principal, ¿en cuánto tiempo recupera su empresa
-            la operación?</p>
-          <div class="quiz-options">
-            <button type="button" class="quiz-opt"
-              onclick="selectAnswer(1, 0, 'Respaldos automatizados y probados (menos de 4h)')">En menos de 4 horas
-              (copias aisladas y probadas)</button>
-            <button type="button" class="quiz-opt"
-              onclick="selectAnswer(1, 15, 'Respaldos manuales sin pruebas periódicas')">En 1 a 3 días (hacemos copias
-              manuales)</button>
-            <button type="button" class="quiz-opt"
-              onclick="selectAnswer(1, 25, 'Sin protocolo claro de recuperación')">No tenemos certeza / perderíamos
-              información crítica</button>
-          </div>
-        </div>
-
-        <!-- PASO 2: ACCESOS Y CONTRASEÑAS -->
-        <div class="quiz-step" data-step="2" style="display:none;">
-          <h3>2. Control de Accesos y Credenciales</h3>
-          <p>¿Cómo gestionan las contraseñas administrativas, correos y accesos cuando un empleado sale de la empresa?
-          </p>
-          <div class="quiz-options">
-            <button type="button" class="quiz-opt"
-              onclick="selectAnswer(2, 0, 'MFA activo y protocolo de baja inmediata')">Usamos doble factor (2FA) y
-              revocación inmediata</button>
-            <button type="button" class="quiz-opt"
-              onclick="selectAnswer(2, 15, 'Sin 2FA obligatorio en cuentas clave')">Se cambian manualmente, pero sin 2FA
-              obligatorio</button>
-            <button type="button" class="quiz-opt"
-              onclick="selectAnswer(2, 25, 'Claves compartidas entre el personal')">Se comparten claves entre varios
-              colaboradores</button>
-          </div>
-        </div>
-
-        <!-- PASO 3: PROCESOS Y DOCUMENTACIÓN -->
-        <div class="quiz-step" data-step="3" style="display:none;">
-          <h3>3. Orden de Procesos Internos</h3>
-          <p>¿Están documentados los procedimientos operativos y de seguridad tecnológica de cada área?</p>
-          <div class="quiz-options">
-            <button type="button" class="quiz-opt" onclick="selectAnswer(3, 0, 'Procesos documentados y auditados')">Sí,
-              tenemos manuales y protocolos claros</button>
-            <button type="button" class="quiz-opt"
-              onclick="selectAnswer(3, 10, 'Documentación parcial o desactualizada')">Parcialmente, dependen de personas
-              clave</button>
-            <button type="button" class="quiz-opt"
-              onclick="selectAnswer(3, 20, 'Operación informal sin protocolos')">No, resolvemos sobre la marcha día a
-              día</button>
-          </div>
-        </div>
-
-        <!-- PASO 4: CAPACITACIÓN DEL PERSONAL -->
-        <div class="quiz-step" data-step="4" style="display:none;">
-          <h3>4. Factor Humano y Phishing</h3>
-          <p>¿Cuándo fue la última vez que su equipo recibió capacitación práctica sobre fraudes digitales y seguridad?
-          </p>
-          <div class="quiz-options">
-            <button type="button" class="quiz-opt"
-              onclick="selectAnswer(4, 0, 'Capacitación continua en los últimos 6 meses')">En los últimos 6
-              meses</button>
-            <button type="button" class="quiz-opt" onclick="selectAnswer(4, 10, 'Hace más de un año')">Hace más de un
-              año</button>
-            <button type="button" class="quiz-opt"
-              onclick="selectAnswer(4, 15, 'Nunca se ha capacitado al personal')">Nunca hemos realizado formación en
-              seguridad</button>
-          </div>
-        </div>
-
-        <!-- PASO 5: SEGURIDAD PERIMETRAL Y WEB -->
-        <div class="quiz-step" data-step="5" style="display:none;">
-          <h3>5. Infraestructura y Plataforma Web</h3>
-          <p>¿Cuentan con monitoreo activo, firewall configurado y auditoría periódica de su red y sitio web?</p>
-          <div class="quiz-options">
-            <button type="button" class="quiz-opt"
-              onclick="selectAnswer(5, 0, 'Monitoreo y auditoría periódica activa')">Sí, auditamos y monitoreamos
-              constantemente</button>
-            <button type="button" class="quiz-opt" onclick="selectAnswer(5, 10, 'Solo antivirus básico')">Solo contamos
-              con antivirus básico en equipos</button>
-            <button type="button" class="quiz-opt"
-              onclick="selectAnswer(5, 15, 'Sin auditoría ni firewall gestionado')">No se ha auditado nuestra
-              infraestructura</button>
-          </div>
-        </div>
-
-        <!-- PASO 6: RESULTADO + DATOS PARA AGENDAR -->
-        <div class="quiz-step" data-step="6" style="display:none;">
-          <div id="risk-result-box"
-            style="padding:14px; border-radius:12px; margin-bottom:14px; border:1px solid rgba(255,255,255,0.12);">
-            <span style="font-size:11.5px; text-transform:uppercase; font-weight:700; letter-spacing:0.5px;">Resultado
-              Preliminar</span>
-            <h4 id="risk-title" style="font-size:18px; margin:4px 0;"></h4>
-            <p id="risk-desc" style="font-size:12.5px; margin:0; color:#E2E8F0;"></p>
-          </div>
-
-          <form id="consultoria-form" onsubmit="enviarYAgendar(event)">
-            <input type="text" id="c-nombre" class="form-control" placeholder="Tu nombre y empresa" required>
-            <input type="email" id="c-correo" class="form-control" placeholder="Correo corporativo" required>
-            <button type="submit" id="btn-agendar" class="btn btn-cyan" style="width:100%; justify-content:center;">
-              Guardar Informe y Agendar Cita →
-            </button>
-          </form>
-        </div>
-
-        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
-          <button type="button" id="btn-quiz-back" onclick="prevStep()"
-            style="display:none; background:none; border:none; color:var(--text-gray); font-size:12.5px; cursor:pointer;">
-            ← Pregunta anterior
-          </button>
-          <span style="font-size:11.5px; color:var(--text-gray); margin-left:auto;">100% Confidencial</span>
-        </div>
+        <div style="text-align:right; font-size:12px; color:#94A3B8; margin-top:4px;">100% Confidencial</div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- DIAGNÓSTICO Y 5 PILARES -->
-  <section id="servicios">
-    <div class="container">
-      <div class="compare-grid">
-        <div class="compare-box risk">
-          <h3>⚠️ Riesgos invisibles en las empresas</h3>
-          <ul>
-            <li>• Procesos desordenados y sin documentación</li>
-            <li>• Equipos sin formación en ciberseguridad</li>
-            <li>• Accesos y contraseñas mal gestionados</li>
-            <li>• Falta de protocolos ante incidentes o fallas</li>
-          </ul>
-        </div>
-        <div class="compare-box shield">
-          <h3>🛡️ Ecosistema Blindaje Integral</h3>
-          <ul>
-            <li>• Alineación de personas, roles y cultura</li>
-            <li>• Protección perimetral de redes y servidores</li>
-            <li>• Respaldo automatizado y continuidad operativa</li>
-            <li>• Monitoreo y acompañamiento técnico mensual</li>
-          </ul>
-        </div>
-      </div>
-
+    <!-- 5 PILARES DE PROTECCIÓN -->
+    <section id="servicios" class="shc-section">
       <div class="section-header">
+        <span class="pill-tag">NUESTRA METODOLOGÍA</span>
         <h2>Nuestros 5 Pilares de Protección</h2>
         <p>Una metodología estructurada para blindar tanto el factor humano como tu infraestructura tecnológica.</p>
       </div>
 
-      <div class="services-grid">
-        <div class="service-card">
-          <div class="s-icon">01</div>
+      <div class="pillars-grid">
+        <article class="pillar-card">
+          <span class="pillar-num">01</span>
           <h3>Consultoría Organizacional</h3>
           <p>Analizamos la estructura interna, roles y dinámicas operativas para eliminar cuellos de botella.</p>
-          <ul>
-            <li>Procesos claros y auditables</li>
-            <li>Roles y responsabilidades alineadas</li>
-            <li>Mayor agilidad en toma de decisiones</li>
+          <ul class="pillar-list">
+            <li>✓ Procesos claros y auditables</li>
+            <li>✓ Roles y responsabilidades alineadas</li>
+            <li>✓ Mayor agilidad en toma de decisiones</li>
           </ul>
-          <a href="#contacto" class="btn btn-cyan" style="justify-content:center;">Agendar consultoría</a>
-        </div>
+          <a href="https://wa.me/584143691615?text=Hola,%20deseo%20agendar%20una%20consultor%C3%ADa%20organizacional" target="_blank" rel="noopener" class="btn btn-cyan">Agendar consultoría</a>
+        </article>
 
-        <div class="service-card">
-          <div class="s-icon">02</div>
-          <h3>Seguridad Informática</h3>
-          <p>Protegemos redes, servidores, dispositivos y datos sensibles frente a ataques o filtraciones.</p>
-          <ul>
-            <li>Evaluación de vulnerabilidades</li>
-            <li>Protección de datos críticos</li>
-            <li>Cumplimiento de estándares</li>
+        <article class="pillar-card">
+          <span class="pillar-num">02</span>
+          <h3>Ciberseguridad y Auditoría</h3>
+          <p>Evaluamos vulnerabilidades reales en redes, accesos y dispositivos antes de que sean explotadas.</p>
+          <ul class="pillar-list">
+            <li>✓ Control de accesos y doble factor (2FA)</li>
+            <li>✓ Políticas contra phishing y ransomware</li>
+            <li>✓ Diagnóstico ejecutivo de riesgos</li>
           </ul>
-          <a href="#contacto" class="btn btn-cyan" style="justify-content:center;">Agendar consultoría</a>
-        </div>
+          <a href="https://wa.me/584143691615?text=Hola,%20deseo%20solicitar%20una%20auditor%C3%ADa%20de%20ciberseguridad" target="_blank" rel="noopener" class="btn btn-outline">Solicitar auditoría</a>
+        </article>
 
-        <div class="service-card">
-          <div class="s-icon">03</div>
-          <h3>Formación del Personal</h3>
-          <p>Capacitamos a tus equipos en hábitos digitales seguros y protocolos internos de prevención.</p>
-          <ul>
-            <li>Reducción de errores humanos</li>
-            <li>Prevención activa contra phishing</li>
-            <li>Cultura organizacional segura</li>
+        <article class="pillar-card">
+          <span class="pillar-num">03</span>
+          <h3>Infraestructura y Continuidad</h3>
+          <p>Diseñamos arquitecturas resilientes con respaldos automatizados y alta disponibilidad.</p>
+          <ul class="pillar-list">
+            <li>✓ Copias de seguridad inmutables</li>
+            <li>✓ Optimización de servidores y redes</li>
+            <li>✓ Planes de recuperación ante desastres</li>
           </ul>
-          <a href="#contacto" class="btn btn-cyan" style="justify-content:center;">Agendar consultoría</a>
-        </div>
+          <a href="https://wa.me/584143691615?text=Hola,%20me%20interesa%20optimizar%20mi%20infraestructura" target="_blank" rel="noopener" class="btn btn-outline">Evaluar infraestructura</a>
+        </article>
 
-        <div class="service-card">
-          <div class="s-icon">04</div>
-          <h3>Implementación Técnica</h3>
-          <p>Instalamos y configuramos firewalls, backups, CCTV, control biométrico y seguridad web.</p>
-          <ul>
-            <li>Infraestructura monitoreada 24/7</li>
-            <li>Control total de accesos físicos y lógicos</li>
-            <li>Seguridad avanzada en WordPress y redes</li>
+        <article class="pillar-card">
+          <span class="pillar-num">04</span>
+          <h3>Automatización y Desarrollo</h3>
+          <p>Construimos portales web, sistemas internos y flujos automatizados a la medida de tu negocio.</p>
+          <ul class="pillar-list">
+            <li>✓ Sistemas de control y monitoreo</li>
+            <li>✓ Integraciones API y paneles web</li>
+            <li>✓ Reducción de tareas operativas manuales</li>
           </ul>
-          <a href="#contacto" class="btn btn-cyan" style="justify-content:center;">Agendar consultoría</a>
-        </div>
+          <a href="https://wa.me/584143691615?text=Hola,%20quiero%20cotizar%20un%20desarrollo%20o%20automatizaci%C3%B3n" target="_blank" rel="noopener" class="btn btn-outline">Cotizar proyecto</a>
+        </article>
 
-        <div class="service-card">
-          <div class="s-icon">05</div>
-          <h3>Acompañamiento Estratégico</h3>
-          <p>Seguimiento mensual con auditorías periódicas, reportes ejecutivos y soporte prioritario.</p>
-          <ul>
-            <li>Seguridad sostenible en el tiempo</li>
-            <li>Visibilidad gerencial y métricas</li>
-            <li>Respuesta rápida ante incidentes</li>
+        <article class="pillar-card">
+          <span class="pillar-num">05</span>
+          <h3>Identidad Digital Ejecutiva</h3>
+          <p>Tarjetas digitales inteligentes con QR dinámico, agenda directa y contacto en un clic.</p>
+          <ul class="pillar-list">
+            <li>✓ Enlace personalizado y código QR</li>
+            <li>✓ Actualización inmediata de datos</li>
+            <li>✓ Portal de autogestión para equipos</li>
           </ul>
-          <a href="#contacto" class="btn btn-cyan" style="justify-content:center;">Agendar consultoría</a>
-        </div>
+          <a href="/tarjeta/" class="btn btn-emerald">Ver demostración</a>
+        </article>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- SECCIÓN DINÁMICA DE PROYECTOS (ALIMENTADA DESDE DJANGO) -->
-  <section id="proyectos" class="projects-section">
-    <div class="container">
+    <!-- PROYECTOS Y CASOS DE ÉXITO (CARGADOS DESDE RENDER) -->
+    <section id="proyectos" class="shc-section">
       <div class="section-header">
-        <span class="pill-tag">PORTAFOLIO EN TIEMPO REAL</span>
-        <h2>Proyectos Activos y Casos de Éxito</h2>
-        <p>Gestionado desde nuestro sistema interno. Conoce las implementaciones que estamos ejecutando actualmente.</p>
+        <span class="pill-tag">PORTAFOLIO EN VIVO</span>
+        <h2>Proyectos y Casos de Éxito</h2>
+        <p>Implementaciones reales sincronizadas desde nuestro sistema central de gestión.</p>
       </div>
+      <div id="projects-grid" class="projects-grid"></div>
+    </section>
 
-      <!-- Contenedor donde JavaScript inyecta los proyectos desde Django -->
-      <div class="projects-grid" id="django-projects-container">
-        <p style="color:var(--text-gray); text-align:center; grid-column:1/-1;">Cargando proyectos desde el servidor...
-        </p>
+    <!-- RED DE ALIADOS B2B / PUBLICIDAD (CARGADOS DESDE RENDER) -->
+    <section id="aliados" class="shc-section">
+      <div class="section-header">
+        <span class="pill-tag">RED DE ALIADOS B2B</span>
+        <h2>Empresas y Soluciones Recomendadas</h2>
+        <p>Organizaciones y servicios verificados que forman parte de nuestro ecosistema empresarial.</p>
       </div>
-    </div>
-  </section>
+      <div id="publicidad-destacada" style="max-width:1220px; margin:0 auto 24px;"></div>
+      <div id="publicidad-grid" class="projects-grid"></div>
+    </section>
 
-  <!-- SOBRE HECTOR CAÑONGO -->
-  <section id="consultor">
-    <div class="container about-grid">
-      <div style="text-align:center;">
-        <!-- Reemplazar con la URL real de la foto de Hector -->
-        <img src="https://ui-avatars.com/api/?name=Hector+Canongo&background=0F172A&color=38BDF8&size=400"
-          alt="Hector Cañongo" class="about-photo">
+    <!-- PREGUNTAS FRECUENTES -->
+    <section id="faq" class="shc-section">
+      <div class="section-header">
+        <span class="pill-tag">DUDAS COMUNES</span>
+        <h2>Preguntas Frecuentes</h2>
       </div>
-      <div>
-        <span class="pill-tag">CONSULTOR PRINCIPAL</span>
-        <h2 style="font-size:32px; margin-bottom:14px;">Hector Cañongo</h2>
-        <p style="color:#475569; margin-bottom:16px;">
-          Con más de <strong>20 años de experiencia en tecnología y gestión digital</strong>, combino ingeniería de
-          soporte técnico (incluyendo trayectoria en soporte de software para firma canadiense) con coaching
-          organizacional.
-        </p>
-        <p style="color:#475569; margin-bottom:24px;">
-          Mi enfoque integra el factor humano con arquitecturas tecnológicas robustas para que las empresas crezcan sin
-          fricciones ni vulnerabilidades.
-        </p>
-        <a href="/tarjeta/" class="btn btn-cyan">Abrir Tarjeta Digital de Contacto</a>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>¿Cómo funciona el Portal de Clientes?</summary>
+          <p>Cada empresa o cliente suscrito recibe credenciales privadas para consultar el avance de sus proyectos, editar su Tarjeta Digital Ejecutiva o administrar su espacio publicitario B2B en tiempo real.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Puedo adquirir una Tarjeta Digital Ejecutiva para mi equipo?</summary>
+          <p>Sí. Ofrecemos planes mensuales y anuales con enlaces personalizados, integración directa a WhatsApp, agenda y portal de edición sin conocimientos técnicos.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Cómo puedo anunciar mi empresa en la Red de Aliados B2B?</summary>
+          <p>Contáctanos para activar tu espacio publicitario mensual, trimestral o anual. Una vez habilitado, podrás subir tu banner, texto promocional y enlace directo desde tu panel.</p>
+        </details>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- PIE DE PÁGINA -->
+    <footer class="shc-footer">
+      <div class="footer-grid">
+        <div>
+          <strong style="color:#FFFFFF; font-size:16px;">SOLUCIONES TECNOLÓGICAS</strong>
+          <p style="font-size:13px !important; margin-top:4px;">Consultoría Organizacional, Ciberseguridad e Infraestructura.</p>
+        </div>
+        <div style="display:flex; gap:18px; flex-wrap:wrap;">
+          <a href="/tarjeta/" style="color:#38BDF8 !important; text-decoration:none; font-weight:600;">Tarjeta Digital</a>
+          <a href="https://solucioneshc-app.onrender.com/login/" target="_blank" rel="noopener" style="color:#38BDF8 !important; text-decoration:none; font-weight:600;">Portal Clientes</a>
+          <a href="https://solucioneshc-app.onrender.com/dashboard/" target="_blank" rel="noopener" style="color:#6EE7B7 !important; text-decoration:none; font-weight:600;">Acceso Admin</a>
+        </div>
+      </div>
+    </footer>
+  </div>
 
   <script>
-    // =========================================================
-    // 1. CARGA DE PROYECTOS DESDE DJANGO
-    // =========================================================
-    const DJANGO_API_URL = "/api/proyectos/";
+    const RENDER_BASE_URL = "https://solucioneshc-app.onrender.com";
 
-    const FALLBACK_PROJECTS = [
+    // DIAGNÓSTICO EXPRESS INTERACTIVO
+    const quizSteps = [
       {
-        titulo: "Blindaje de Red y Servidores Corporativos",
-        cliente: "Sector Industrial · Valencia",
-        estado: "En progreso",
-        progreso: 80,
-        descripcion: "Implementación de firewall perimetral, segmentación VLAN y respaldos automatizados en nube híbrida.",
-        tecnologias: "Firewall, Linux, Backups, VPN"
+        step: "Paso 2 de 3",
+        title: "2. Control de Accesos y Credenciales",
+        desc: "¿Su equipo utiliza autenticación en dos pasos (2FA) y permisos diferenciados para sistemas críticos?",
+        options: [
+          { text: "Sí, en todos los correos, servidores y banca", score: 3 },
+          { text: "Solo en algunas cuentas administrativas", score: 2 },
+          { text: "No, usamos contraseñas compartidas o simples", score: 1 }
+        ]
       },
       {
-        titulo: "Auditoría y Hardening de E-Commerce",
-        cliente: "Retail & Logística",
-        estado: "Completado",
-        progreso: 100,
-        descripcion: "Optimización de seguridad en WordPress, protección WAF y capacitación de personal administrativo.",
-        tecnologias: "WordPress, WAF, Ciberseguridad"
+        step: "Paso 3 de 3",
+        title: "3. Procesos y Documentación",
+        desc: "¿Están documentados los protocolos operativos y de respuesta ante incidentes tecnológicos?",
+        options: [
+          { text: "Sí, auditados y conocidos por el personal", score: 3 },
+          { text: "Parcialmente, en documentos aislados", score: 2 },
+          { text: "No, dependemos de la memoria del personal clave", score: 1 }
+        ]
       }
     ];
 
-    async function loadDjangoProjects() {
-      const container = document.getElementById("django-projects-container");
-      if (!container) return;
-      let projects = [];
+    let currentStep = 0;
+    let totalScore = 0;
 
-      try {
-        const res = await fetch(DJANGO_API_URL);
-        if (!res.ok) throw new Error("API no disponible");
-        projects = await res.json();
-        if (!projects.length) projects = FALLBACK_PROJECTS;
-      } catch (err) {
-        projects = FALLBACK_PROJECTS;
+    function nextQuiz(points) {
+      totalScore += points;
+      if (currentStep < quizSteps.length) {
+        const q = quizSteps[currentStep];
+        document.getElementById("quiz-step").textContent = q.step;
+        document.getElementById("quiz-question").textContent = q.title;
+        document.getElementById("quiz-desc").textContent = q.desc;
+        document.getElementById("quiz-options").innerHTML = q.options.map(opt =>
+          `<button class="quiz-option" onclick="nextQuiz(${opt.score})">${opt.text}</button>`
+        ).join("");
+        currentStep++;
+      } else {
+        const nivel = totalScore >= 8 ? "Madurez Alta" : (totalScore >= 5 ? "Riesgo Moderado" : "Riesgo Crítico");
+        const color = totalScore >= 8 ? "#6EE7B7" : (totalScore >= 5 ? "#FCD34D" : "#FCA5A5");
+        document.getElementById("quiz-container").innerHTML = `
+          <div class="quiz-header">
+            <span>RESULTADO PRELIMINAR</span>
+            <span style="color:${color};">${nivel}</span>
+          </div>
+          <h3 style="font-size:20px;">Nivel de Blindaje: <span style="color:${color};">${nivel}</span></h3>
+          <p style="font-size:14.5px !important;">Hemos identificado oportunidades clave para fortalecer la continuidad operativa y seguridad de tu empresa.</p>
+          <a href="https://wa.me/584143691615?text=Hola,%20complet%C3%A9%20el%20diagn%C3%B3stico%20express%20(Resultado:%20${encodeURIComponent(nivel)})%20y%20quiero%20una%20evaluaci%C3%B3n." target="_blank" rel="noopener" class="btn btn-cyan" style="width:100%; margin-top:8px;">
+            Solicitar Revisión Ejecutiva
+          </a>
+        `;
       }
+    }
 
-      container.innerHTML = projects.map(p => {
-        const tags = (p.tecnologias || "").split(",").map(t => `<span class="tech-tag">${t.trim()}</span>`).join("");
-        return `
+    // CARGAR PROYECTOS DESDE RENDER
+    async function loadProyectos() {
+      try {
+        const res = await fetch(`${RENDER_BASE_URL}/api/proyectos/`);
+        const proyectos = await res.json();
+        const grid = document.getElementById("projects-grid");
+        if (!grid) return;
+
+        if (!proyectos.length) {
+          grid.innerHTML = `<p style="text-align:center; grid-column:1/-1;">Pronto publicaremos nuevos casos de éxito.</p>`;
+          return;
+        }
+
+        grid.innerHTML = proyectos.map(p => `
           <article class="project-card">
             <div class="project-top">
-              <span style="font-size:12px; color:var(--accent-cyan); font-weight:600;">${p.cliente}</span>
-              <span class="status-badge">${p.estado} · ${p.progreso}%</span>
+              <span class="project-client">${p.cliente}</span>
+              <span class="project-badge">${p.estado} · ${p.progreso}%</span>
             </div>
-            <h3 style="font-size:18px; color:white;">${p.titulo}</h3>
-            <p style="font-size:13.5px; color:var(--text-gray); flex:1;">${p.descripcion}</p>
-            <div class="progress-wrap">
-              <div class="progress-bar" style="width:${p.progreso}%"></div>
-            </div>
-            <div class="tech-tags">${tags}</div>
+            <h3>${p.titulo}</h3>
+            <p>${p.descripcion}</p>
+            ${(p.problema_detectado || p.resultado_obtenido) ? `
+              <div style="display:grid; gap:8px; margin-top:6px; font-size:13px;">
+                ${p.problema_detectado ? `<div style="padding:9px 11px; border-radius:8px; background:rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.28); color:#FECACA;"><strong style="color:#FCA5A5;">Problema:</strong> ${p.problema_detectado}</div>` : ""}
+                ${p.resultado_obtenido ? `<div style="padding:9px 11px; border-radius:8px; background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.28); color:#D1FAE5;"><strong style="color:#6EE7B7;">Solución:</strong> ${p.resultado_obtenido}</div>` : ""}
+              </div>
+            ` : ""}
+            <div class="progress-bar"><div class="progress-fill" style="width:${p.progreso}%"></div></div>
+            <div class="tech-tags">${p.tecnologias}</div>
           </article>
-        `;
-      }).join("");
-    }
-
-    loadDjangoProjects();
-
-    // =========================================================
-    // 2. TEST INTERACTIVO DE DIAGNÓSTICO + GOOGLE SHEETS + CALENDAR
-    // =========================================================
-    const SHEETS_CONSULTORIA_URL = "https://script.google.com/macros/s/AKfycbw-KvT5vv8ztdLFxzE6FwoCBeqf0AVS8cHbAb-fcL6I4M8CIE5OkLWIEkvy7h49aiI/exec";
-    const GOOGLE_CALENDAR_BOOKING_URL = "https://calendar.app.google/deNoKCbMZe9Gysxd8";
-
-    let currentStep = 1;
-    const quizScores = {};
-    const quizLabels = {};
-    let finalRiskLevel = "";
-    let finalTotalScore = 0;
-
-    function showStep(step) {
-      currentStep = step;
-      document.querySelectorAll(".quiz-step").forEach(el => {
-        el.style.display = Number(el.dataset.step) === step ? "block" : "none";
-      });
-      document.getElementById("quiz-step-label").textContent = `Paso ${step} de 6`;
-      document.getElementById("quiz-progress").style.width = `${Math.round((step / 6) * 100)}%`;
-      document.getElementById("btn-quiz-back").style.display = step > 1 ? "inline-block" : "none";
-    }
-
-    function selectAnswer(step, points, label) {
-      quizScores[step] = points;
-      quizLabels[step] = label;
-
-      if (step < 5) {
-        showStep(step + 1);
-      } else {
-        calculateRisk();
-        showStep(6);
+        `).join("");
+      } catch (e) {
+        console.error("Error cargando proyectos:", e);
       }
     }
 
-    function prevStep() {
-      if (currentStep > 1) showStep(currentStep - 1);
-    }
-
-    function calculateRisk() {
-      finalTotalScore = Object.values(quizScores).reduce((a, b) => a + b, 0);
-      const box = document.getElementById("risk-result-box");
-      const title = document.getElementById("risk-title");
-      const desc = document.getElementById("risk-desc");
-
-      if (finalTotalScore >= 60) {
-        finalRiskLevel = "RIESGO CRÍTICO";
-        box.style.background = "rgba(239, 68, 68, 0.16)";
-        box.style.borderColor = "rgba(239, 68, 68, 0.45)";
-        title.style.color = "#FCA5A5";
-        title.textContent = `⚠️ Riesgo Crítico (${finalTotalScore}/100 pts)`;
-        desc.textContent = "Tu operación presenta brechas altas en continuidad y accesos. Agenda tu sesión gratuita para revisar un plan de contención inmediato.";
-      } else if (finalTotalScore >= 30) {
-        finalRiskLevel = "RIESGO MODERADO";
-        box.style.background = "rgba(245, 158, 11, 0.16)";
-        box.style.borderColor = "rgba(245, 158, 11, 0.45)";
-        title.style.color = "#FCD34D";
-        title.textContent = `⚡ Riesgo Moderado (${finalTotalScore}/100 pts)`;
-        desc.textContent = "Tienes bases operativas, pero existen puntos ciegos en procesos o prevención. Revisemos cómo blindarlos en 30 minutos.";
-      } else {
-        finalRiskLevel = "RIESGO CONTROLADO";
-        box.style.background = "rgba(16, 185, 129, 0.16)";
-        box.style.borderColor = "rgba(16, 185, 129, 0.45)";
-        title.style.color = "#6EE7B7";
-        title.textContent = `🛡️ Riesgo Controlado (${finalTotalScore}/100 pts)`;
-        desc.textContent = "Buen nivel de madurez. Podemos ayudarte a auditar y certificar tus controles para escalar con seguridad.";
-      }
-    }
-
-    function seleccionarServicio(nombreServicio) {
-      const target = document.getElementById("contacto");
-      if (target) target.scrollIntoView({ behavior: "smooth" });
-    }
-
-    async function enviarYAgendar(e) {
-      e.preventDefault();
-      const btn = document.getElementById("btn-agendar");
-      btn.disabled = true;
-      btn.textContent = "Guardando diagnóstico...";
-
-      const resumen = Object.entries(quizLabels)
-        .map(([k, v]) => `P${k}: ${v}`)
-        .join(" | ");
-
-      const datos = new URLSearchParams({
-        fecha: new Date().toLocaleString("es-VE"),
-        nombre: document.getElementById("c-nombre").value.trim(),
-        correo: document.getElementById("c-correo").value.trim(),
-        nivel_riesgo: finalRiskLevel || "Evaluación Directa",
-        puntaje: `${finalTotalScore}/100`,
-        resumen_respuestas: resumen
-      });
-
-      try {
-        await fetch(SHEETS_CONSULTORIA_URL, {
-          method: "POST",
-          mode: "no-cors",
-          body: datos
-        });
-      } catch (err) {
-        console.error("Error guardando en Google Sheets:", err);
-      }
-
-      setTimeout(() => {
-        window.location.href = GOOGLE_CALENDAR_BOOKING_URL;
-      }, 600);
-    }
-
+    // CARGAR PUBLICIDAD B2B DESDE RENDER
     async function loadPublicidad() {
       try {
-        const res = await fetch("/api/publicidad/");
+        const res = await fetch(`${RENDER_BASE_URL}/api/publicidad/`);
         const ads = await res.json();
         const sec = document.getElementById("aliados");
         if (!ads.length) {
           if (sec) sec.style.display = "none";
           return;
         }
+
         const destacados = ads.filter(a => a.ubicacion === "destacado");
         const estandar = ads.filter(a => a.ubicacion !== "destacado");
 
-        document.getElementById("publicidad-destacada").innerHTML = destacados.map(a =>
-          a.usar_html ? a.html : `
-        <div style="background:var(--bg-surface); border:1px solid rgba(14,165,233,0.35); border-radius:20px; padding:24px; display:flex; gap:22px; align-items:center; flex-wrap:wrap;">
-          ${a.imagen_url ? `<img src="${a.imagen_url}" alt="${a.titulo}" style="width:280px; max-width:100%; height:150px; object-fit:cover; border-radius:12px;">` : ""}
-          <div style="flex:1; min-width:240px;">
-            <span style="font-size:11px; color:var(--accent-cyan); font-weight:700;">ESPACIO PATROCINADO</span>
-            <h3 style="font-size:20px; margin:4px 0 8px;">${a.titulo}</h3>
-            <p style="font-size:14px; color:var(--text-gray); margin-bottom:14px;">${a.texto}</p>
-            <a href="${a.enlace_destino}" target="_blank" rel="noopener" class="btn btn-cyan">${a.texto_boton}</a>
-          </div>
-        </div>`
-        ).join("");
+        const contDestacado = document.getElementById("publicidad-destacada");
+        if (contDestacado) {
+          contDestacado.innerHTML = destacados.map(a =>
+            a.usar_html ? a.html : `
+              <div style="background:#111C33; border:1px solid rgba(14,165,233,0.4); border-radius:20px; padding:24px; display:flex; gap:22px; align-items:center; flex-wrap:wrap;">
+                ${a.imagen_url ? `<img src="${a.imagen_url}" alt="${a.titulo}" style="width:280px; max-width:100%; height:150px; object-fit:cover; border-radius:12px;">` : ""}
+                <div style="flex:1; min-width:240px;">
+                  <span style="font-size:11.5px; color:#38BDF8; font-weight:800;">ESPACIO PATROCINADO</span>
+                  <h3 style="font-size:20px; margin:4px 0 8px; color:#FFFFFF;">${a.titulo}</h3>
+                  <p style="font-size:14.5px; color:#E2E8F0; margin-bottom:14px;">${a.texto}</p>
+                  <a href="${a.enlace_destino}" target="_blank" rel="noopener" class="btn btn-cyan">${a.texto_boton}</a>
+                </div>
+              </div>`
+          ).join("");
+        }
 
-        document.getElementById("publicidad-grid").innerHTML = estandar.map(a =>
-          a.usar_html ? a.html : `
-        <article class="project-card">
-          ${a.imagen_url ? `<img src="${a.imagen_url}" alt="${a.titulo}" style="width:100%; height:150px; object-fit:cover; border-radius:12px;">` : ""}
-          <span style="font-size:11px; color:var(--accent-emerald); font-weight:700;">ALIADO VERIFICADO</span>
-          <h3 style="font-size:17px;">${a.titulo}</h3>
-          <p style="font-size:13.5px; color:var(--text-gray); flex:1;">${a.texto}</p>
-          <a href="${a.enlace_destino}" target="_blank" rel="noopener" class="btn btn-outline" style="justify-content:center;">${a.texto_boton}</a>
-        </article>`
-        ).join("");
-      } catch (e) { console.error(e); }
+        const contGrid = document.getElementById("publicidad-grid");
+        if (contGrid) {
+          contGrid.innerHTML = estandar.map(a =>
+            a.usar_html ? a.html : `
+              <article class="project-card">
+                ${a.imagen_url ? `<img src="${a.imagen_url}" alt="${a.titulo}" style="width:100%; height:150px; object-fit:cover; border-radius:12px;">` : ""}
+                <span style="font-size:11.5px; color:#6EE7B7; font-weight:800;">ALIADO VERIFICADO</span>
+                <h3 style="font-size:17px;">${a.titulo}</h3>
+                <p style="font-size:14px; color:#E2E8F0; flex:1;">${a.texto}</p>
+                <a href="${a.enlace_destino}" target="_blank" rel="noopener" class="btn btn-outline" style="width:100%;">${a.texto_boton}</a>
+              </article>`
+          ).join("");
+        }
+      } catch (e) {
+        console.error("Error cargando publicidad:", e);
+      }
     }
+
+    loadProyectos();
     loadPublicidad();
   </script>
-  <section id="aliados" style="background:rgba(15, 23, 42, 0.45); border-top:1px solid var(--border);">
-    <div class="section-header">
-      <span class="pill-tag">RED DE ALIADOS B2B</span>
-      <h2>Empresas y Soluciones Recomendadas</h2>
-      <p>Organizaciones y servicios verificados que forman parte de nuestro ecosistema empresarial.</p>
-    </div>
-    <div id="publicidad-destacada" style="max-width:1180px; margin:0 auto 24px;"></div>
-    <div id="publicidad-grid" class="projects-grid"></div>
-  </section>
 </body>
-
 </html>
