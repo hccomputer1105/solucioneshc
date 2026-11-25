@@ -1,319 +1,99 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portal de Cliente | Soluciones Tecnológicas</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-dark: #060D1A;
-            --bg-surface: #0F172A;
-            --accent-cyan: #0EA5E9;
-            --accent-emerald: #10B981;
-            --text-light: #F8FAFC;
-            --text-gray: #94A3B8;
-            --border: rgba(255, 255, 255, 0.09);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-        }
-
-        body {
-            background: var(--bg-dark);
-            color: var(--text-light);
-            min-height: 100vh;
-        }
-
-        .topbar {
-            background: var(--bg-surface);
-            border-bottom: 1px solid var(--border);
-            padding: 16px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .brand {
-            font-weight: 800;
-            font-size: 16px;
-        }
-
-        .brand span {
-            color: var(--accent-cyan);
-        }
-
-        .btn-out {
-            padding: 8px 14px;
-            border-radius: 9px;
-            background: rgba(239, 68, 68, 0.15);
-            color: #FCA5A5;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .container {
-            max-width: 960px;
-            margin: 36px auto;
-            padding: 0 5%;
-        }
-
-        .welcome {
-            margin-bottom: 28px;
-        }
-
-        .welcome h1 {
-            font-size: 24px;
-            margin-bottom: 6px;
-        }
-
-        .welcome p {
-            color: var(--text-gray);
-            font-size: 14px;
-        }
-
-        .card {
-            background: var(--bg-surface);
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            padding: 24px;
-            margin-bottom: 20px;
-        }
-
-        .card-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-bottom: 12px;
-        }
-
-        .badge {
-            padding: 5px 12px;
-            border-radius: 99px;
-            font-size: 12px;
-            font-weight: 700;
-            background: rgba(14, 165, 233, 0.15);
-            color: var(--accent-cyan);
-        }
-
-        .track {
-            height: 9px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 99px;
-            overflow: hidden;
-            margin: 14px 0;
-        }
-
-        .fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-emerald));
-        }
-
-        .case-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            margin-top: 16px;
-        }
-
-        .case-box {
-            padding: 14px;
-            border-radius: 12px;
-            font-size: 13px;
-            line-height: 1.5;
-        }
-
-        .case-prob {
-            background: rgba(239, 68, 68, 0.08);
-            border: 1px solid rgba(239, 68, 68, 0.22);
-        }
-
-        .case-sol {
-            background: rgba(16, 185, 129, 0.08);
-            border: 1px solid rgba(16, 185, 129, 0.22);
-        }
-
-        @media (max-width: 700px) {
-            .case-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portal del Cliente | Soluciones Tecnológicas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #060D1A;
+      --bg-surface: #0F172A;
+      --accent-cyan: #0EA5E9;
+      --accent-emerald: #10B981;
+      --text-light: #F8FAFC;
+      --text-gray: #94A3B8;
+      --border: rgba(255, 255, 255, 0.09);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    body { background: var(--bg-dark); color: var(--text-light); min-height: 100vh; }
+    .topbar {
+      background: var(--bg-surface); border-bottom: 1px solid var(--border);
+      padding: 16px 5%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+    }
+    .btn {
+      padding: 9px 14px; border-radius: 9px; font-size: 13px; font-weight: 600;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-cyan { background: var(--accent-cyan); color: #04101E; }
+    .btn-ghost { background: rgba(255,255,255,0.06); color: #FFF; border: 1px solid var(--border); }
+    .btn-danger { background: rgba(239,68,68,0.15); color: #FCA5A5; border: 1px solid rgba(239,68,68,0.3); }
+    .container { max-width: 1050px; margin: 28px auto; padding: 0 5%; }
+    .card {
+      background: var(--bg-surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 22px; margin-bottom: 18px;
+    }
+    .progress-track { width: 100%; height: 8px; background: rgba(255,255,255,0.08); border-radius: 99px; overflow: hidden; margin-top: 10px; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-cyan), var(--accent-emerald)); }
+  </style>
 </head>
-
 <body>
-    <header class="topbar">
-        <div class="brand">SOLUCIONES <span>TECNOLÓGICAS</span> · Portal Cliente</div>
-        <a href="{% url 'logout' %}" class="btn-out">Cerrar Sesión</a>
-        {% if request.user.tarjeta_digital.habilitada and not request.user.tarjeta_digital.usar_html_personalizado %}
-        <a href="{% url 'cliente_editar_tarjeta' %}"
-            style="padding:8px 14px; border-radius:9px; background:#0EA5E9; color:#04101E; text-decoration:none; font-size:13px; font-weight:700;">
-            Editar Mi Tarjeta Digital
-        </a>
-        {% endif %}
-    </header>
+  <header class="topbar">
+    <div style="font-weight:800; font-size:16px;">SOLUCIONES <span style="color:#0EA5E9;">TECNOLÓGICAS</span> · Portal Cliente</div>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <span style="font-size:13px; color:var(--text-gray);">Hola, <strong style="color:#FFF;">{{ request.user.username }}</strong></span>
+      <a href="/" class="btn btn-ghost">Inicio</a>
+      <a href="{% url 'logout' %}" class="btn btn-danger">Salir</a>
+    </div>
+  </header>
 
-    <main class="container">
-        <div class="welcome">
-            {% if request.user.tarjeta_digital %}
-            {% with td=request.user.tarjeta_digital %}
-            <section class="card"
-                style="border-color: {% if td.esta_activa %}rgba(14,165,233,0.4){% else %}rgba(239,68,68,0.5){% endif %};">
-                <div class="card-top">
-                    <div>
-                        <span style="font-size:11.5px; font-weight:800; color:#38BDF8; letter-spacing:0.5px;">
-                            CÓDIGO DE TARJETA: {{ td.codigo_suscripcion }}
-                        </span>
-                       <h2 style="font-size:19px; margin-top:4px;">Suscripción de Tarjeta Digital ({{ td.get_plan_display }})</h2>
-                       {% if request.user.publicidad %}
-                    </div>
-
-                    {% if td.esta_activa %}
-                    <span class="badge" style="background:rgba(16,185,129,0.16); color:#6EE7B7;">
-                        ACTIVA · {{ td.dias_restantes }} días disponibles
-                    </span>
-                    {% else %}
-                    <span class="badge" style="background:rgba(239,68,68,0.18); color:#FCA5A5;">
-                        BLOQUEADA / VENCIDA
-                    </span>
-                    {% endif %}
-                </div>
-
-                <p style="font-size:13.5px; color:#94A3B8; margin-bottom:16px;">
-                    Fecha de vencimiento: <strong style="color:white;">{{ td.fecha_vencimiento|date:"d/m/Y" }}</strong>.
-                    {% if not td.esta_activa %}
-                    Tu tarjeta pública está temporalmente pausada. Reporta tu pago abajo para reactivarla.
-                    {% endif %}
-                </p>
-
-                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:18px;">
-                    {% if td.esta_activa %}
-                    <a href="{% url 'ver_tarjeta_publica' td.slug %}" target="_blank"
-                        style="padding:10px 16px; border-radius:10px; background:#10B981; color:#041E14; font-weight:700; text-decoration:none; font-size:13px;">
-                        Ver Tarjeta Pública ↗
-                    </a>
-                    {% if not td.usar_html_personalizado %}
-                    <a href="{% url 'cliente_editar_tarjeta' %}"
-                        style="padding:10px 16px; border-radius:10px; background:#0EA5E9; color:#04101E; font-weight:700; text-decoration:none; font-size:13px;">
-                        Personalizar Tarjeta
-                    </a>
-                    {% endif %}
-                    {% endif %}
-                </div>
-
-                <!-- FORMULARIO PARA REPORTAR PAGO -->
-                <details
-                    style="background:rgba(6,13,26,0.6); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:14px;">
-                    <summary style="cursor:pointer; font-weight:700; font-size:13.5px; color:#38BDF8;">
-                        + Reportar Pago de Renovación (Mensual / Anual)
-                    </summary>
-                    <form method="POST" action="{% url 'cliente_reportar_pago' %}" enctype="multipart/form-data"
-                        style="margin-top:14px; display:grid; gap:10px;">
-                        {% csrf_token %}
-                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-                            <select name="plan_solicitado"
-                                style="padding:9px; border-radius:8px; background:#0F172A; color:white; border:1px solid rgba(255,255,255,0.12);">
-                                <option value="mensual">Plan Mensual (30 días)</option>
-                                <option value="anual">Plan Anual (365 días)</option>
-                            </select>
-                            <input type="text" name="metodo_pago"
-                                placeholder="Método (Pago Móvil, Zelle, Transferencia)" required
-                                style="padding:9px; border-radius:8px; background:#0F172A; color:white; border:1px solid rgba(255,255,255,0.12);">
-                        </div>
-                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-                            <input type="text" name="referencia" placeholder="Número de Referencia *" required
-                                style="padding:9px; border-radius:8px; background:#0F172A; color:white; border:1px solid rgba(255,255,255,0.12);">
-                            <input type="text" name="monto" placeholder="Monto pagado (ej. $15 / Bs. 650) *" required
-                                style="padding:9px; border-radius:8px; background:#0F172A; color:white; border:1px solid rgba(255,255,255,0.12);">
-                        </div>
-                        <input type="file" name="comprobante" accept="image/*,.pdf"
-                            style="font-size:12px; color:#94A3B8;">
-                        <button type="submit"
-                            style="padding:10px; border-radius:9px; background:#0EA5E9; color:#04101E; font-weight:700; border:none; cursor:pointer;">
-                            Enviar Reporte de Pago para Validación
-                        </button>
-                    </form>
-                </details>
-
-                <!-- HISTORIAL DE PAGOS DEL CLIENTE -->
-                {% if td.pagos.all %}
-                <div style="margin-top:14px; font-size:12px; color:#94A3B8;">
-                    <strong>Últimos reportes de pago:</strong>
-                    {% for pago in td.pagos.all|slice:":3" %}
-                    <div
-                        style="padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.05); display:flex; justify-content:space-between;">
-                        <span>{{ pago.fecha_reporte|date:"d/m/Y" }} · {{ pago.get_plan_solicitado_display }} · Ref: {{
-                            pago.referencia }}</span>
-                        <strong
-                            style="color:{% if pago.estado == 'aprobado' %}#6EE7B7{% elif pago.estado == 'rechazado' %}#FCA5A5{% else %}#FCD34D{% endif %};">
-                            {{ pago.get_estado_display }}
-                        </strong>
-                    </div>
-                    {% endfor %}
-                </div>
-                {% endif %}
-            </section>
-            {% endwith %}
-            {% endif %}
-            <h1>Bienvenido, {{ request.user.username }}</h1>
-            <p>Seguimiento ejecutivo en tiempo real de tus auditorías e implementaciones tecnológicas.</p>
+  <main class="container">
+    {% if tarjeta or publicidad %}
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:16px; margin-bottom:24px;">
+      {% if tarjeta %}
+      <div class="card" style="margin-bottom:0;">
+        <h3 style="font-size:16px; margin-bottom:6px;">Mi Tarjeta Digital</h3>
+        <p style="font-size:13px; color:var(--text-gray); margin-bottom:14px;">Estado: {% if tarjeta.esta_activa %}<strong style="color:#6EE7B7;">Activa</strong>{% else %}<strong style="color:#FCA5A5;">Vencida / Pendiente</strong>{% endif %}</p>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <a href="{% url 'ver_tarjeta_publica' tarjeta.slug %}" target="_blank" class="btn btn-cyan">Ver Tarjeta</a>
+          <a href="{% url 'cliente_editar_tarjeta' %}" class="btn btn-ghost">Editar Datos</a>
         </div>
+      </div>
+      {% endif %}
 
-        {% for p in proyectos %}
-        <article class="card">
-            <div class="card-top">
-                <div>
-                    <span style="font-size:12px; color:var(--accent-cyan); font-weight:600;">{{ p.cliente }}</span>
-                    <h2 style="font-size:20px; margin-top:3px;">{{ p.titulo }}</h2>
-                </div>
-                <span class="badge">{{ p.estado }} · {{ p.progreso }}%</span>
-            </div>
+      {% if publicidad %}
+      <div class="card" style="margin-bottom:0;">
+        <h3 style="font-size:16px; margin-bottom:6px;">Mi Espacio Publicitario</h3>
+        <p style="font-size:13px; color:var(--text-gray); margin-bottom:14px;">Estado: {% if publicidad.esta_activa %}<strong style="color:#6EE7B7;">Activa</strong>{% else %}<strong style="color:#FCA5A5;">Vencida / Pendiente</strong>{% endif %}</p>
+        <a href="{% url 'cliente_editar_publicidad' %}" class="btn btn-ghost">Editar Anuncio</a>
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
 
-            <p style="font-size:14px; color:var(--text-gray); line-height:1.6;">{{ p.descripcion }}</p>
+    <h2 style="font-size:20px; margin-bottom:16px;">Mis Proyectos Asignados ({{ proyectos|length }})</h2>
 
-            <div class="track">
-                <div class="fill" style="width:{{ p.progreso }}%;"></div>
-            </div>
-
-            {% if p.problema_detectado or p.resultado_obtenido %}
-            <div class="case-grid">
-                <div class="case-box case-prob">
-                    <strong style="color:#FCA5A5; display:block; margin-bottom:4px;">Hallazgo / Diagnóstico
-                        Inicial</strong>
-                    {{ p.problema_detectado|default:"En evaluación técnica" }}
-                </div>
-                <div class="case-box case-sol">
-                    <strong style="color:#6EE7B7; display:block; margin-bottom:4px;">Solución e Impacto Logrado</strong>
-                    {{ p.resultado_obtenido|default:"En fase de implementación" }}
-                </div>
-            </div>
-            {% endif %}
-
-            <div
-                style="margin-top:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; font-size:12.5px; color:var(--text-gray);">
-                <span><strong>Alcance técnico:</strong> {{ p.tecnologias }}</span>
-                <a href="https://wa.me/584140000000?text=Hola%20Hector,%20consulto%20sobre%20mi%20proyecto:%20{{ p.titulo|urlencode }}"
-                    target="_blank" style="color:var(--accent-emerald); text-decoration:none; font-weight:600;">
-                    Consultar con mi consultor →
-                </a>
-            </div>
-        </article>
-        {% empty %}
-        <div class="card" style="text-align:center; padding:40px;">
-            <p style="color:var(--text-gray);">Aún no tienes proyectos vinculados a tu cuenta. Contacta a tu consultor
-                para activarlos.</p>
+    {% for p in proyectos %}
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+        <div>
+          <span style="font-size:12px; color:#38BDF8; font-weight:600;">{{ p.cliente }}</span>
+          <h3 style="font-size:18px; margin-top:2px;">{{ p.titulo }}</h3>
         </div>
-        {% endfor %}
-    </main>
+        <span style="font-size:12px; font-weight:700; padding:4px 12px; border-radius:99px; background:rgba(14,165,233,0.15); color:#38BDF8;">
+          {{ p.estado }} · {{ p.progreso }}%
+        </span>
+      </div>
+      <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">{{ p.descripcion }}</p>
+      <div class="progress-track">
+        <div class="progress-fill" style="width: {{ p.progreso }}%;"></div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="card" style="text-align:center; padding:40px;">
+      <p style="color:var(--text-gray); font-size:14px;">Aún no tienes proyectos asignados en tu cuenta. Cuando el equipo técnico te vincule un proyecto, podrás ver su avance aquí.</p>
+    </div>
+    {% endfor %}
+  </main>
 </body>
-
 </html>

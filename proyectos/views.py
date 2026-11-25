@@ -111,7 +111,13 @@ def dashboard_view(request):
     # Portal del Cliente
     if not request.user.is_staff:
         mis_proyectos = Proyecto.objects.filter(cliente_usuario=request.user)
-        return render(request, "cliente_portal.html", {"proyectos": mis_proyectos})
+        tarjeta = TarjetaDigital.objects.filter(usuario=request.user).first()
+        publicidad = PublicidadBanner.objects.filter(usuario=request.user).first()
+        return render(request, "cliente_portal.html", {
+            "proyectos": mis_proyectos,
+            "tarjeta": tarjeta,
+            "publicidad": publicidad,
+        })
 
     # Panel del Administrador
     mensaje = None
