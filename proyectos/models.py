@@ -218,3 +218,141 @@ class AppDemoRender(models.Model):
     visible_en_web = models.BooleanField(default=True)
     orden = models.PositiveIntegerField(default=1)
     creado = models.DateTimeField(auto_now_add=True)
+
+class EvaluacionFactibilidad(models.Model):
+    cliente = models.ForeignKey(User, on_delete=models.CASCADE, related_name="evaluaciones")
+    nombre_proyecto_propuesto = models.CharField(max_length=160)
+    notas_consultor = models.TextField(blank=True, default="")
+
+    # 1. TECNOLOGÍA E INFRAESTRUCTURA
+    tec_red_estructurada = models.BooleanField(default=False)
+    tec_dominio_correos = models.BooleanField(default=False)
+    tec_seguridad_perimetral = models.BooleanField(default=False)
+    tec_seguridad_logica = models.BooleanField(default=False)
+    tec_servidores = models.BooleanField(default=False)
+    tec_camaras_cctv = models.BooleanField(default=False)
+
+    # 2. MARKETING Y PRESENCIA DIGITAL
+    mkt_sitio_web = models.BooleanField(default=False)
+    mkt_redes_identidad = models.BooleanField(default=False)
+    mkt_crm_automatizacion = models.BooleanField(default=False)
+    mkt_analitica_metricas = models.BooleanField(default=False)
+
+    # 3. EVALUACIÓN ORGANIZACIONAL
+    org_roles_organigrama = models.BooleanField(default=False)
+    org_manuales_procesos = models.BooleanField(default=False)
+    org_continuidad_riesgos = models.BooleanField(default=False)
+    org_kpis_gestion = models.BooleanField(default=False)
+
+    creado = models.DateTimeField(auto_now_add=True)
+    actualizado = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["-actualizado"]
+
+    @property
+    def puntaje_tecnologia(self):
+        items = [
+            self.tec_red_estructurada,
+            self.tec_dominio_correos,
+            self.tec_seguridad_perimetral,
+            self.tec_seguridad_logica,
+            self.tec_servidores,
+            self.tec_camaras_cctv,
+        ]
+        return round((sum(items) / len(items)) * 100)
+
+    @property
+    def puntaje_marketing(self):
+        items = [
+            self.mkt_sitio_web,
+            self.mkt_redes_identidad,
+            self.mkt_crm_automatizacion,
+            self.mkt_analitica_metricas,
+        ]
+        return round((sum(items) / len(items)) * 100)
+
+    @property
+    def puntaje_organizacional(self):
+        items = [
+            self.org_roles_organigrama,
+            self.org_manuales_procesos,
+            self.org_continuidad_riesgos,
+            self.org_kpis_gestion,
+        ]
+        return round((sum(items) / len(items)) * 100)
+
+    @property
+    def madurez_global(self):
+        return round(
+            (self.puntaje_tecnologia * 0.45)
+            + (self.puntaje_marketing * 0.25)
+            + (self.puntaje_organizacional * 0.30)
+        )
+
+    @property
+    def diagnostico_ia(self):
+        """Genera análisis de factibilidad, brechas y proyección en 3 fases."""
+        brechas_fase1 = []
+        brechas_fase2 = []
+        brechas_fase3 = []
+
+        # Fase 1: Blindaje e Infraestructura Crítica
+        if not self.tec_red_estructurada:
+            brechas_fase1.append("Diseño y certificación de red estructurada empresarial.")
+        if not self.tec_seguridad_perimetral:
+            brechas_fase1.append("Implementación de Firewall perimetral y segmentación de red.")
+        if not self.tec_seguridad_logica:
+            brechas_fase1.append("Despliegue de seguridad lógica (EDR, 2FA y backups automatizados).")
+        if not self.tec_servidores:
+            brechas_fase1.append("Centralización en servidor local o arquitectura Cloud híbrida.")
+        if not self.tec_camaras_cctv:
+            brechas_fase1.append("Instalación de sistema de videovigilancia IP con respaldo remoto.")
+        if not self.tec_dominio_correos:
+            brechas_fase1.append("Registro de dominio corporativo y migración de correos profesionales.")
+
+        # Fase 2: Orden Organizacional
+        if not self.org_roles_organigrama:
+            brechas_fase2.append("Definición de organigrama funcional y matriz de responsabilidades.")
+        if not self.org_manuales_procesos:
+            brechas_fase2.append("Levantamiento y documentación de procesos operativos clave.")
+        if not self.org_continuidad_riesgos:
+            brechas_fase2.append("Plan de continuidad operativa y recuperación ante desastres (DRP).")
+        if not self.org_kpis_gestion:
+            brechas_fase2.append("Tablero de indicadores (KPIs) para control ejecutivo.")
+
+        # Fase 3: Aceleración Comercial y Marketing
+        if not self.mkt_sitio_web:
+            brechas_fase3.append("Desarrollo de plataforma web corporativa orientada a conversión.")
+        if not self.mkt_redes_identidad:
+            brechas_fase3.append("Estandarización de identidad digital y canales oficiales.")
+        if not self.mkt_crm_automatizacion:
+            brechas_fase3.append("Implementación de embudo CRM, WhatsApp automatizado y Tarjetas Digitales.")
+        if not self.mkt_analitica_metricas:
+            brechas_fase3.append("Configuración de analítica web y seguimiento de retorno de inversión.")
+
+        global_score = self.madurez_global
+        if global_score < 35:
+            factibilidad = "ALTA PRIORIDAD · Transformación Integral"
+            resumen = "El cliente opera con alta vulnerabilidad técnica y baja estandarización. Se recomienda iniciar con blindaje de infraestructura antes de escalar ventas."
+            proyeccion = min(85, global_score + 50)
+        elif global_score < 70:
+            factibilidad = "FACTIBILIDAD ÓPTIMA · Modernización y Blindaje"
+            resumen = "Cuenta con base operativa funcional, pero presenta brechas de seguridad y procesos que frenan su crecimiento. Excelente candidato para proyecto por fases."
+            proyeccion = min(92, global_score + 30)
+        else:
+            factibilidad = "ALTA MADUREZ · Optimización y Automatización Avanzada"
+            resumen = "Infraestructura sólida. El proyecto debe enfocarse en automatización de procesos, analítica avanzada y mejora continua."
+            proyeccion = min(98, global_score + 15)
+
+        return {
+            "factibilidad": factibilidad,
+            "resumen": resumen,
+            "proyeccion_objetivo": proyeccion,
+            "fase1": brechas_fase1,
+            "fase2": brechas_fase2,
+            "fase3": brechas_fase3,
+        }
+
+    def __str__(self):
+        return f"Evaluación {self.cliente.username} - {self.nombre_proyecto_propuesto} ({self.madurez_global}%)"

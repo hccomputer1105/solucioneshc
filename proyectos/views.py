@@ -13,6 +13,7 @@ from .models import (
     PublicidadBanner,
     ReportePagoPublicidad,
     AppDemoRender,
+    EvaluacionFactibilidad,
 )
 
 
@@ -457,3 +458,68 @@ def toggle_app_demo_web(request, pk):
     app_demo.visible_en_web = not app_demo.visible_en_web
     app_demo.save()
     return redirect("dashboard")
+
+@login_required(login_url="/login/")
+def evaluacion_proyectos_view(request, eval_id=None):
+    if not request.user.is_staff:
+        return redirect("dashboard")
+
+    clientes = User.objects.filter(is_staff=False)
+    evaluaciones = EvaluacionFactibilidad.objects.select_related("cliente").all()
+    evaluacion_activa = (
+        get_object_or_404(EvaluacionFactibilidad, id=eval_id)
+        if eval_id
+        else evaluaciones.first()
+    )
+
+    if request.method == "POST":
+        accion = request.POST.get("accion")
+
+        if accion == "guardar_evaluacion":
+            cliente_obj = get_object_or_404(User, id=request.POST.get("cliente_id"))
+            ev = EvaluacionFactibilidad.objects.create(
+                cliente=cliente_obj,
+                nombre_proyecto_propuesto=request.POST.get("nombre_proyecto_propuesto", "").strip(),
+                notas_consultor=request.POST.get("notas_consultor", "").strip(),
+                # Tecnología
+                tec_red_estructurada=bool(request.POST.get("tec_red_estructurada")),
+                tec_dominio_correos=bool(request.POST.get("tec_dominio_correos")),
+                tec_seguridad_perimetral=bool(request.POST.get("tec_seguridad_perimetral")),
+                tec_seguridad_logica=bool(request.POST.get("tec_seguridad_logica")),
+                tec_servidores=bool(request.POST.get("tec_servidores")),
+                tec_camaras_cctv=bool(request.POST.get("tec_camaras_cctv")),
+                # Marketing
+                mkt_sitio_web=bool(request.POST.get("mkt_sitio_web")),
+                mkt_redes_identidad=bool(request.POST.get("mkt_redes_identidad")),
+                mkt_crm_automatizacion=bool(request.POST.get("mkt_crm_automatizacion")),
+                mkt_analitica_metricas=bool(request.POST.get("mkt_analitica_metricas")),
+                # Organizacional
+                org_roles_organigrama=bool(request.POST.get("org_roles_organigrama")),
+                org_manuales_procesos=bool(request.POST.get("org_manuales_procesos")),
+                org_continuidad_riesgos=bool(request.POST.get("org_continuidad_riesgos")),
+                org_kpis_gestion=bool(request.POST.get("org_kpis_gestion")),
+            )
+            return redirect("evaluacion_proyecto_detalle", eval_id=ev.id)
+
+        elif accion == "convertir_a_proyecto" and evaluacion_activa:
+            diag = evaluacion_activa.diagnostico_ia
+            todas_brechas = diag["fase1"] + diag["fase2"] + diag["fase3"]
+            Proyecto.objects.create(
+                titulo=evaluacion_activa.nombre_proyecto_propuesto,
+                cliente=evaluacion_activa.cliente.username,
+                cliente_usuario=evaluacion_activa.cliente,
+                problema_detectado=diag["resumen"],
+                resultado_obtenido=f"Proyección de madurez: de {evaluacion_activa.madurez_global}% a {diag['proyeccion_objetivo']}%. Fases: {len(todas_brechas)} mejoras clave.",
+                descripcion=" | ".join(todas_brechas[:5]) or "Optimización integral de infraestructura y procesos.",
+                estado="En progreso",
+                progreso=15,
+                tecnologias="Infraestructura, Ciberseguridad, Procesos, Marketing Digital",
+                visible_en_web=False,
+            )
+            return redirect("dashboard")
+
+    return render(request, "evaluacion_factibilidad.html", {
+        "clientes": clientes,
+        "evaluaciones": evaluaciones,
+        "ev": evaluacion_activa,
+    })

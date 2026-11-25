@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Evaluación y Factibilidad de Proyectos | Soluciones Tecnológicas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #060D1A;
+      --bg-surface: #0F172A;
+      --accent-cyan: #0EA5E9;
+      --accent-emerald: #10B981;
+      --accent-amber: #F59E0B;
+      --text-light: #F8FAFC;
+      --text-gray: #94A3B8;
+      --border: rgba(255, 255, 255, 0.1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    body { background: var(--bg-dark); color: var(--text-light); min-height: 100vh; }
+    .topbar {
+      background: var(--bg-surface); border-bottom: 1px solid var(--border);
+      padding: 16px 4%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+    }
+    .btn {
+      padding: 9px 15px; border-radius: 9px; font-size: 13px; font-weight: 700;
+      border: none; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-cyan { background: var(--accent-cyan); color: #04101E; }
+    .btn-emerald { background: var(--accent-emerald); color: #041E14; }
+    .btn-ghost { background: rgba(255,255,255,0.06); color: #FFF; border: 1px solid var(--border); }
+    .layout {
+      padding: 24px 4%; display: grid; grid-template-columns: 440px minmax(0, 1fr); gap: 24px; align-items: start;
+    }
+    .card {
+      background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px; margin-bottom: 20px;
+    }
+    .pillar-group {
+      background: #081122; border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 14px;
+    }
+    .pillar-group h4 { font-size: 13px; color: #38BDF8; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .chk-item {
+      display: flex; align-items: center; gap: 9px; font-size: 13px; color: #E2E8F0; padding: 5px 0; cursor: pointer;
+    }
+    input[type="text"], select, textarea {
+      width: 100%; padding: 9px 12px; border-radius: 9px; background: var(--bg-dark);
+      border: 1px solid var(--border); color: #FFF; font-size: 13px; margin-top: 4px; margin-bottom: 12px;
+    }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin: 18px 0; }
+    .kpi-box { background: #081122; border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+    .bar-bg { width: 100%; height: 8px; background: rgba(255,255,255,0.08); border-radius: 99px; overflow: hidden; margin-top: 8px; }
+    .bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent-cyan), var(--accent-emerald)); }
+    .phase-box { background: #081122; border-left: 3px solid var(--accent-cyan); border-radius: 10px; padding: 14px; margin-bottom: 12px; }
+    .phase-box ul { margin-left: 18px; margin-top: 6px; font-size: 13px; color: #CBD5E1; line-height: 1.5; }
+    @media (max-width: 960px) { .layout { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div style="font-weight:800; font-size:16px;">SOLUCIONES <span style="color:#0EA5E9;">TECNOLÓGICAS</span> · Diagnóstico & Factibilidad</div>
+    <div style="display:flex; gap:10px;">
+      <a href="{% url 'dashboard' %}" class="btn btn-ghost">← Volver al Dashboard</a>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- COLUMNA IZQUIERDA: CHECKLIST DE EVALUACIÓN -->
+    <aside>
+      <div class="card">
+        <h2 style="font-size:18px; margin-bottom:4px;">Nueva Evaluación de Cliente</h2>
+        <p style="font-size:12.5px; color:var(--text-gray); margin-bottom:16px;">Marca lo que el cliente posee actualmente para proyectar su hoja de ruta.</p>
+
+        <form method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="accion" value="guardar_evaluacion">
+
+          <label style="font-size:12px; color:var(--text-gray); font-weight:600;">Seleccionar Cliente *</label>
+          <select name="cliente_id" required>
+            <option value="">-- Elige un cliente registrado --</option>
+            {% for c in clientes %}
+            <option value="{{ c.id }}">{{ c.username }}</option>
+            {% endfor %}
+          </select>
+
+          <label style="font-size:12px; color:var(--text-gray); font-weight:600;">Nombre del Proyecto a Evaluar *</label>
+          <input type="text" name="nombre_proyecto_propuesto" placeholder="Ej. Modernización IT y Blindaje 2026" required>
+
+          <!-- PILAR 1: TECNOLOGÍA -->
+          <div class="pillar-group">
+            <h4>1. Tecnología e Infraestructura</h4>
+            <label class="chk-item"><input type="checkbox" name="tec_red_estructurada"> Infraestructura de red estructurada</label>
+            <label class="chk-item"><input type="checkbox" name="tec_dominio_correos"> Dominio propio y correos corporativos</label>
+            <label class="chk-item"><input type="checkbox" name="tec_seguridad_perimetral"> Seguridad perimetral (Firewall / VPN)</label>
+            <label class="chk-item"><input type="checkbox" name="tec_seguridad_logica"> Seguridad lógica (Antivirus, 2FA, Backups)</label>
+            <label class="chk-item"><input type="checkbox" name="tec_servidores"> Servidores propios o nube gestionada</label>
+            <label class="chk-item"><input type="checkbox" name="tec_camaras_cctv"> Sistema de cámaras / videovigilancia IP</label>
+          </div>
+
+          <!-- PILAR 2: MARKETING -->
+          <div class="pillar-group">
+            <h4>2. Marketing y Presencia Digital</h4>
+            <label class="chk-item"><input type="checkbox" name="mkt_sitio_web"> Sitio web corporativo activo</label>
+            <label class="chk-item"><input type="checkbox" name="mkt_redes_identidad"> Identidad visual y redes sociales activas</label>
+            <label class="chk-item"><input type="checkbox" name="mkt_crm_automatizacion"> Embudo CRM / WhatsApp / Tarjeta Digital</label>
+            <label class="chk-item"><input type="checkbox" name="mkt_analitica_metricas"> Analítica y medición de resultados</label>
+          </div>
+
+          <!-- PILAR 3: ORGANIZACIONAL -->
+          <div class="pillar-group">
+            <h4>3. Evaluación Organizacional</h4>
+            <label class="chk-item"><input type="checkbox" name="org_roles_organigrama"> Organigrama y roles definidos</label>
+            <label class="chk-item"><input type="checkbox" name="org_manuales_procesos"> Manuales de procesos operativos</label>
+            <label class="chk-item"><input type="checkbox" name="org_continuidad_riesgos"> Plan de continuidad y gestión de riesgos</label>
+            <label class="chk-item"><input type="checkbox" name="org_kpis_gestion"> Indicadores de gestión (KPIs)</label>
+          </div>
+
+          <label style="font-size:12px; color:var(--text-gray); font-weight:600;">Observaciones del Consultor</label>
+          <textarea name="notas_consultor" rows="2" placeholder="Detalles levantados en la reunión..."></textarea>
+
+          <button type="submit" class="btn btn-cyan" style="width:100%; justify-content:center; padding:12px;">
+            Generar Diagnóstico y Proyección
+          </button>
+        </form>
+      </div>
+    </aside>
+
+    <!-- COLUMNA DERECHA: DASHBOARD DE FACTIBILIDAD Y PROYECCIÓN -->
+    <section>
+      {% if evaluaciones %}
+      <div class="card" style="padding:14px 20px;">
+        <span style="font-size:12px; color:var(--text-gray); display:block; margin-bottom:8px;">Historial de Evaluaciones Realizadas:</span>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          {% for item in evaluaciones %}
+          <a href="{% url 'evaluacion_proyecto_detalle' item.id %}" class="btn {% if ev.id == item.id %}btn-cyan{% else %}btn-ghost{% endif %}" style="font-size:12px; padding:6px 12px;">
+            {{ item.cliente.username }} · {{ item.madurez_global }}%
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      {% if ev %}
+      {% with diag=ev.diagnostico_ia %}
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px;">
+          <div>
+            <span style="font-size:11.5px; font-weight:800; color:#6EE7B7; letter-spacing:0.04em;">{{ diag.factibilidad }}</span>
+            <h2 style="font-size:22px; margin-top:4px;">{{ ev.nombre_proyecto_propuesto }}</h2>
+            <p style="font-size:13px; color:#38BDF8; margin-top:2px;">Cliente: <strong>{{ ev.cliente.username }}</strong></p>
+          </div>
+          <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="accion" value="convertir_a_proyecto">
+            <button type="submit" class="btn btn-emerald">✓ Convertir Proyección en Proyecto</button>
+          </form>
+        </div>
+
+        <p style="margin-top:14px; font-size:14px; color:#E2E8F0; background:#081122; padding:14px; border-radius:10px; border:1px solid var(--border);">
+          {{ diag.resumen }}
+        </p>
+
+        <!-- COMPARATIVA ESTADO ACTUAL VS PROYECCIÓN -->
+        <div class="kpi-grid">
+          <div class="kpi-box">
+            <span style="font-size:12px; color:var(--text-gray);">Madurez Actual Global</span>
+            <div style="font-size:26px; font-weight:800; color:#FCD34D; margin-top:4px;">{{ ev.madurez_global }}%</div>
+            <div class="bar-bg"><div class="bar-fill" style="width:{{ ev.madurez_global }}%;"></div></div>
+          </div>
+          <div class="kpi-box">
+            <span style="font-size:12px; color:var(--text-gray);">Posición Proyectada</span>
+            <div style="font-size:26px; font-weight:800; color:#6EE7B7; margin-top:4px;">{{ diag.proyeccion_objetivo }}%</div>
+            <div class="bar-bg"><div class="bar-fill" style="width:{{ diag.proyeccion_objetivo }}%;"></div></div>
+          </div>
+          <div class="kpi-box">
+            <span style="font-size:12px; color:var(--text-gray);">Tecnología / Infraestructura</span>
+            <div style="font-size:22px; font-weight:800; margin-top:4px;">{{ ev.puntaje_tecnologia }}%</div>
+            <div class="bar-bg"><div class="bar-fill" style="width:{{ ev.puntaje_tecnologia }}%;"></div></div>
+          </div>
+          <div class="kpi-box">
+            <span style="font-size:12px; color:var(--text-gray);">Organización / Procesos</span>
+            <div style="font-size:22px; font-weight:800; margin-top:4px;">{{ ev.puntaje_organizacional }}%</div>
+            <div class="bar-bg"><div class="bar-fill" style="width:{{ ev.puntaje_organizacional }}%;"></div></div>
+          </div>
+          <div class="kpi-box">
+            <span style="font-size:12px; color:var(--text-gray);">Marketing Digital</span>
+            <div style="font-size:22px; font-weight:800; margin-top:4px;">{{ ev.puntaje_marketing }}%</div>
+            <div class="bar-bg"><div class="bar-fill" style="width:{{ ev.puntaje_marketing }}%;"></div></div>
+          </div>
+        </div>
+
+        <!-- HOJA DE RUTA PROYECTADA POR FASES -->
+        <h3 style="font-size:17px; margin:20px 0 12px;">Plan de Acción y Proyección por Fases</h3>
+
+        {% if diag.fase1 %}
+        <div class="phase-box" style="border-left-color:#38BDF8;">
+          <strong style="color:#38BDF8; font-size:14px;">Fase 1 · Blindaje Tecnológico e Infraestructura</strong>
+          <ul>{% for item in diag.fase1 %}<li>{{ item }}</li>{% endfor %}</ul>
+        </div>
+        {% endif %}
+
+        {% if diag.fase2 %}
+        <div class="phase-box" style="border-left-color:#10B981;">
+          <strong style="color:#6EE7B7; font-size:14px;">Fase 2 · Estandarización Organizacional</strong>
+          <ul>{% for item in diag.fase2 %}<li>{{ item }}</li>{% endfor %}</ul>
+        </div>
+        {% endif %}
+
+        {% if diag.fase3 %}
+        <div class="phase-box" style="border-left-color:#F59E0B;">
+          <strong style="color:#FCD34D; font-size:14px;">Fase 3 · Crecimiento Comercial y Marketing</strong>
+          <ul>{% for item in diag.fase3 %}<li>{{ item }}</li>{% endfor %}</ul>
+        </div>
+        {% endif %}
+      </div>
+      {% endwith %}
+      {% else %}
+      <div class="card" style="text-align:center; padding:48px;">
+        <h3 style="margin-bottom:8px;">Aún no hay evaluaciones registradas</h3>
+        <p style="color:var(--text-gray); font-size:14px;">Selecciona un cliente en el panel izquierdo y marca su infraestructura actual para generar su diagnóstico de factibilidad.</p>
+      </div>
+      {% endif %}
+    </section>
+  </main>
+</body>
+</html>

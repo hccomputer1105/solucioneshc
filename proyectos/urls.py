@@ -23,4 +23,6 @@ urlpatterns = [
     path("eliminar-app-demo/<int:pk>/", views.eliminar_app_demo, name="eliminar_app_demo"),
     path("api/apps/", views.api_apps_publicas, name="api_apps_publicas"),
     path("toggle-app-demo/<int:pk>/", views.toggle_app_demo_web, name="toggle_app_demo_web"),
+    path("evaluacion-proyectos/", views.evaluacion_proyectos_view, name="evaluacion_proyectos"),
+    path("evaluacion-proyectos/<int:eval_id>/", views.evaluacion_proyectos_view, name="evaluacion_proyecto_detalle"),
 ]
