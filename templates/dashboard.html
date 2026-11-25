@@ -93,15 +93,22 @@
       border: 1px solid rgba(239, 68, 68, 0.3);
     }
 
+    /* LAYOUT RESPONSIVO: PC (2 columnas amplias) */
     .main-grid {
       width: 100%;
       max-width: 100%;
       margin: 24px 0;
       padding: 0 3%;
       display: grid;
-      grid-template-columns: 420px 1fr;
+      grid-template-columns: 420px minmax(0, 1fr);
       gap: 28px;
       align-items: start;
+    }
+
+    .col-izquierda,
+    .col-derecha {
+      width: 100%;
+      min-width: 0;
     }
 
     .panel-box {
@@ -139,6 +146,7 @@
     input[type="password"],
     input[type="email"],
     input[type="number"],
+    input[type="url"],
     select,
     textarea {
       width: 100%;
@@ -290,11 +298,26 @@
       padding: 22px;
     }
 
-    @media (max-width: 900px) {
+    /* TABLET (769px a 1100px: dos columnas proporcionales) */
+    @media (max-width: 1100px) {
+      .main-grid {
+        grid-template-columns: 340px minmax(0, 1fr);
+        gap: 20px;
+        padding: 0 2.5%;
+      }
+    }
 
+    /* TELÉFONO (768px o menos: una sola columna apilada al 100%) */
+    @media (max-width: 768px) {
       .main-grid,
-      .case-preview {
+      .case-preview,
+      .row-2 {
         grid-template-columns: 1fr;
+      }
+
+      .main-grid {
+        padding: 0 4%;
+        gap: 20px;
       }
     }
   </style>
@@ -312,16 +335,17 @@
   </header>
 
   {% if mensaje %}
-  <div style="max-width:1280px; margin:16px auto 0; padding:0 5%;">
-    <div
-      style="padding:12px 16px; border-radius:10px; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); color:#6EE7B7; font-size:13.5px;">
+  <div style="width:100%; margin:16px 0 0; padding:0 3%;">
+    <div style="padding:12px 16px; border-radius:10px; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); color:#6EE7B7; font-size:13.5px;">
       {{ mensaje }}
     </div>
   </div>
   {% endif %}
 
   <main class="main-grid">
-    <aside>
+
+    <!-- COLUMNA IZQUIERDA: FORMULARIOS Y CLIENTES -->
+    <aside class="col-izquierda">
       <!-- FORMULARIO NUEVO PROYECTO / CASO DE ÉXITO -->
       <div class="panel-box">
         <h2>Nuevo Proyecto / Caso de Éxito</h2>
@@ -365,18 +389,15 @@
           </div>
           <div class="field">
             <label>Problema Detectado (Vende más en la web)</label>
-            <textarea name="problema_detectado" rows="2"
-              placeholder="Ej. Falta de respaldos aislados y accesos sin 2FA..."></textarea>
+            <textarea name="problema_detectado" rows="2" placeholder="Ej. Falta de respaldos aislados y accesos sin 2FA..."></textarea>
           </div>
           <div class="field">
             <label>Solución / Resultado Obtenido</label>
-            <textarea name="resultado_obtenido" rows="2"
-              placeholder="Ej. Reducción del 90% en riesgo de parada y recuperación en 15 min..."></textarea>
+            <textarea name="resultado_obtenido" rows="2" placeholder="Ej. Reducción del 90% en riesgo de parada y recuperación en 15 min..."></textarea>
           </div>
           <div class="field">
             <label>Descripción técnica *</label>
-            <textarea name="descripcion" rows="2" placeholder="Alcance general de la implementación..."
-              required></textarea>
+            <textarea name="descripcion" rows="2" placeholder="Alcance general de la implementación..." required></textarea>
           </div>
           <div class="field">
             <label>Tecnologías</label>
@@ -415,52 +436,47 @@
         </form>
 
         <div style="margin-top:16px; border-top:1px solid var(--border); padding-top:12px;">
-          <span style="font-size:12px; color:var(--text-gray); display:block; margin-bottom:8px;">Clientes registrados
-            (Configurar Servicios):</span>
+          <span style="font-size:12px; color:var(--text-gray); display:block; margin-bottom:8px;">Clientes registrados (Configurar Servicios):</span>
           {% for c in clientes %}
           <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; font-size:13px;">
             <span>{{ c.username }}</span>
             <div style="display:flex; gap:6px;">
-              <a href="{% url 'admin_gestionar_tarjeta' c.id %}" class="btn btn-ghost"
-                style="padding:5px 9px; font-size:11px;">Tarjeta</a>
-              <a href="{% url 'admin_gestionar_publicidad' c.id %}" class="btn btn-ghost"
-                style="padding:5px 9px; font-size:11px; color:#38BDF8;">Publicidad</a>
+              <a href="{% url 'admin_gestionar_tarjeta' c.id %}" class="btn btn-ghost" style="padding:5px 9px; font-size:11px;">Tarjeta</a>
+              <a href="{% url 'admin_gestionar_publicidad' c.id %}" class="btn btn-ghost" style="padding:5px 9px; font-size:11px; color:#38BDF8;">Publicidad</a>
             </div>
           </div>
-    </aside>
-    {% empty %}
-    <span style="font-size:12px; color:var(--text-gray);">Aún no hay clientes registrados.</span>
-    {% endfor %}
-    </div>
-    </div>
-
-    {% if pagos_pendientes %}
-    <div class="panel-box" style="border-color:rgba(245,158,11,0.45); background:rgba(245,158,11,0.07);">
-      <h3 style="font-size:16px; color:#FCD34D; margin-bottom:10px;">Pagos de Tarjetas Digitales por Validar ({{
-        pagos_pendientes|length }})</h3>
-      {% for pago in pagos_pendientes %}
-      <div
-        style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.08); font-size:13px;">
-        <div>
-          <strong>{{ pago.tarjeta.codigo_suscripcion }}</strong> ({{ pago.tarjeta.nombre_completo }}) —
-          {{ pago.get_plan_solicitado_display }} · {{ pago.metodo_pago }} · Ref: <strong>{{ pago.referencia
-            }}</strong>
-          ({{ pago.monto }})
-          {% if pago.comprobante %}<a href="{{ pago.comprobante.url }}" target="_blank"
-            style="color:#38BDF8; margin-left:6px;">[Ver Capture]</a>{% endif %}
-        </div>
-        <div style="display:flex; gap:6px;">
-          <a href="{% url 'admin_validar_pago' pago.id 'aprobar' %}" class="btn btn-emerald"
-            style="padding:6px 12px; font-size:12px;">Aprobar y Renovar</a>
-          <a href="{% url 'admin_validar_pago' pago.id 'rechazar' %}" class="btn btn-danger"
-            style="padding:6px 12px; font-size:12px;">Rechazar</a>
+          {% empty %}
+          <span style="font-size:12px; color:var(--text-gray);">Aún no hay clientes registrados.</span>
+          {% endfor %}
         </div>
       </div>
-      {% endfor %}
-    </div>
-    {% endif %}
-    <!-- LISTADO DE PROYECTOS -->
-    <section>
+    </aside>
+
+    <!-- COLUMNA DERECHA: PAGOS PENDIENTES, APPS EN RENDER Y PROYECTOS -->
+    <section class="col-derecha">
+
+      {% if pagos_pendientes %}
+      <div class="panel-box" style="border-color:rgba(245,158,11,0.45); background:rgba(245,158,11,0.07);">
+        <h3 style="font-size:16px; color:#FCD34D; margin-bottom:10px;">Pagos de Tarjetas Digitales por Validar ({{ pagos_pendientes|length }})</h3>
+        {% for pago in pagos_pendientes %}
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.08); font-size:13px;">
+          <div>
+            <strong>{{ pago.tarjeta.codigo_suscripcion }}</strong> ({{ pago.tarjeta.nombre_completo }}) —
+            {{ pago.get_plan_solicitado_display }} · {{ pago.metodo_pago }} · Ref: <strong>{{ pago.referencia }}</strong>
+            ({{ pago.monto }})
+            {% if pago.comprobante %}
+            <a href="{{ pago.comprobante.url }}" target="_blank" style="color:#38BDF8; margin-left:6px;">[Ver Capture]</a>
+            {% endif %}
+          </div>
+          <div style="display:flex; gap:6px;">
+            <a href="{% url 'admin_validar_pago' pago.id 'aprobar' %}" class="btn btn-emerald" style="padding:6px 12px; font-size:12px;">Aprobar y Renovar</a>
+            <a href="{% url 'admin_validar_pago' pago.id 'rechazar' %}" class="btn btn-danger" style="padding:6px 12px; font-size:12px;">Rechazar</a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
       <!-- SECCIÓN EXCLUSIVA ADMIN GENERAL: MIS APPS Y DEMOS EN RENDER -->
       <div class="panel-box" style="margin-bottom: 24px; border: 1px solid rgba(14, 165, 233, 0.35); background: linear-gradient(145deg, #0F172A, #0B1528);">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
@@ -470,7 +486,7 @@
           </div>
           <details style="background:rgba(14,165,233,0.12); border:1px solid rgba(14,165,233,0.3); border-radius:10px; padding:7px 12px;">
             <summary style="cursor:pointer; font-size:12.5px; font-weight:700; color:#38BDF8;">+ Agregar Nueva App / Link</summary>
-            <form method="POST" style="margin-top:12px; display:grid; gap:8px; min-width:280px;">
+            <form method="POST" style="margin-top:12px; display:grid; gap:8px; min-width:260px;">
               {% csrf_token %}
               <input type="hidden" name="accion" value="crear_app_demo">
               <input type="text" name="app_nombre" placeholder="Nombre (Ej: AuditTech)" required>
@@ -485,29 +501,31 @@
 
         <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:12px;">
           {% for app in apps_demo %}
-            <div style="background:#060D1A; border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:14px; display:flex; flex-direction:column; justify-content:space-between; gap:10px;">
-              <div>
-                <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; margin-bottom:4px;">
-                  <span style="font-size:10.5px; font-weight:700; padding:3px 8px; border-radius:99px; background:rgba(16,185,129,0.15); color:#6EE7B7;">{{ app.categoria }}</span>
-                  <a href="{% url 'eliminar_app_demo' app.id %}" onclick="return confirm('¿Quitar esta aplicación de tu lista?');" style="color:#F87171; font-size:11px; text-decoration:none;">Eliminar</a>
-                </div>
-                <h3 style="font-size:15.5px; color:#FFFFFF; margin-bottom:4px;">{{ app.nombre }}</h3>
-                {% if app.descripcion %}
-                  <p style="font-size:12.5px; color:#94A3B8; line-height:1.4;">{{ app.descripcion }}</p>
-                {% endif %}
-                {% if app.credenciales_demo %}
-                  <div style="margin-top:6px; font-size:11.5px; padding:5px 8px; border-radius:6px; background:rgba(255,255,255,0.05); color:#CBD5E1;">
-                    <strong>Acceso Demo:</strong> {{ app.credenciales_demo }}
-                  </div>
-                {% endif %}
+          <div style="background:#060D1A; border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:14px; display:flex; flex-direction:column; justify-content:space-between; gap:10px;">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; margin-bottom:4px;">
+                <span style="font-size:10.5px; font-weight:700; padding:3px 8px; border-radius:99px; background:rgba(16,185,129,0.15); color:#6EE7B7;">{{ app.categoria }}</span>
+                <a href="{% url 'eliminar_app_demo' app.id %}" onclick="return confirm('¿Quitar esta aplicación de tu lista?');" style="color:#F87171; font-size:11px; text-decoration:none;">Eliminar</a>
               </div>
-              <a href="{{ app.url }}" target="_blank" rel="noopener" class="btn btn-cyan" style="width:100%; justify-content:center; padding:8px 12px; font-size:12.5px;">
-                Abrir Aplicación en Vivo ↗
-              </a>
+              <h3 style="font-size:15.5px; color:#FFFFFF; margin-bottom:4px;">{{ app.nombre }}</h3>
+              {% if app.descripcion %}
+              <p style="font-size:12.5px; color:#94A3B8; line-height:1.4;">{{ app.descripcion }}</p>
+              {% endif %}
+              {% if app.credenciales_demo %}
+              <div style="margin-top:6px; font-size:11.5px; padding:5px 8px; border-radius:6px; background:rgba(255,255,255,0.05); color:#CBD5E1;">
+                <strong>Acceso Demo:</strong> {{ app.credenciales_demo }}
+              </div>
+              {% endif %}
             </div>
+            <a href="{{ app.url }}" target="_blank" rel="noopener" class="btn btn-cyan" style="width:100%; justify-content:center; padding:8px 12px; font-size:12.5px;">
+              Abrir Aplicación en Vivo ↗
+            </a>
+          </div>
           {% endfor %}
         </div>
       </div>
+
+      <!-- LISTADO DE PROYECTOS Y CASOS DE ÉXITO -->
       <h2 style="font-size:20px; margin-bottom:16px;">Proyectos y Casos de Éxito ({{ proyectos|length }})</h2>
 
       <div class="project-list">
@@ -563,6 +581,7 @@
         </div>
         {% endfor %}
       </div>
+
     </section>
   </main>
 
@@ -574,8 +593,7 @@
         {% csrf_token %}
         <div class="field"><label>Título</label><input type="text" name="titulo" id="edit-titulo" required></div>
         <div class="row-2">
-          <div class="field"><label>Empresa / Sector</label><input type="text" name="cliente" id="edit-cliente"
-              required></div>
+          <div class="field"><label>Empresa / Sector</label><input type="text" name="cliente" id="edit-cliente" required></div>
           <div class="field">
             <label>Cliente Asignado</label>
             <select name="cliente_usuario" id="edit-cliente-usuario">
@@ -595,15 +613,11 @@
               <option value="Completado">Completado</option>
             </select>
           </div>
-          <div class="field"><label>Avance (%)</label><input type="number" name="progreso" id="edit-progreso" min="0"
-              max="100" required></div>
+          <div class="field"><label>Avance (%)</label><input type="number" name="progreso" id="edit-progreso" min="0" max="100" required></div>
         </div>
-        <div class="field"><label>Problema Detectado</label><textarea name="problema_detectado" id="edit-problema"
-            rows="2"></textarea></div>
-        <div class="field"><label>Solución / Resultado Obtenido</label><textarea name="resultado_obtenido"
-            id="edit-resultado" rows="2"></textarea></div>
-        <div class="field"><label>Descripción</label><textarea name="descripcion" id="edit-descripcion" rows="2"
-            required></textarea></div>
+        <div class="field"><label>Problema Detectado</label><textarea name="problema_detectado" id="edit-problema" rows="2"></textarea></div>
+        <div class="field"><label>Solución / Resultado Obtenido</label><textarea name="resultado_obtenido" id="edit-resultado" rows="2"></textarea></div>
+        <div class="field"><label>Descripción</label><textarea name="descripcion" id="edit-descripcion" rows="2" required></textarea></div>
         <div class="field"><label>Tecnologías</label><input type="text" name="tecnologias" id="edit-tecnologias"></div>
         <label class="checkbox-row">
           <input type="checkbox" name="visible_en_web" id="edit-visible">
