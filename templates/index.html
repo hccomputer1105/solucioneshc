@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Soluciones Tecnológicas | Blindaje Integral Empresarial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #060D1A;
+      --bg-surface: #0F172A;
+      --bg-card: #1E293B;
+      --accent-cyan: #0EA5E9;
+      --accent-emerald: #10B981;
+      --text-light: #F8FAFC;
+      --text-gray: #94A3B8;
+      --text-dark: #0F172A;
+      --border-dark: rgba(255, 255, 255, 0.08);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { background: #FFFFFF; color: var(--text-dark); line-height: 1.6; }
+
+    /* NAVBAR */
+    .navbar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(6, 13, 26, 0.94); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-dark);
+      padding: 14px 5%; display: flex; align-items: center; justify-content: space-between;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; color: white; text-decoration: none; font-weight: 800; font-size: 16px; }
+    .brand span { color: var(--accent-cyan); }
+    .nav-links { display: flex; gap: 24px; align-items: center; }
+    .nav-links a { color: var(--text-gray); text-decoration: none; font-size: 14px; font-weight: 500; transition: 0.2s; }
+    .nav-links a:hover { color: white; }
+    .nav-actions { display: flex; gap: 10px; align-items: center; }
+
+    .btn {
+      padding: 10px 18px; border-radius: 10px; font-size: 13.5px; font-weight: 600;
+      text-decoration: none; cursor: pointer; transition: 0.2s; border: none; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-cyan { background: var(--accent-cyan); color: #04101E; }
+    .btn-cyan:hover { background: #38BDF8; }
+    .btn-outline { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.2); }
+    .btn-outline:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+    .btn-emerald { background: var(--accent-emerald); color: #041E14; }
+
+    /* HERO */
+    .hero {
+      background: radial-gradient(circle at 80% 20%, rgba(14,165,233,0.16), transparent 45%),
+                  linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-surface) 100%);
+      color: white; padding: 80px 5% 90px;
+    }
+    .hero-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 48px; align-items: center; }
+    .pill-tag {
+      display: inline-block; padding: 6px 14px; border-radius: 99px;
+      background: rgba(14,165,233,0.14); color: var(--accent-cyan);
+      font-size: 12.5px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 18px;
+    }
+    .hero h1 { font-size: 42px; line-height: 1.15; font-weight: 800; margin-bottom: 20px; }
+    .hero p { color: var(--text-gray); font-size: 17px; margin-bottom: 30px; max-width: 600px; }
+    .hero-btns { display: flex; flex-wrap: wrap; gap: 12px; }
+
+    /* FORMULARIO GLASSMORPHISM EN HERO */
+    .lead-card {
+      background: rgba(30, 41, 59, 0.75); backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.12); border-radius: 20px;
+      padding: 28px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+    }
+    .lead-card h3 { font-size: 20px; margin-bottom: 6px; }
+    .lead-card p { font-size: 13px; color: var(--text-gray); margin-bottom: 18px; }
+    .form-control {
+      width: 100%; padding: 12px 14px; border-radius: 10px;
+      background: rgba(6, 13, 26, 0.7); border: 1px solid rgba(255,255,255,0.15);
+      color: white; font-size: 14px; margin-bottom: 12px; outline: none;
+    }
+    .form-control:focus { border-color: var(--accent-cyan); }
+
+    /* SECCIÓN GENERAL */
+    section { padding: 80px 5%; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .section-header { text-align: center; max-width: 720px; margin: 0 auto 50px; }
+    .section-header h2 { font-size: 32px; font-weight: 800; margin-bottom: 12px; color: var(--bg-dark); }
+    .section-header p { color: #475569; font-size: 16px; }
+
+    /* COMPARATIVA RIESGOS VS BLINDAJE */
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 60px; }
+    .compare-box { padding: 32px; border-radius: var(--radius); border: 1px solid #E2E8F0; }
+    .compare-box.risk { background: #FFF1F2; border-color: #FECDD3; }
+    .compare-box.shield { background: #F0FDF4; border-color: #BBF7D0; }
+    .compare-box h3 { font-size: 20px; margin-bottom: 16px; }
+    .compare-box ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .compare-box li { font-size: 15px; display: flex; align-items: center; gap: 10px; }
+
+    /* BENTO GRID 5 PILARES */
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 24px; }
+    .service-card {
+      border: 1px solid #E2E8F0; border-radius: var(--radius); padding: 28px;
+      transition: 0.25s; display: flex; flex-direction: column; background: white;
+    }
+    .service-card:hover { transform: translateY(-4px); border-color: var(--accent-cyan); box-shadow: 0 15px 30px rgba(15,23,42,0.07); }
+    .s-icon {
+      width: 46px; height: 46px; border-radius: 12px; background: rgba(14,165,233,0.1);
+      color: var(--accent-cyan); display: flex; align-items: center; justify-content: center; font-weight: 800; margin-bottom: 18px;
+    }
+    .service-card h3 { font-size: 19px; margin-bottom: 10px; }
+    .service-card p { font-size: 14px; color: #475569; margin-bottom: 16px; }
+    .service-card ul { list-style: none; margin-bottom: 22px; flex: 1; }
+    .service-card li { font-size: 13.5px; color: #334155; padding: 4px 0; }
+    .service-card li::before { content: "✓ "; color: var(--accent-emerald); font-weight: 700; }
+
+    /* SECCIÓN PROYECTOS CONECTADA A DJANGO */
+    .projects-section { background: var(--bg-dark); color: white; }
+    .projects-section .section-header h2 { color: white; }
+    .projects-section .section-header p { color: var(--text-gray); }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+    .project-card {
+      background: var(--bg-surface); border: 1px solid var(--border-dark);
+      border-radius: var(--radius); padding: 24px; display: flex; flex-direction: column; gap: 14px;
+    }
+    .project-top { display: flex; justify-content: space-between; align-items: center; }
+    .status-badge {
+      font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 99px;
+      background: rgba(16,185,129,0.15); color: var(--accent-emerald);
+    }
+    .progress-wrap { background: rgba(255,255,255,0.08); height: 7px; border-radius: 99px; overflow: hidden; }
+    .progress-bar { height: 100%; background: linear-gradient(90deg, var(--accent-cyan), var(--accent-emerald)); }
+    .tech-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tech-tag { font-size: 11px; padding: 3px 9px; border-radius: 6px; background: rgba(255,255,255,0.06); color: var(--text-gray); }
+
+    /* PERFIL CONSULTOR */
+    .about-grid { display: grid; grid-template-columns: 0.7fr 1.3fr; gap: 48px; align-items: center; }
+    .about-photo {
+      width: 100%; max-width: 340px; border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(15,23,42,0.15); border: 4px solid #F1F5F9;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid, .compare-grid, .about-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hero h1 { font-size: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVEGACIÓN PRINCIPAL -->
+  <header class="navbar">
+    <a href="#" class="brand">SOLUCIONES <span>TECNOLÓGICAS</span></a>
+    <nav class="nav-links">
+      <a href="#servicios">Servicios</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#consultor">Hector Cañongo</a>
+      <a href="#faq">Preguntas Frecuentes</a>
+    </nav>
+    <div class="nav-actions">
+      <!-- Enlace a tu Tarjeta Digital -->
+      <a href="/tarjeta/" class="btn btn-outline">Tarjeta Digital</a>
+      <!-- Enlace al Login de Django -->
+      <a href="http://127.0.0.1:8000/login/" class="btn btn-cyan">Acceso Clientes / Admin</a>
+    </div>
+  </header>
+
+  <!-- HERO + FORMULARIO DE EVALUACIÓN -->
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <span class="pill-tag">BLINDAJE INTEGRAL EMPRESARIAL</span>
+        <h1>Protegemos tu empresa desde adentro hacia afuera</h1>
+        <p>Combinamos consultoría organizacional, ciberseguridad e infraestructura técnica para reducir riesgos operativos y garantizar la continuidad de tu negocio.</p>
+        <div class="hero-btns">
+          <a href="#servicios" class="btn btn-cyan">Explorar Soluciones</a>
+          <a href="/tarjeta/" class="btn btn-emerald">Ver Tarjeta Digital Ejecutiva</a>
+        </div>
+      </div>
+
+      <div class="lead-card" id="contacto">
+        <h3>Solicitar evaluación gratuita</h3>
+        <p>Diagnóstico inicial de riesgos técnicos y organizacionales.</p>
+        <form id="consultoria-form" onsubmit="enviarYAgendar(event)">
+          <input type="text" id="c-nombre" class="form-control" placeholder="Nombre completo" required>
+          <input type="email" id="c-correo" class="form-control" placeholder="Correo corporativo" required>
+          <select id="c-servicio" class="form-control">
+            <option value="Blindaje Integral (General)">Área de interés: Blindaje Integral</option>
+            <option value="Consultoría Organizacional">Consultoría Organizacional</option>
+            <option value="Seguridad Informática">Seguridad Informática</option>
+            <option value="Formación del Personal">Formación del Personal</option>
+            <option value="Implementación Técnica">Implementación Técnica</option>
+            <option value="Acompañamiento Estratégico">Acompañamiento Estratégico</option>
+          </select>
+          <textarea id="c-necesidad" class="form-control" rows="3" placeholder="Cuéntanos brevemente tu necesidad..." required></textarea>
+          <button type="submit" id="btn-agendar" class="btn btn-cyan" style="width:100%; justify-content:center;">
+            Agendar Consultoría →
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIAGNÓSTICO Y 5 PILARES -->
+  <section id="servicios">
+    <div class="container">
+      <div class="compare-grid">
+        <div class="compare-box risk">
+          <h3>⚠️ Riesgos invisibles en las empresas</h3>
+          <ul>
+            <li>• Procesos desordenados y sin documentación</li>
+            <li>• Equipos sin formación en ciberseguridad</li>
+            <li>• Accesos y contraseñas mal gestionados</li>
+            <li>• Falta de protocolos ante incidentes o fallas</li>
+          </ul>
+        </div>
+        <div class="compare-box shield">
+          <h3>🛡️ Ecosistema Blindaje Integral</h3>
+          <ul>
+            <li>• Alineación de personas, roles y cultura</li>
+            <li>• Protección perimetral de redes y servidores</li>
+            <li>• Respaldo automatizado y continuidad operativa</li>
+            <li>• Monitoreo y acompañamiento técnico mensual</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <h2>Nuestros 5 Pilares de Protección</h2>
+        <p>Una metodología estructurada para blindar tanto el factor humano como tu infraestructura tecnológica.</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="s-icon">01</div>
+          <h3>Consultoría Organizacional</h3>
+          <p>Analizamos la estructura interna, roles y dinámicas operativas para eliminar cuellos de botella.</p>
+          <ul>
+            <li>Procesos claros y auditables</li>
+            <li>Roles y responsabilidades alineadas</li>
+            <li>Mayor agilidad en toma de decisiones</li>
+          </ul>
+          <a href="#contacto" class="btn btn-cyan" style="justify-content:center;">Agendar consultoría</a>
+        </div>
+
+        <div class="service-card">
+          <div class="s-icon">02</div>
+          <h3>Seguridad Informática</h3>
+          <p>Protegemos redes, servidores, dispositivos y datos sensibles frente a ataques o filtraciones.</p>
+          <ul>
+            <li>Evaluación de vulnerabilidades</li>
+            <li>Protección de datos críticos</li>
+            <li>Cumplimiento de estándares</li>
+          </ul>
+          <a href="#contacto" class="btn btn-cyan" style="justify-content:center;">Agendar consultoría</a>
+        </div>
+
+        <div class="service-card">
+          <div class="s-icon">03</div>
+          <h3>Formación del Personal</h3>
+          <p>Capacitamos a tus equipos en hábitos digitales seguros y protocolos internos de prevención.</p>
+          <ul>
+            <li>Reducción de errores humanos</li>
+            <li>Prevención activa contra phishing</li>
+            <li>Cultura organizacional segura</li>
+          </ul>
+          <a href="#contacto" class="btn btn-cyan" style="justify-content:center;">Agendar consultoría</a>
+        </div>
+
+        <div class="service-card">
+          <div class="s-icon">04</div>
+          <h3>Implementación Técnica</h3>
+          <p>Instalamos y configuramos firewalls, backups, CCTV, control biométrico y seguridad web.</p>
+          <ul>
+            <li>Infraestructura monitoreada 24/7</li>
+            <li>Control total de accesos físicos y lógicos</li>
+            <li>Seguridad avanzada en WordPress y redes</li>
+          </ul>
+          <a href="#contacto" class="btn btn-cyan" style="justify-content:center;">Agendar consultoría</a>
+        </div>
+
+        <div class="service-card">
+          <div class="s-icon">05</div>
+          <h3>Acompañamiento Estratégico</h3>
+          <p>Seguimiento mensual con auditorías periódicas, reportes ejecutivos y soporte prioritario.</p>
+          <ul>
+            <li>Seguridad sostenible en el tiempo</li>
+            <li>Visibilidad gerencial y métricas</li>
+            <li>Respuesta rápida ante incidentes</li>
+          </ul>
+          <a href="#contacto" class="btn btn-cyan" style="justify-content:center;">Agendar consultoría</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DINÁMICA DE PROYECTOS (ALIMENTADA DESDE DJANGO) -->
+  <section id="proyectos" class="projects-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="pill-tag">PORTAFOLIO EN TIEMPO REAL</span>
+        <h2>Proyectos Activos y Casos de Éxito</h2>
+        <p>Gestionado desde nuestro sistema interno. Conoce las implementaciones que estamos ejecutando actualmente.</p>
+      </div>
+
+      <!-- Contenedor donde JavaScript inyecta los proyectos desde Django -->
+      <div class="projects-grid" id="django-projects-container">
+        <p style="color:var(--text-gray); text-align:center; grid-column:1/-1;">Cargando proyectos desde el servidor...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE HECTOR CAÑONGO -->
+  <section id="consultor">
+    <div class="container about-grid">
+      <div style="text-align:center;">
+        <!-- Reemplazar con la URL real de la foto de Hector -->
+        <img src="https://ui-avatars.com/api/?name=Hector+Canongo&background=0F172A&color=38BDF8&size=400" alt="Hector Cañongo" class="about-photo">
+      </div>
+      <div>
+        <span class="pill-tag">CONSULTOR PRINCIPAL</span>
+        <h2 style="font-size:32px; margin-bottom:14px;">Hector Cañongo</h2>
+        <p style="color:#475569; margin-bottom:16px;">
+          Con más de <strong>20 años de experiencia en tecnología y gestión digital</strong>, combino ingeniería de soporte técnico (incluyendo trayectoria en soporte de software para firma canadiense) con coaching organizacional.
+        </p>
+        <p style="color:#475569; margin-bottom:24px;">
+          Mi enfoque integra el factor humano con arquitecturas tecnológicas robustas para que las empresas crezcan sin fricciones ni vulnerabilidades.
+        </p>
+        <a href="/tarjeta/" class="btn btn-cyan">Abrir Tarjeta Digital de Contacto</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // URL DE LA API DE TU PROYECTO DJANGO
+    const DJANGO_API_URL = "http://127.0.0.1:8000/api/proyectos/";
+
+    // Proyectos de respaldo por si Django aún no está encendido en local
+    const FALLBACK_PROJECTS = [
+      {
+        titulo: "Blindaje de Red y Servidores Corporativos",
+        cliente: "Sector Industrial · Valencia",
+        estado: "En progreso",
+        progreso: 80,
+        descripcion: "Implementación de firewall perimetral, segmentación VLAN y respaldos automatizados en nube híbrida.",
+        tecnologias: "Firewall, Linux, Backups, VPN"
+      },
+      {
+        titulo: "Auditoría y Hardening de E-Commerce",
+        cliente: "Retail & Logística",
+        estado: "Completado",
+        progreso: 100,
+        descripcion: "Optimización de seguridad en WordPress, protección WAF y capacitación de personal administrativo.",
+        tecnologias: "WordPress, WAF, Ciberseguridad"
+      }
+    ];
+
+    async function loadDjangoProjects() {
+      const container = document.getElementById("django-projects-container");
+      let projects = [];
+
+      try {
+        const res = await fetch(DJANGO_API_URL);
+        if (!res.ok) throw new Error("API no disponible");
+        projects = await res.json();
+      } catch (err) {
+        console.warn("Usando proyectos de muestra mientras se conecta Django:", err);
+        projects = FALLBACK_PROJECTS;
+      }
+
+      container.innerHTML = projects.map(p => {
+        const tags = (p.tecnologias || "").split(",").map(t => `<span class="tech-tag">${t.trim()}</span>`).join("");
+        return `
+          <article class="project-card">
+            <div class="project-top">
+              <span style="font-size:12px; color:var(--accent-cyan); font-weight:600;">${p.cliente}</span>
+              <span class="status-badge">${p.estado} · ${p.progreso}%</span>
+            </div>
+            <h3 style="font-size:18px; color:white;">${p.titulo}</h3>
+            <p style="font-size:13.5px; color:var(--text-gray); flex:1;">${p.descripcion}</p>
+            <div class="progress-wrap">
+              <div class="progress-bar" style="width:${p.progreso}%"></div>
+            </div>
+            <div class="tech-tags">${tags}</div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    loadDjangoProjects();
+
+    // 1. PEGA AQUÍ LA URL DE TU GOOGLE APPS SCRIPT (/exec)
+    const SHEETS_CONSULTORIA_URL = "https://script.google.com/macros/s/AKfycbw-KvT5vv8ztdLFxzE6FwoCBeqf0AVS8cHbAb-fcL6I4M8CIE5OkLWIEkvy7h49aiI/exec";
+
+    // 2. PEGA AQUÍ EL ENLACE DE TU AGENDA DE CITAS DE GOOGLE CALENDAR
+    const GOOGLE_CALENDAR_BOOKING_URL = "https://calendar.app.google/deNoKCbMZe9Gysxd8";
+
+    // Función para preseleccionar servicio desde las tarjetas de abajo
+    function seleccionarServicio(nombreServicio) {
+      const select = document.getElementById("c-servicio");
+      if (select) select.value = nombreServicio;
+      document.getElementById("contacto").scrollIntoView({ behavior: "smooth" });
+    }
+
+    async function enviarYAgendar(e) {
+      e.preventDefault();
+      const btn = document.getElementById("btn-agendar");
+      btn.disabled = true;
+      btn.textContent = "Guardando y abriendo agenda...";
+
+      const datos = new URLSearchParams({
+        fecha: new Date().toLocaleString("es-VE"),
+        nombre: document.getElementById("c-nombre").value.trim(),
+        correo: document.getElementById("c-correo").value.trim(),
+        servicio: document.getElementById("c-servicio").value,
+        necesidad: document.getElementById("c-necesidad").value.trim()
+      });
+
+      // Guardar en Google Sheets
+      if (SHEETS_CONSULTORIA_URL.startsWith("http")) {
+        try {
+          await fetch(SHEETS_CONSULTORIA_URL, {
+            method: "POST",
+            mode: "no-cors",
+            body: datos
+          });
+        } catch (err) {
+          console.error("Error guardando en Google Sheets:", err);
+        }
+      }
+
+      // Redirigir a la agenda de Google Calendar para elegir día y hora
+      setTimeout(() => {
+        window.open(GOOGLE_CALENDAR_BOOKING_URL, "_blank");
+        btn.disabled = false;
+        btn.textContent = "Agendar Consultoría →";
+        document.getElementById("consultoria-form").reset();
+      }, 600);
+    }
+  </script>
+</body>
+</html>
