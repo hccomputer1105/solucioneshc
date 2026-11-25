@@ -203,3 +203,23 @@ class ReportePagoPublicidad(models.Model):
 
     class Meta:
         ordering = ['-fecha_reporte']
+
+class AppDemoRender(models.Model):
+    nombre = models.CharField(max_length=120, help_text="Ej: AuditTech - Sistema de Auditoría")
+    url = models.URLField(help_text="Ej: https://audittech.onrender.com/cuentas/login/")
+    descripcion = models.CharField(max_length=250, blank=True, default="")
+    credenciales_demo = models.CharField(
+        max_length=150,
+        blank=True,
+        default="",
+        help_text="Opcional: Usuario/clave de prueba para tus demos en vivo"
+    )
+    categoria = models.CharField(max_length=80, default="SaaS / Web App")
+    orden = models.PositiveIntegerField(default=1)
+    creado = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['orden', '-creado']
+
+    def __str__(self):
+        return f"{self.nombre} ({self.url})"

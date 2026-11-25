@@ -12,6 +12,7 @@ from .models import (
     ReportePagoTarjeta,
     PublicidadBanner,
     ReportePagoPublicidad,
+    AppDemoRender,
 )
 
 
@@ -116,6 +117,17 @@ def dashboard_view(request):
                     mensaje = f"Acceso creado para el cliente '{nuevo_user}'."
                 else:
                     mensaje = f"El usuario '{nuevo_user}' ya existe."
+
+        elif accion == "crear_app_demo":
+            AppDemoRender.objects.create(
+                nombre=request.POST.get("app_nombre", "").strip(),
+                url=request.POST.get("app_url", "").strip(),
+                descripcion=request.POST.get("app_descripcion", "").strip(),
+                credenciales_demo=request.POST.get("app_credenciales", "").strip(),
+                categoria=request.POST.get("app_categoria", "SaaS / Render").strip(),
+            )
+            return redirect("dashboard")
+
         else:
             cliente_id = request.POST.get("cliente_usuario")
             usuario_asignado = User.objects.filter(id=cliente_id).first() if cliente_id else None
@@ -139,11 +151,23 @@ def dashboard_view(request):
     pagos_pendientes = ReportePagoTarjeta.objects.filter(estado="pendiente")
     pagos_pub_pendientes = ReportePagoPublicidad.objects.filter(estado="pendiente")
 
+    if not AppDemoRender.objects.exists():
+        AppDemoRender.objects.create(
+            nombre="AuditTech · Plataforma de Auditoría",
+            url="https://audittech.onrender.com/cuentas/login/",
+            descripcion="Sistema web desplegado en Render para gestión y control de auditorías.",
+            categoria="Auditoría / SaaS",
+            orden=1,
+        )
+
+    apps_demo = AppDemoRender.objects.all()
+
     return render(request, "dashboard.html", {
         "proyectos": proyectos,
         "clientes": clientes,
         "pagos_pendientes": pagos_pendientes,
         "pagos_pub_pendientes": pagos_pub_pendientes,
+        "apps_demo": apps_demo,
         "mensaje": mensaje,
     })
 
@@ -398,4 +422,12 @@ def cliente_reportar_pago_pub(request):
             monto=request.POST.get("monto", ""),
             comprobante=request.FILES.get("comprobante"),
         )
+    return redirect("dashboard")
+
+@login_required(login_url="/login/")
+def eliminar_app_demo(request, pk):
+    if not request.user.is_staff:
+        return redirect("dashboard")
+    app_demo = get_object_or_404(AppDemoRender, pk=pk)
+    app_demo.delete()
     return redirect("dashboard")
