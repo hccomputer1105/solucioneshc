@@ -21,4 +21,5 @@ urlpatterns = [
     path("mi-publicidad/", views.cliente_editar_publicidad, name="cliente_editar_publicidad"),
     path("reportar-pago-pub/", views.cliente_reportar_pago_pub, name="cliente_reportar_pago_pub"),
     path("eliminar-app-demo/<int:pk>/", views.eliminar_app_demo, name="eliminar_app_demo"),
+    path("api/apps/", views.api_apps_publicas, name="api_apps_publicas"),
 ]

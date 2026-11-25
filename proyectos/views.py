@@ -68,6 +68,21 @@ def api_publicidad(request):
     return response
 
 
+def api_apps_publicas(request):
+    apps = AppDemoRender.objects.all()
+    data = [
+        {
+            "nombre": a.nombre,
+            "categoria": a.categoria,
+            "descripcion": a.descripcion,
+        }
+        for a in apps
+    ]
+    response = JsonResponse(data, safe=False)
+    response["Access-Control-Allow-Origin"] = "*"
+    return response
+
+
 # 3. AUTENTICACIÓN (LOGIN / LOGOUT)
 def login_view(request):
     error = None
@@ -128,20 +143,20 @@ def dashboard_view(request):
             )
             return redirect("dashboard")
 
-        else:
+        elif accion == "crear_proyecto" or not accion:
             cliente_id = request.POST.get("cliente_usuario")
             usuario_asignado = User.objects.filter(id=cliente_id).first() if cliente_id else None
 
             Proyecto.objects.create(
-                titulo=request.POST.get("titulo"),
-                cliente=request.POST.get("cliente"),
+                titulo=request.POST.get("titulo", "").strip(),
+                cliente=request.POST.get("cliente", "").strip(),
                 cliente_usuario=usuario_asignado,
-                descripcion=request.POST.get("descripcion"),
-                problema_detectado=request.POST.get("problema_detectado", ""),
-                resultado_obtenido=request.POST.get("resultado_obtenido", ""),
-                estado=request.POST.get("estado"),
-                progreso=int(request.POST.get("progreso", 0)),
-                tecnologias=request.POST.get("tecnologias"),
+                descripcion=request.POST.get("descripcion", "").strip(),
+                problema_detectado=request.POST.get("problema_detectado", "").strip(),
+                resultado_obtenido=request.POST.get("resultado_obtenido", "").strip(),
+                estado=request.POST.get("estado", "En progreso"),
+                progreso=int(request.POST.get("progreso") or 0),
+                tecnologias=request.POST.get("tecnologias", "").strip(),
                 visible_en_web=bool(request.POST.get("visible_en_web")),
             )
             return redirect("dashboard")
@@ -172,7 +187,7 @@ def dashboard_view(request):
     })
 
 
-# 5. CRUD DE PROYECTOS (SOLO ADMIN)
+# 5. CRUD DE PROYECTOS Y APPS DEMO (SOLO ADMIN)
 @login_required(login_url="/login/")
 def editar_proyecto(request, pk):
     if not request.user.is_staff:
@@ -181,14 +196,14 @@ def editar_proyecto(request, pk):
     if request.method == "POST":
         cliente_id = request.POST.get("cliente_usuario")
         proyecto.cliente_usuario = User.objects.filter(id=cliente_id).first() if cliente_id else None
-        proyecto.titulo = request.POST.get("titulo")
-        proyecto.cliente = request.POST.get("cliente")
-        proyecto.descripcion = request.POST.get("descripcion")
-        proyecto.problema_detectado = request.POST.get("problema_detectado", "")
-        proyecto.resultado_obtenido = request.POST.get("resultado_obtenido", "")
-        proyecto.estado = request.POST.get("estado")
-        proyecto.progreso = int(request.POST.get("progreso", 0))
-        proyecto.tecnologias = request.POST.get("tecnologias")
+        proyecto.titulo = request.POST.get("titulo", "").strip()
+        proyecto.cliente = request.POST.get("cliente", "").strip()
+        proyecto.descripcion = request.POST.get("descripcion", "").strip()
+        proyecto.problema_detectado = request.POST.get("problema_detectado", "").strip()
+        proyecto.resultado_obtenido = request.POST.get("resultado_obtenido", "").strip()
+        proyecto.estado = request.POST.get("estado", "En progreso")
+        proyecto.progreso = int(request.POST.get("progreso") or 0)
+        proyecto.tecnologias = request.POST.get("tecnologias", "").strip()
         proyecto.visible_en_web = bool(request.POST.get("visible_en_web"))
         proyecto.save()
     return redirect("dashboard")
@@ -200,6 +215,15 @@ def eliminar_proyecto(request, pk):
         return redirect("dashboard")
     proyecto = get_object_or_404(Proyecto, pk=pk)
     proyecto.delete()
+    return redirect("dashboard")
+
+
+@login_required(login_url="/login/")
+def eliminar_app_demo(request, pk):
+    if not request.user.is_staff:
+        return redirect("dashboard")
+    app_demo = get_object_or_404(AppDemoRender, pk=pk)
+    app_demo.delete()
     return redirect("dashboard")
 
 
@@ -422,12 +446,4 @@ def cliente_reportar_pago_pub(request):
             monto=request.POST.get("monto", ""),
             comprobante=request.FILES.get("comprobante"),
         )
-    return redirect("dashboard")
-
-@login_required(login_url="/login/")
-def eliminar_app_demo(request, pk):
-    if not request.user.is_staff:
-        return redirect("dashboard")
-    app_demo = get_object_or_404(AppDemoRender, pk=pk)
-    app_demo.delete()
     return redirect("dashboard")

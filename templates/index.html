@@ -528,12 +528,22 @@
 
     <!-- PROYECTOS Y CASOS DE ÉXITO (CARGADOS DESDE RENDER) -->
     <section id="proyectos" class="shc-section">
+      
       <div class="section-header">
         <span class="pill-tag">PORTAFOLIO EN VIVO</span>
         <h2>Proyectos y Casos de Éxito</h2>
         <p>Implementaciones reales sincronizadas desde nuestro sistema central de gestión.</p>
       </div>
       <div id="projects-grid" class="projects-grid"></div>
+    </section>
+    <!-- PLATAFORMAS Y SISTEMAS PROPIOS (INFORMATIVO DESDE RENDER) -->
+    <section id="plataformas" class="shc-section">
+      <div class="section-header">
+        <span class="pill-tag">ECOSISTEMA TECNOLÓGICO</span>
+        <h2>Plataformas y Sistemas Desarrollados</h2>
+        <p>Soluciones propias desplegadas en la nube para gestión, auditoría y control empresarial.</p>
+      </div>
+      <div id="apps-grid" class="projects-grid"></div>
     </section>
 
     <!-- RED DE ALIADOS B2B / PUBLICIDAD (CARGADOS DESDE RENDER) -->
@@ -729,6 +739,39 @@
 
     loadProyectos();
     loadPublicidad();
+
+    // CARGAR APPS DE RENDER DE FORMA INFORMATIVA (SIN ENLACES NI CREDENCIALES)
+    async function loadAppsInformativas() {
+      try {
+        const res = await fetch(`${RENDER_BASE_URL}/api/apps/`);
+        const apps = await res.json();
+        const sec = document.getElementById("plataformas");
+        const grid = document.getElementById("apps-grid");
+        if (!grid) return;
+
+        if (!apps.length) {
+          if (sec) sec.style.display = "none";
+          return;
+        }
+
+        grid.innerHTML = apps.map(a => `
+          <article class="project-card">
+            <div class="project-top">
+              <span class="project-client">${a.categoria}</span>
+              <span class="project-badge">Sistema Activo</span>
+            </div>
+            <h3>${a.nombre}</h3>
+            <p>${a.descripcion || "Plataforma empresarial desarrollada y operada por Soluciones Tecnológicas."}</p>
+          </article>
+        `).join("");
+      } catch (e) {
+        console.error("Error cargando plataformas:", e);
+      }
+    }
+
+    loadProyectos();
+    loadPublicidad();
+    loadAppsInformativas();
   </script>
 </body>
 </html>
