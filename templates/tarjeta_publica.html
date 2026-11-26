@@ -1,245 +1,560 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ t.nombre_completo }} | Tarjeta Digital</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    /* TEMA 1: CYBER-EXECUTIVE (DEFAULT) */
-    :root {
-      --bg-outer: #030712; --bg-card: #0B1324; --bg-surface: #131E36;
-      --accent: #0EA5E9; --accent-2: #10B981; --btn-text: #031120;
-      --text-main: #F8FAFC; --text-muted: #94A3B8;
-      --border: rgba(255, 255, 255, 0.09);
-      --banner-bg: linear-gradient(135deg, #061830 0%, #0EA5E9 160%);
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ t.nombre_completo }} | Tarjeta Digital</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* TEMA 1: CYBER-EXECUTIVE (DEFAULT) */
+      :root {
+        --bg-outer: #030712;
+        --bg-card: #0b1324;
+        --bg-surface: #131e36;
+        --accent: #0ea5e9;
+        --accent-2: #10b981;
+        --btn-text: #031120;
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --border: rgba(255, 255, 255, 0.09);
+        --banner-bg: linear-gradient(135deg, #061830 0%, #0ea5e9 160%);
+      }
 
-    /* TEMA 2: CORPORATIVO CLARO (BLANCO & AZUL MARINO) */
-    body.theme-corp_light {
-      --bg-outer: #E2E8F0; --bg-card: #FFFFFF; --bg-surface: #F8FAFC;
-      --accent: #0F172A; --accent-2: #0284C7; --btn-text: #FFFFFF;
-      --text-main: #0F172A; --text-muted: #475569;
-      --border: #E2E8F0;
-      --banner-bg: linear-gradient(135deg, #0F172A 0%, #1E3A8A 100%);
-    }
+      /* TEMA 2: CORPORATIVO CLARO (BLANCO & AZUL MARINO) */
+      body.theme-corp_light {
+        --bg-outer: #e2e8f0;
+        --bg-card: #ffffff;
+        --bg-surface: #f8fafc;
+        --accent: #0f172a;
+        --accent-2: #0284c7;
+        --btn-text: #ffffff;
+        --text-main: #0f172a;
+        --text-muted: #475569;
+        --border: #e2e8f0;
+        --banner-bg: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      }
 
-    /* TEMA 3: CONSULTOR ESTRATÉGICO (OSCURO & ESMERALDA) */
-    body.theme-emerald_pro {
-      --bg-outer: #020D0A; --bg-card: #071914; --bg-surface: #0D261F;
-      --accent: #10B981; --accent-2: #34D399; --btn-text: #02140E;
-      --text-main: #F8FAFC; --text-muted: #94A3B8;
-      --border: rgba(16, 185, 129, 0.16);
-      --banner-bg: linear-gradient(135deg, #041F17 0%, #10B981 170%);
-    }
+      /* TEMA 3: CONSULTOR ESTRATÉGICO (OSCURO & ESMERALDA) */
+      body.theme-emerald_pro {
+        --bg-outer: #020d0a;
+        --bg-card: #071914;
+        --bg-surface: #0d261f;
+        --accent: #10b981;
+        --accent-2: #34d399;
+        --btn-text: #02140e;
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --border: rgba(16, 185, 129, 0.16);
+        --banner-bg: linear-gradient(135deg, #041f17 0%, #10b981 170%);
+      }
 
-    /* TEMA 4: DIRECTIVO PREMIUM (GRAFITO & DORADO) */
-    body.theme-graphite_gold {
-      --bg-outer: #09090B; --bg-card: #121215; --bg-surface: #1C1C21;
-      --accent: #F59E0B; --accent-2: #FBBF24; --btn-text: #181002;
-      --text-main: #FAFAFA; --text-muted: #A1A1AA;
-      --border: rgba(245, 158, 11, 0.18);
-      --banner-bg: linear-gradient(135deg, #18181B 0%, #B45309 170%);
-    }
+      /* TEMA 4: DIRECTIVO PREMIUM (GRAFITO & DORADO) */
+      body.theme-graphite_gold {
+        --bg-outer: #09090b;
+        --bg-card: #121215;
+        --bg-surface: #1c1c21;
+        --accent: #f59e0b;
+        --accent-2: #fbbf24;
+        --btn-text: #181002;
+        --text-main: #fafafa;
+        --text-muted: #a1a1aa;
+        --border: rgba(245, 158, 11, 0.18);
+        --banner-bg: linear-gradient(135deg, #18181b 0%, #b45309 170%);
+      }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-    body {
-      min-height: 100vh; background: var(--bg-outer);
-      display: flex; justify-content: center; align-items: center; padding: 20px; color: var(--text-main);
-    }
-    .card-shell {
-      width: 100%; max-width: 430px; background: var(--bg-card);
-      border-radius: 26px; border: 1px solid var(--border);
-      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.55); overflow: hidden;
-    }
-    .card-banner {
-      height: 130px; background: var(--banner-bg);
-      display: flex; justify-content: space-between; align-items: flex-start; padding: 16px 20px;
-    }
-    .brand-mini {
-      font-size: 11px; font-weight: 800; color: white;
-      background: rgba(0,0,0,0.45); backdrop-filter: blur(8px);
-      padding: 5px 11px; border-radius: 99px;
-    }
-    .btn-qr {
-      background: rgba(0,0,0,0.55); color: white; border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 10px; padding: 6px 10px; font-size: 12px; font-weight: 600; cursor: pointer;
-    }
-    .profile-section { padding: 0 24px 22px; text-align: center; margin-top: -54px; }
-    .avatar-ring {
-      width: 108px; height: 108px; border-radius: 50%; padding: 4px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      margin: 0 auto 14px; box-shadow: 0 12px 28px rgba(0,0,0,0.4);
-    }
-    .avatar-ring img {
-      width: 100%; height: 100%; object-fit: cover; object-position: center top;
-      border-radius: 50%; background: var(--bg-card); display: block;
-    }
-    .profile-section h1 { font-size: 22px; font-weight: 800; }
-    .role-title { font-size: 13.5px; font-weight: 600; color: var(--accent); margin-top: 4px; }
-    .pillars-bar {
-      margin-top: 12px; padding: 8px 12px; background: var(--bg-surface);
-      border: 1px solid var(--border); border-radius: 12px; font-size: 12px; color: var(--text-muted);
-    }
-    .quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 20px 16px; }
-    .btn-primary {
-      background: var(--accent); color: var(--btn-text); border: none;
-      padding: 13px 14px; border-radius: 14px; font-size: 13.5px; font-weight: 700;
-      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
-    }
-    .btn-wa {
-      background: rgba(37, 211, 102, 0.14); color: #22C55E;
-      border: 1px solid rgba(37, 211, 102, 0.35); padding: 13px 14px; border-radius: 14px;
-      font-size: 13.5px; font-weight: 700; text-decoration: none;
-      display: flex; align-items: center; justify-content: center; gap: 6px;
-    }
-    .links-stack { padding: 0 20px 22px; display: flex; flex-direction: column; gap: 10px; }
-    .action-row {
-      display: flex; align-items: center; gap: 14px; padding: 13px 16px;
-      background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px;
-      color: var(--text-main); text-decoration: none; transition: 0.2s;
-    }
-    .action-row:hover { border-color: var(--accent); transform: translateX(3px); }
-    .row-icon {
-      width: 36px; height: 36px; border-radius: 10px; background: rgba(14,165,233,0.12);
-      color: var(--accent); display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;
-    }
-    .row-text { flex: 1; }
-    .row-text strong { display: block; font-size: 14px; }
-    .row-text span { display: block; font-size: 12px; color: var(--text-muted); }
-    .card-footer {
-      background: var(--bg-surface); border-top: 1px solid var(--border);
-      padding: 18px 20px; text-align: center;
-    }
-    .socials-row { display: flex; justify-content: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
-    .social-pill {
-      padding: 7px 12px; border-radius: 10px; background: var(--bg-card);
-      border: 1px solid var(--border); color: var(--text-main); text-decoration: none; font-size: 12px; font-weight: 600;
-    }
-    .btn-share {
-      width: 100%; padding: 12px; border-radius: 12px; background: #25D366;
-      color: #052E16; font-weight: 700; font-size: 13.5px; border: none; cursor: pointer;
-    }
-    .qr-modal {
-      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8);
-      z-index: 100; align-items: center; justify-content: center; padding: 20px;
-    }
-    .qr-modal.open { display: flex; }
-    .qr-box {
-      background: var(--bg-card); border: 1px solid var(--border); padding: 24px;
-      border-radius: 20px; text-align: center; max-width: 310px; width: 100%;
-    }
-    .qr-box img { width: 190px; height: 190px; background: white; padding: 10px; border-radius: 12px; margin: 14px 0; }
-    @media (max-width: 480px) {
-      body { padding: 0; align-items: flex-start; background: var(--bg-card); }
-      .card-shell { max-width: 100%; min-height: 100vh; border-radius: 0; border: none; }
-      .quick-grid { grid-template-columns: 1fr; }
-    }
-  </style>
-</head>
-<body class="theme-{{ t.plantilla }}">
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Inter", sans-serif;
+      }
+      body {
+        min-height: 100vh;
+        background: var(--bg-outer);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        color: var(--text-main);
+      }
 
-  <main class="card-shell">
-    <div class="card-banner">
-      <div class="brand-mini">{{ t.empresa|default:"TARJETA EJECUTIVA" }}</div>
-      <button class="btn-qr" onclick="document.getElementById('qrModal').classList.toggle('open')">Código QR</button>
-    </div>
+      /* CONTENEDOR INFERIOR: REDES + AVATAR LATERAL */
+      .bottom-social-avatar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
 
-    <div class="profile-section">
-      <div class="avatar-ring">
-        {% if t.foto %}
-          <img src="{{ t.foto.url }}" alt="{{ t.nombre_completo }}">
-        {% else %}
-          <img src="https://ui-avatars.com/api/?name={{ t.nombre_completo|urlencode }}&background=0F172A&color=38BDF8&size=240" alt="{{ t.nombre_completo }}">
+      .social-row-left {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      /* AVATAR EN ESQUINA INFERIOR DERECHA */
+      .corner-avatar-box {
+        position: relative;
+        width: 66px;
+        height: 66px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        padding: 3px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+        transition: transform 0.25s ease;
+      }
+
+      .corner-avatar-box:hover {
+        transform: scale(1.08);
+      }
+
+      .corner-avatar-media {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        object-position: center top;
+        background: var(--bg-card);
+        display: block;
+      }
+
+      .corner-avatar-dot {
+        position: absolute;
+        bottom: 2px;
+        right: 2px;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #10b981;
+        border: 2px solid var(--bg-surface);
+      }
+
+      .card-shell {
+        width: 100%;
+        max-width: 430px;
+        background: var(--bg-card);
+        border-radius: 26px;
+        border: 1px solid var(--border);
+        box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.55);
+        overflow: hidden;
+      }
+      .card-banner {
+        height: 130px;
+        background: var(--banner-bg);
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 16px 20px;
+      }
+      .brand-mini {
+        font-size: 11px;
+        font-weight: 800;
+        color: white;
+        background: rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(8px);
+        padding: 5px 11px;
+        border-radius: 99px;
+      }
+      .btn-qr {
+        background: rgba(0, 0, 0, 0.55);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        padding: 6px 10px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .profile-section {
+        padding: 0 24px 22px;
+        text-align: center;
+        margin-top: -54px;
+      }
+      .avatar-ring {
+        width: 108px;
+        height: 108px;
+        border-radius: 50%;
+        padding: 4px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        margin: 0 auto 14px;
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+      }
+      .avatar-ring img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        border-radius: 50%;
+        background: var(--bg-card);
+        display: block;
+      }
+      .profile-section h1 {
+        font-size: 22px;
+        font-weight: 800;
+      }
+      .role-title {
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--accent);
+        margin-top: 4px;
+      }
+      .pillars-bar {
+        margin-top: 12px;
+        padding: 8px 12px;
+        background: var(--bg-surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+      .quick-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        padding: 0 20px 16px;
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: var(--btn-text);
+        border: none;
+        padding: 13px 14px;
+        border-radius: 14px;
+        font-size: 13.5px;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+      }
+      .btn-wa {
+        background: rgba(37, 211, 102, 0.14);
+        color: #22c55e;
+        border: 1px solid rgba(37, 211, 102, 0.35);
+        padding: 13px 14px;
+        border-radius: 14px;
+        font-size: 13.5px;
+        font-weight: 700;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+      }
+      .links-stack {
+        padding: 0 20px 22px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .action-row {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 13px 16px;
+        background: var(--bg-surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        color: var(--text-main);
+        text-decoration: none;
+        transition: 0.2s;
+      }
+      .action-row:hover {
+        border-color: var(--accent);
+        transform: translateX(3px);
+      }
+      .row-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        background: rgba(14, 165, 233, 0.12);
+        color: var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        flex-shrink: 0;
+      }
+      .row-text {
+        flex: 1;
+      }
+      .row-text strong {
+        display: block;
+        font-size: 14px;
+      }
+      .row-text span {
+        display: block;
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+      .card-footer {
+        background: var(--bg-surface);
+        border-top: 1px solid var(--border);
+        padding: 18px 20px;
+      }
+      .social-pill {
+        padding: 7px 12px;
+        border-radius: 10px;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        color: var(--text-main);
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 600;
+        transition: 0.2s;
+      }
+      .social-pill:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .btn-share {
+        width: 100%;
+        padding: 12px;
+        border-radius: 12px;
+        background: #25d366;
+        color: #052e16;
+        font-weight: 700;
+        font-size: 13.5px;
+        border: none;
+        cursor: pointer;
+      }
+      .qr-modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 100;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      .qr-modal.open {
+        display: flex;
+      }
+      .qr-box {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        padding: 24px;
+        border-radius: 20px;
+        text-align: center;
+        max-width: 310px;
+        width: 100%;
+      }
+      .qr-box img {
+        width: 190px;
+        height: 190px;
+        background: white;
+        padding: 10px;
+        border-radius: 12px;
+        margin: 14px 0;
+      }
+      @media (max-width: 480px) {
+        body {
+          padding: 0;
+          align-items: flex-start;
+          background: var(--bg-card);
+        }
+        .card-shell {
+          max-width: 100%;
+          min-height: 100vh;
+          border-radius: 0;
+          border: none;
+        }
+        .quick-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body class="theme-{{ t.plantilla }}">
+    <main class="card-shell">
+      <div class="card-banner">
+        <div class="brand-mini">
+          {{ t.empresa|default:"TARJETA EJECUTIVA" }}
+        </div>
+        <button
+          class="btn-qr"
+          onclick="document.getElementById('qrModal').classList.toggle('open')"
+        >
+          Código QR
+        </button>
+      </div>
+
+      <div class="profile-section">
+        <div class="avatar-ring">
+          {% if t.foto %}
+          <img src="{{ t.foto.url }}" alt="{{ t.nombre_completo }}" />
+          {% else %}
+          <img
+            src="https://ui-avatars.com/api/?name={{ t.nombre_completo|urlencode }}&background=0F172A&color=38BDF8&size=240"
+            alt="{{ t.nombre_completo }}"
+          />
+          {% endif %}
+        </div>
+        <h1>{{ t.nombre_completo }}</h1>
+        <p class="role-title">{{ t.cargo }}</p>
+        {% if t.lema_especialidades %}
+        <div class="pillars-bar">{{ t.lema_especialidades }}</div>
         {% endif %}
       </div>
-      <h1>{{ t.nombre_completo }}</h1>
-      <p class="role-title">{{ t.cargo }}</p>
-      {% if t.lema_especialidades %}
-        <div class="pillars-bar">{{ t.lema_especialidades }}</div>
-      {% endif %}
-    </div>
 
-    <div class="quick-grid">
-      <button class="btn-primary" onclick="downloadVCard()">Guardar Contacto</button>
-      <a href="https://wa.me/{{ t.whatsapp }}?text=Hola%20{{ t.nombre_completo|urlencode }},%20vi%20tu%20tarjeta%20digital." target="_blank" class="btn-wa">WhatsApp</a>
-    </div>
-
-    <div class="links-stack">
-      <a href="tel:{{ t.telefono }}" class="action-row">
-        <div class="row-icon">TEL</div>
-        <div class="row-text"><strong>Llamar Directamente</strong><span>{{ t.telefono }}</span></div>
-      </a>
-
-      <a href="mailto:{{ t.correo }}" class="action-row">
-        <div class="row-icon">@</div>
-        <div class="row-text"><strong>Correo Electrónico</strong><span>{{ t.correo }}</span></div>
-      </a>
-
-      {% if t.sitio_web %}
-        <a href="{{ t.sitio_web }}" target="_blank" class="action-row">
-          <div class="row-icon">WEB</div>
-          <div class="row-text"><strong>Conoce Mis Servicios</strong><span>Visitar sitio web oficial</span></div>
-        </a>
-      {% endif %}
-
-      {% if t.link_agenda %}
-        <a href="{{ t.link_agenda }}" target="_blank" class="action-row">
-          <div class="row-icon">CITA</div>
-          <div class="row-text"><strong>Agendar Reunión / Consultoría</strong><span>Reservar espacio en calendario</span></div>
-        </a>
-      {% endif %}
-    </div>
-
-    <footer class="card-footer">
-      <div class="socials-row">
-        {% if t.linkedin %}<a href="{{ t.linkedin }}" target="_blank" class="social-pill">LinkedIn</a>{% endif %}
-        {% if t.instagram %}<a href="{{ t.instagram }}" target="_blank" class="social-pill">Instagram</a>{% endif %}
-        {% if t.youtube %}<a href="{{ t.youtube }}" target="_blank" class="social-pill">YouTube</a>{% endif %}
-        {% if t.facebook %}<a href="{{ t.facebook }}" target="_blank" class="social-pill">Facebook</a>{% endif %}
+      <div class="quick-grid">
+        <button class="btn-primary" onclick="downloadVCard()">
+          Guardar Contacto
+        </button>
+        <a
+          href="https://wa.me/{{ t.whatsapp }}?text=Hola%20{{ t.nombre_completo|urlencode }},%20vi%20tu%20tarjeta%20digital."
+          target="_blank"
+          rel="noopener"
+          class="btn-wa"
+          >WhatsApp</a
+        >
       </div>
-      <button class="btn-share" onclick="shareCard()">Compartir Tarjeta por WhatsApp</button>
-    </footer>
-  </main>
 
-  <div class="qr-modal" id="qrModal" onclick="this.classList.remove('open')">
-    <div class="qr-box" onclick="event.stopPropagation()">
-      <h3 style="font-size:16px;">Escanea mi Tarjeta</h3>
-      <img id="qr-img" src="" alt="QR">
-      <button class="btn-primary" style="width:100%;" onclick="document.getElementById('qrModal').classList.remove('open')">Cerrar</button>
+      <div class="links-stack">
+        <a href="tel:{{ t.telefono }}" class="action-row">
+          <div class="row-icon">TEL</div>
+          <div class="row-text">
+            <strong>Llamar Directamente</strong><span>{{ t.telefono }}</span>
+          </div>
+        </a>
+
+        <a href="mailto:{{ t.correo }}" class="action-row">
+          <div class="row-icon">@</div>
+          <div class="row-text">
+            <strong>Correo Electrónico</strong><span>{{ t.correo }}</span>
+          </div>
+        </a>
+
+        {% if t.sitio_web %}
+        <a href="{{ t.sitio_web }}" target="_blank" rel="noopener" class="action-row">
+          <div class="row-icon">WEB</div>
+          <div class="row-text">
+            <strong>Conoce Mis Servicios</strong
+            ><span>Visitar sitio web oficial</span>
+          </div>
+        </a>
+        {% endif %} {% if t.link_agenda %}
+        <a href="{{ t.link_agenda }}" target="_blank" rel="noopener" class="action-row">
+          <div class="row-icon">CITA</div>
+          <div class="row-text">
+            <strong>Agendar Reunión / Consultoría</strong
+            ><span>Reservar espacio en calendario</span>
+          </div>
+        </a>
+        {% endif %}
+      </div>
+
+      <footer class="card-footer">
+        <div class="bottom-social-avatar">
+          <div class="social-row-left">
+            {% if t.linkedin %}<a
+              href="{{ t.linkedin }}"
+              target="_blank"
+              rel="noopener"
+              class="social-pill"
+              >LinkedIn</a
+            >{% endif %} {% if t.instagram %}<a
+              href="{{ t.instagram }}"
+              target="_blank"
+              rel="noopener"
+              class="social-pill"
+              >Instagram</a
+            >{% endif %} {% if t.youtube %}<a
+              href="{{ t.youtube }}"
+              target="_blank"
+              rel="noopener"
+              class="social-pill"
+              >YouTube</a
+            >{% endif %} {% if t.facebook %}<a
+              href="{{ t.facebook }}"
+              target="_blank"
+              rel="noopener"
+              class="social-pill"
+              >Facebook</a
+            >{% endif %}
+          </div>
+
+          {% if t.video_avatar or t.avatar_imagen %}
+          <div class="corner-avatar-box" title="Asistente Digital">
+            {% if t.video_avatar %}
+              <video
+                src="{{ t.video_avatar.url }}"
+                {% if t.avatar_imagen %}poster="{{ t.avatar_imagen.url }}"{% endif %}
+                class="corner-avatar-media"
+                autoplay
+                loop
+                muted
+                playsinline
+              ></video>
+            {% elif t.avatar_imagen %}
+              <img
+                src="{{ t.avatar_imagen.url }}"
+                alt="Avatar {{ t.nombre_completo }}"
+                class="corner-avatar-media"
+              />
+            {% endif %}
+            <span class="corner-avatar-dot"></span>
+          </div>
+          {% endif %}
+        </div>
+
+        <button class="btn-share" onclick="shareCard()">
+          Compartir Tarjeta por WhatsApp
+        </button>
+      </footer>
+    </main>
+
+    <div class="qr-modal" id="qrModal" onclick="this.classList.remove('open')">
+      <div class="qr-box" onclick="event.stopPropagation()">
+        <h3 style="font-size: 16px">Escanea mi Tarjeta</h3>
+        <img id="qr-img" src="" alt="QR" />
+        <button
+          class="btn-primary"
+          style="width: 100%"
+          onclick="document.getElementById('qrModal').classList.remove('open')"
+        >
+          Cerrar
+        </button>
+      </div>
     </div>
-  </div>
 
-  <script>
-    document.getElementById("qr-img").src = "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" + encodeURIComponent(window.location.href);
+    <script>
+      document.getElementById("qr-img").src = "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" + encodeURIComponent(window.location.href);
 
-    function downloadVCard() {
-      const vcard = [
-        "BEGIN:VCARD",
-        "VERSION:3.0",
-        "FN:{{ t.nombre_completo|escapejs }}",
-        "ORG:{{ t.empresa|escapejs }}",
-        "TITLE:{{ t.cargo|escapejs }}",
-        "TEL;TYPE=CELL,VOICE,PREF:{{ t.telefono|escapejs }}",
-        "EMAIL;TYPE=WORK,INTERNET:{{ t.correo|escapejs }}",
-        {% if t.sitio_web %}"URL:{{ t.sitio_web|escapejs }}",{% endif %}
-        {% if t.foto %}"PHOTO;VALUE=URI;TYPE=JPEG:" + window.location.origin + "{{ t.foto.url }}",{% endif %}
-        "END:VCARD"
-      ].join("\r\n");
+      function downloadVCard() {
+        const vcard = [
+          "BEGIN:VCARD",
+          "VERSION:3.0",
+          "FN:{{ t.nombre_completo|escapejs }}",
+          "ORG:{{ t.empresa|escapejs }}",
+          "TITLE:{{ t.cargo|escapejs }}",
+          "TEL;TYPE=CELL,VOICE,PREF:{{ t.telefono|escapejs }}",
+          "EMAIL;TYPE=WORK,INTERNET:{{ t.correo|escapejs }}",
+          {% if t.sitio_web %}"URL:{{ t.sitio_web|escapejs }}",{% endif %}
+          {% if t.foto %}"PHOTO;VALUE=URI;TYPE=JPEG:" + window.location.origin + "{{ t.foto.url }}",{% endif %}
+          "END:VCARD"
+        ].join("\r\n");
 
-      const blob = new Blob([vcard], { type: "text/vcard;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "{{ t.slug }}.vcf";
-      a.click();
-      URL.revokeObjectURL(url);
-    }
+        const blob = new Blob([vcard], { type: "text/vcard;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "{{ t.slug }}.vcf";
+        a.click();
+        URL.revokeObjectURL(url);
+      }
 
-    function shareCard() {
-      const msg = "Te comparto la tarjeta digital de {{ t.nombre_completo|escapejs }}: " + window.location.href;
-      window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank");
-    }
-  </script>
-</body>
+      function shareCard() {
+        const msg = "Te comparto la tarjeta digital de {{ t.nombre_completo|escapejs }}: " + window.location.href;
+        window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank");
+      }
+    </script>
+  </body>
 </html>

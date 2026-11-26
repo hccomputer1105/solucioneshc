@@ -296,6 +296,10 @@ def admin_gestionar_tarjeta(request, user_id):
 
         if request.FILES.get("foto"):
             tarjeta.foto = request.FILES["foto"]
+        if request.FILES.get("avatar_imagen"):
+            tarjeta.avatar_imagen = request.FILES["avatar_imagen"]
+        if request.FILES.get("video_avatar"):
+            tarjeta.video_avatar = request.FILES["video_avatar"]
 
         tarjeta.save()
         return redirect("dashboard")
@@ -357,8 +361,14 @@ def cliente_editar_tarjeta(request):
         tarjeta.instagram = request.POST.get("instagram", tarjeta.instagram)
         tarjeta.youtube = request.POST.get("youtube", tarjeta.youtube)
         tarjeta.facebook = request.POST.get("facebook", tarjeta.facebook)
+
         if request.FILES.get("foto"):
             tarjeta.foto = request.FILES["foto"]
+        if request.FILES.get("avatar_imagen"):
+            tarjeta.avatar_imagen = request.FILES["avatar_imagen"]
+        if request.FILES.get("video_avatar"):
+            tarjeta.video_avatar = request.FILES["video_avatar"]
+
         tarjeta.save()
         guardado = True
 

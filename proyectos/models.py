@@ -63,7 +63,20 @@ class TarjetaDigital(models.Model):
     plantilla = models.CharField(max_length=30, choices=PLANTILLAS, default='cyber_dark')
 
     # Datos de la tarjeta
-    foto = models.FileField(upload_to='tarjetas/', blank=True, null=True)
+    foto = models.ImageField(upload_to="tarjetas/fotos/", blank=True, null=True)
+    avatar_imagen = models.ImageField(
+        upload_to="tarjetas/avatares/",
+        blank=True,
+        null=True,
+        help_text="Opcional: Imagen PNG/JPG del avatar inferior"
+    )
+    video_avatar = models.FileField(
+        upload_to="tarjetas/avatares_video/",
+        blank=True,
+        null=True,
+        help_text="Opcional: Video MP4/WebM en movimiento del avatar inferior"
+    )
+    
     nombre_completo = models.CharField(max_length=150)
     cargo = models.CharField(max_length=150)
     empresa = models.CharField(max_length=150, blank=True, default="")
@@ -356,3 +369,16 @@ class EvaluacionFactibilidad(models.Model):
 
     def __str__(self):
         return f"Evaluación {self.cliente.username} - {self.nombre_proyecto_propuesto} ({self.madurez_global}%)"
+
+class LeadDiagnostico(models.Model):
+    nombre = models.CharField(max_length=150)
+    correo = models.EmailField()
+    telefono = models.CharField(max_length=40)
+    nivel_blindaje = models.CharField(max_length=80, default="No especificado")
+    fecha = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-fecha"]
+
+    def __str__(self):
+        return f"{self.nombre} - {self.correo} ({self.nivel_blindaje})"        
