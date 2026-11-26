@@ -23,6 +23,10 @@
       padding: 12px 14px; border-radius: 10px; background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.3);
       margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 13.5px;
     }
+    .section-divider {
+      margin: 20px 0 14px; padding-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.1);
+      color: #38BDF8; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+    }
     .html-box {
       padding: 16px; border-radius: 12px; background: rgba(14,165,233,0.08); border: 1px solid rgba(14,165,233,0.3); margin-top: 18px;
     }
@@ -44,7 +48,7 @@
       </div>
     </div>
 
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST">
       {% csrf_token %}
 
       <label class="perm-box">
@@ -82,9 +86,11 @@
         </div>
         <div class="field">
           <label>URL / Slug público (/card/slug/)</label>
-          <input type="text" name="slug" value="{{ t.slug }}" required>
+          <input type="text" name="slug" value="{{ t.slug }}" placeholder="ej: equiofica" required>
         </div>
       </div>
+
+      <div class="section-divider">Datos Principales y Marca</div>
 
       <div class="grid-2">
         <div class="field"><label>Nombre Completo *</label><input type="text" name="nombre_completo" value="{{ t.nombre_completo }}" required></div>
@@ -92,11 +98,21 @@
       </div>
 
       <div class="grid-2">
-        <div class="field"><label>Empresa</label><input type="text" name="empresa" value="{{ t.empresa }}"></div>
-        <div class="field"><label>Foto de Perfil</label><input type="url" name="foto" accept="image/*" style="color:#94A3B8;"></div>
+        <div class="field"><label>Nombre de la Empresa</label><input type="text" name="empresa" value="{{ t.empresa }}" placeholder="Ej. Soluciones Tecnológicas"></div>
+        <div class="field">
+          <label>URL del Logo de la Empresa (WordPress)</label>
+          <input type="url" name="logo_empresa_url" value="{{ t.logo_empresa_url }}" placeholder="https://solucioneshc.com/wp-content/uploads/.../logo.png">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>URL de Foto de Perfil Principal (WordPress)</label>
+        <input type="url" name="foto_url" value="{{ t.foto_url }}" placeholder="https://solucioneshc.com/wp-content/uploads/.../foto.png">
       </div>
 
       <div class="field"><label>Especialidades / Lema</label><input type="text" name="lema_especialidades" value="{{ t.lema_especialidades }}"></div>
+
+      <div class="section-divider">Contacto y Redes Sociales</div>
 
       <div class="grid-2">
         <div class="field"><label>Teléfono (+58...)</label><input type="text" name="telefono" value="{{ t.telefono }}"></div>
@@ -117,43 +133,23 @@
         <div class="field"><label>Facebook URL</label><input type="url" name="facebook" value="{{ t.facebook }}"></div>
       </div>
 
-      <!-- IDENTIDAD DE EMPRESA (LOGO O NOMBRE) -->
-<div class="field">
-  <label>Nombre de la Empresa</label>
-  <input type="text" name="empresa" value="{{ t.empresa }}" placeholder="Ej. Soluciones Tecnológicas">
-</div>
+      <div class="section-divider">Asistente Virtual / Avatar (Enlaces de WordPress)</div>
 
-<div class="field">
-  <label>Logo de la Empresa (Opcional — reemplaza el texto superior si se sube)</label>
-  {% if t.logo_empresa %}
-    <div style="margin-bottom:6px;">
-      <img src="{{ t.logo_empresa.url }}" alt="Logo actual" style="max-height:36px; background:#0b1324; padding:4px 8px; border-radius:8px;">
-    </div>
-  {% endif %}
-  <input type="url" name="logo_empresa" accept="image/png,image/jpeg,image/webp">
-</div>
+      <div class="grid-2">
+        <div class="field">
+          <label>URL del Avatar en Imagen (PNG / JPG — Opcional)</label>
+          <input type="url" name="avatar_imagen_url" value="{{ t.avatar_imagen_url }}" placeholder="https://solucioneshc.com/wp-content/uploads/.../avatar.png">
+        </div>
+        <div class="field">
+          <label>URL del Avatar en Video MP4 (Opcional — tiene prioridad)</label>
+          <input type="url" name="video_avatar_url" value="{{ t.video_avatar_url }}" placeholder="https://solucioneshc.com/wp-content/uploads/.../avatar.mp4">
+        </div>
+      </div>
 
-<!-- ASISTENTE VIRTUAL / AVATAR Y DIÁLOGO -->
-<div class="field">
-  <label>Avatar en Imagen (PNG / JPG — Opcional)</label>
-  {% if t.avatar_imagen %}
-    <small style="display:block; color:#38bdf8; margin-bottom:4px;">Imagen cargada: {{ t.avatar_imagen.name }}</small>
-  {% endif %}
-  <input type="url" name="avatar_imagen" accept="image/png,image/jpeg,image/webp">
-</div>
-
-<div class="field">
-  <label>Avatar en Video en Movimiento (MP4 / WebM corto — Opcional, tiene prioridad sobre la imagen)</label>
-  {% if t.video_avatar %}
-    <small style="display:block; color:#10b981; margin-bottom:4px;">Video cargado: {{ t.video_avatar.name }}</small>
-  {% endif %}
-  <input type="url" name="video_avatar" accept="video/mp4,video/webm">
-</div>
-
-<div class="field">
-  <label>¿Qué dirá tu Avatar? (Escribe hasta 3 frases, una por línea)</label>
-  <textarea name="avatar_dialogo" rows="3" placeholder="¡Hola! Bienvenido a mi tarjeta digital.&#10;Agenda una reunión conmigo con un clic.&#10;Guarda mi contacto directo en tu teléfono.">{{ t.avatar_dialogo }}</textarea>
-</div>
+      <div class="field">
+        <label>¿Qué dirá tu Avatar? (Escribe hasta 3 frases, una por línea)</label>
+        <textarea name="avatar_dialogo" rows="3" placeholder="¡Hola! Bienvenido a mi tarjeta digital.&#10;Agenda una reunión conmigo con un clic.&#10;Guarda mi contacto directo en tu teléfono.">{{ t.avatar_dialogo }}</textarea>
+      </div>
 
       <div class="html-box">
         <label style="display:flex; align-items:center; gap:8px; color:#38BDF8; cursor:pointer; margin-bottom:10px;">

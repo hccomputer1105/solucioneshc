@@ -12,8 +12,12 @@
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     .field { margin-bottom: 14px; }
     label { display: block; font-size: 12.5px; color: #94A3B8; margin-bottom: 5px; font-weight: 600; }
-    input[type="text"], input[type="email"], input[type="url"], select {
+    input[type="text"], input[type="email"], input[type="url"], select, textarea {
       width: 100%; padding: 10px 12px; border-radius: 9px; background: #060D1A; border: 1px solid rgba(255,255,255,0.12); color: white; font-size: 13.5px;
+    }
+    .section-divider {
+      margin: 20px 0 14px; padding-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.1);
+      color: #38BDF8; font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
     }
     .btn { padding: 11px 18px; border-radius: 10px; border: none; font-weight: 700; cursor: pointer; text-decoration: none; display: inline-block; }
     .btn-cyan { background: #0EA5E9; color: #04101E; }
@@ -25,7 +29,7 @@
   <div class="box">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; flex-wrap:wrap; gap:10px;">
       <h2>Personalizar Mi Tarjeta Digital</h2>
-      <div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
         <a href="{% url 'ver_tarjeta_publica' t.slug %}" target="_blank" class="btn btn-cyan">Ver Mi Tarjeta en Vivo ↗</a>
         <a href="{% url 'dashboard' %}" class="btn btn-ghost">← Volver al Portal</a>
       </div>
@@ -37,8 +41,9 @@
       </div>
     {% endif %}
 
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST">
       {% csrf_token %}
+
       <div class="grid-2">
         <div class="field">
           <label>Elige el Diseño de tu Tarjeta</label>
@@ -49,28 +54,35 @@
           </select>
         </div>
         <div class="field">
-          <label>Actualizar Foto de Perfil</label>
-          <input type="file" name="foto" accept="image/*" style="color:#94A3B8;">
+          <label>URL de Foto de Perfil Principal</label>
+          <input type="url" name="foto_url" value="{{ t.foto_url }}" placeholder="https://.../foto.png">
         </div>
       </div>
 
       <div class="grid-2">
-        <div class="field"><label>Tu Nombre Completo</label><input type="text" name="nombre_completo" value="{{ t.nombre_completo }}" required></div>
-        <div class="field"><label>Tu Cargo o Especialidad</label><input type="text" name="cargo" value="{{ t.cargo }}" required></div>
+        <div class="field"><label>Tu Nombre Completo *</label><input type="text" name="nombre_completo" value="{{ t.nombre_completo }}" required></div>
+        <div class="field"><label>Tu Cargo o Especialidad *</label><input type="text" name="cargo" value="{{ t.cargo }}" required></div>
       </div>
 
       <div class="grid-2">
         <div class="field"><label>Nombre de tu Empresa</label><input type="text" name="empresa" value="{{ t.empresa }}"></div>
-        <div class="field"><label>Frase o Servicios Clave</label><input type="text" name="lema_especialidades" value="{{ t.lema_especialidades }}"></div>
+        <div class="field">
+          <label>URL del Logo de tu Empresa (Opcional)</label>
+          <input type="url" name="logo_empresa_url" value="{{ t.logo_empresa_url }}" placeholder="https://.../logo.png">
+        </div>
+      </div>
+
+      <div class="field"><label>Frase o Servicios Clave</label><input type="text" name="lema_especialidades" value="{{ t.lema_especialidades }}"></div>
+
+      <div class="section-divider">Datos de Contacto y Redes</div>
+
+      <div class="grid-2">
+        <div class="field"><label>Teléfono de Llamadas *</label><input type="text" name="telefono" value="{{ t.telefono }}" required></div>
+        <div class="field"><label>Número de WhatsApp (ej. 584141234567) *</label><input type="text" name="whatsapp" value="{{ t.whatsapp }}" required></div>
       </div>
 
       <div class="grid-2">
-        <div class="field"><label>Teléfono de Llamadas</label><input type="text" name="telefono" value="{{ t.telefono }}" required></div>
-        <div class="field"><label>Número de WhatsApp (ej. 584141234567)</label><input type="text" name="whatsapp" value="{{ t.whatsapp }}" required></div>
-      </div>
-
-      <div class="grid-2">
-        <div class="field"><label>Correo Electrónico</label><input type="email" name="correo" value="{{ t.correo }}" required></div>
+        <div class="field"><label>Correo Electrónico *</label><input type="email" name="correo" value="{{ t.correo }}" required></div>
         <div class="field"><label>Página Web</label><input type="url" name="sitio_web" value="{{ t.sitio_web }}"></div>
       </div>
 
@@ -81,6 +93,24 @@
         <div class="field"><label>Instagram</label><input type="url" name="instagram" value="{{ t.instagram }}"></div>
         <div class="field"><label>YouTube</label><input type="url" name="youtube" value="{{ t.youtube }}"></div>
         <div class="field"><label>Facebook</label><input type="url" name="facebook" value="{{ t.facebook }}"></div>
+      </div>
+
+      <div class="section-divider">Asistente Virtual / Avatar (Opcional)</div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label>URL del Avatar en Imagen (PNG / JPG)</label>
+          <input type="url" name="avatar_imagen_url" value="{{ t.avatar_imagen_url }}" placeholder="https://.../avatar.png">
+        </div>
+        <div class="field">
+          <label>URL del Avatar en Video MP4 (tiene prioridad)</label>
+          <input type="url" name="video_avatar_url" value="{{ t.video_avatar_url }}" placeholder="https://.../avatar.mp4">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>¿Qué dirá tu Avatar? (Hasta 3 frases, una por línea)</label>
+        <textarea name="avatar_dialogo" rows="3" placeholder="¡Hola! Bienvenido a mi tarjeta digital.&#10;Agenda una reunión conmigo con un clic.&#10;Guarda mi contacto directo en tu teléfono.">{{ t.avatar_dialogo }}</textarea>
       </div>
 
       <button type="submit" class="btn btn-cyan" style="width:100%; margin-top:10px;">Guardar y Actualizar Mi Tarjeta</button>

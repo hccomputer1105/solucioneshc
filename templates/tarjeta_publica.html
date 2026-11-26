@@ -465,44 +465,37 @@
     <main class="card-shell">
       <!-- CABECERA: LOGO DE EMPRESA O NOMBRE -->
       <div class="card-banner">
-        {% if t.logo_empresa_url %}
-        <div class="brand-logo-wrap">
-          <img
-            src="{{ t.logo_empresa_url }}"
-            alt="{{ t.empresa|default:t.nombre_completo }}"
-          />
-        </div>
-        {% else %}
-        <div class="brand-mini">
-          {{ t.empresa|default:"TARJETA EJECUTIVA" }}
-        </div>
-        {% endif %}
+  {% if t.logo_empresa_url %}
+    <div class="brand-logo-wrap">
+      <img src="{{ t.logo_empresa_url }}" alt="{{ t.empresa|default:t.nombre_completo }}" />
+    </div>
+  {% else %}
+    <div class="brand-mini">
+      {{ t.empresa|default:"TARJETA EJECUTIVA" }}
+    </div>
+  {% endif %}
 
-        <button
-          class="btn-qr"
-          onclick="document.getElementById('qrModal').classList.toggle('open')"
-        >
-          Código QR
-        </button>
-      </div>
+  <button
+    class="btn-qr"
+    onclick="document.getElementById('qrModal').classList.toggle('open')"
+  >
+    Código QR
+  </button>
+</div>
 
       <div class="profile-section">
-        <div class="avatar-ring">
-          {% if t.foto_url %}
-          <img src="{{ t.foto_url }}" alt="{{ t.nombre_completo }}" />
-          {% else %}
-          <img
-            src="https://ui-avatars.com/api/?name={{ t.nombre_completo|urlencode }}&background=0F172A&color=38BDF8&size=240"
-            alt="{{ t.nombre_completo }}"
-          />
-          {% endif %}
-        </div>
-        <h1>{{ t.nombre_completo }}</h1>
-        <p class="role-title">{{ t.cargo }}</p>
-        {% if t.lema_especialidades %}
-        <div class="pillars-bar">{{ t.lema_especialidades }}</div>
-        {% endif %}
-      </div>
+       <div class="avatar-ring">
+  {% if t.foto_url %}
+    <img src="{{ t.foto_url }}" alt="{{ t.nombre_completo }}" />
+  {% elif t.foto %}
+    <img src="{{ t.foto.url }}" alt="{{ t.nombre_completo }}" />
+  {% else %}
+    <img
+      src="https://ui-avatars.com/api/?name={{ t.nombre_completo|urlencode }}&background=0F172A&color=38BDF8&size=240"
+      alt="{{ t.nombre_completo }}"
+    />
+  {% endif %}
+</div>
 
       <div class="quick-grid">
         <button class="btn-primary" onclick="downloadVCard()">

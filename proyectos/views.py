@@ -141,15 +141,15 @@ def dashboard_view(request):
                     mensaje = f"El usuario '{nuevo_user}' ya existe."
 
         elif accion == "crear_app_demo":
-         AppDemoRender.objects.create(
-             nombre=request.POST.get("app_nombre", "").strip(),
-             url=request.POST.get("app_url", "").strip(),
-             descripcion=request.POST.get("app_descripcion", "").strip(),
-             credenciales_demo=request.POST.get("app_credenciales", "").strip(),
-             categoria=request.POST.get("app_categoria", "SaaS / Render").strip(),
-             visible_en_web=bool(request.POST.get("app_visible_en_web")),
-         )
-         return redirect("dashboard")
+            AppDemoRender.objects.create(
+                nombre=request.POST.get("app_nombre", "").strip(),
+                url=request.POST.get("app_url", "").strip(),
+                descripcion=request.POST.get("app_descripcion", "").strip(),
+                credenciales_demo=request.POST.get("app_credenciales", "").strip(),
+                categoria=request.POST.get("app_categoria", "SaaS / Render").strip(),
+                visible_en_web=bool(request.POST.get("app_visible_en_web")),
+            )
+            return redirect("dashboard")
 
         elif accion == "crear_proyecto" or not accion:
             cliente_id = request.POST.get("cliente_usuario")
@@ -271,8 +271,6 @@ def admin_gestionar_tarjeta(request, user_id):
     if request.method == "POST":
         tarjeta.habilitada = bool(request.POST.get("habilitada"))
         tarjeta.plan = request.POST.get("plan", "mensual")
-        tarjeta.empresa = request.POST.get("empresa", "")
-        tarjeta.avatar_dialogo = request.POST.get("avatar_dialogo", "").strip()
 
         fecha_str = request.POST.get("fecha_vencimiento")
         if fecha_str:
@@ -280,32 +278,32 @@ def admin_gestionar_tarjeta(request, user_id):
 
         tarjeta.slug = slugify(request.POST.get("slug") or cliente.username)
         tarjeta.plantilla = request.POST.get("plantilla", "cyber_dark")
-        tarjeta.nombre_completo = request.POST.get("nombre_completo", "")
-        tarjeta.cargo = request.POST.get("cargo", "")
-        tarjeta.empresa = request.POST.get("empresa", "")
-        tarjeta.lema_especialidades = request.POST.get("lema_especialidades", "")
-        tarjeta.telefono = request.POST.get("telefono", "")
-        tarjeta.whatsapp = request.POST.get("whatsapp", "")
-        tarjeta.correo = request.POST.get("correo", "")
-        tarjeta.sitio_web = request.POST.get("sitio_web", "")
-        tarjeta.link_agenda = request.POST.get("link_agenda", "")
-        tarjeta.linkedin = request.POST.get("linkedin", "")
-        tarjeta.instagram = request.POST.get("instagram", "")
-        tarjeta.youtube = request.POST.get("youtube", "")
-        tarjeta.facebook = request.POST.get("facebook", "")
-        tarjeta.usar_html_personalizado = bool(request.POST.get("usar_html_personalizado"))
-        tarjeta.codigo_html_personalizado = request.POST.get("codigo_html_personalizado", "")
-
+        tarjeta.nombre_completo = request.POST.get("nombre_completo", "").strip()
+        tarjeta.cargo = request.POST.get("cargo", "").strip()
         tarjeta.empresa = request.POST.get("empresa", "").strip()
+        tarjeta.lema_especialidades = request.POST.get("lema_especialidades", "").strip()
+        tarjeta.telefono = request.POST.get("telefono", "").strip()
+        tarjeta.whatsapp = request.POST.get("whatsapp", "").strip()
+        tarjeta.correo = request.POST.get("correo", "").strip()
+        tarjeta.sitio_web = request.POST.get("sitio_web", "").strip()
+        tarjeta.link_agenda = request.POST.get("link_agenda", "").strip()
+        tarjeta.linkedin = request.POST.get("linkedin", "").strip()
+        tarjeta.instagram = request.POST.get("instagram", "").strip()
+        tarjeta.youtube = request.POST.get("youtube", "").strip()
+        tarjeta.facebook = request.POST.get("facebook", "").strip()
+
+        # URLs de medios alojados en WordPress
         tarjeta.logo_empresa_url = request.POST.get("logo_empresa_url", "").strip()
-        tarjeta.foto_url = request.POST.get("foto_url", "").strip()
+        tarjeta.foto_url = (request.POST.get("foto_url") or request.POST.get("foto") or "").strip()
         tarjeta.avatar_imagen_url = request.POST.get("avatar_imagen_url", "").strip()
         tarjeta.video_avatar_url = request.POST.get("video_avatar_url", "").strip()
         tarjeta.avatar_dialogo = request.POST.get("avatar_dialogo", "").strip()
-        # ... resto de campos de texto ...
+
+        tarjeta.usar_html_personalizado = bool(request.POST.get("usar_html_personalizado"))
+        tarjeta.codigo_html_personalizado = request.POST.get("codigo_html_personalizado", "")
+
         tarjeta.save()
         return redirect("dashboard")
-
 
     return render(request, "admin_tarjeta_form.html", {"cliente": cliente, "t": tarjeta})
 
@@ -350,29 +348,27 @@ def cliente_editar_tarjeta(request):
 
     guardado = False
     if request.method == "POST":
-        tarjeta.empresa = request.POST.get("empresa", tarjeta.empresa)
-        tarjeta.avatar_dialogo = request.POST.get("avatar_dialogo", tarjeta.avatar_dialogo).strip()
         tarjeta.plantilla = request.POST.get("plantilla", tarjeta.plantilla)
-        tarjeta.nombre_completo = request.POST.get("nombre_completo", tarjeta.nombre_completo)
-        tarjeta.cargo = request.POST.get("cargo", tarjeta.cargo)
-        tarjeta.empresa = request.POST.get("empresa", tarjeta.empresa)
-        tarjeta.lema_especialidades = request.POST.get("lema_especialidades", tarjeta.lema_especialidades)
-        tarjeta.telefono = request.POST.get("telefono", tarjeta.telefono)
-        tarjeta.whatsapp = request.POST.get("whatsapp", tarjeta.whatsapp)
-        tarjeta.correo = request.POST.get("correo", tarjeta.correo)
-        tarjeta.sitio_web = request.POST.get("sitio_web", tarjeta.sitio_web)
-        tarjeta.link_agenda = request.POST.get("link_agenda", tarjeta.link_agenda)
-        tarjeta.linkedin = request.POST.get("linkedin", tarjeta.linkedin)
-        tarjeta.instagram = request.POST.get("instagram", tarjeta.instagram)
-        tarjeta.youtube = request.POST.get("youtube", tarjeta.youtube)
-        tarjeta.facebook = request.POST.get("facebook", tarjeta.facebook)
-
+        tarjeta.nombre_completo = request.POST.get("nombre_completo", tarjeta.nombre_completo).strip()
+        tarjeta.cargo = request.POST.get("cargo", tarjeta.cargo).strip()
         tarjeta.empresa = request.POST.get("empresa", tarjeta.empresa).strip()
-        tarjeta.logo_empresa_url = request.POST.get("logo_empresa_url", tarjeta.logo_empresa_url).strip()
-        tarjeta.foto_url = request.POST.get("foto_url", tarjeta.foto_url).strip()
-        tarjeta.avatar_imagen_url = request.POST.get("avatar_imagen_url", tarjeta.avatar_imagen_url).strip()
-        tarjeta.video_avatar_url = request.POST.get("video_avatar_url", tarjeta.video_avatar_url).strip()
-        tarjeta.avatar_dialogo = request.POST.get("avatar_dialogo", tarjeta.avatar_dialogo).strip()
+        tarjeta.lema_especialidades = request.POST.get("lema_especialidades", tarjeta.lema_especialidades).strip()
+        tarjeta.telefono = request.POST.get("telefono", tarjeta.telefono).strip()
+        tarjeta.whatsapp = request.POST.get("whatsapp", tarjeta.whatsapp).strip()
+        tarjeta.correo = request.POST.get("correo", tarjeta.correo).strip()
+        tarjeta.sitio_web = request.POST.get("sitio_web", tarjeta.sitio_web).strip()
+        tarjeta.link_agenda = request.POST.get("link_agenda", tarjeta.link_agenda).strip()
+        tarjeta.linkedin = request.POST.get("linkedin", tarjeta.linkedin).strip()
+        tarjeta.instagram = request.POST.get("instagram", tarjeta.instagram).strip()
+        tarjeta.youtube = request.POST.get("youtube", tarjeta.youtube).strip()
+        tarjeta.facebook = request.POST.get("facebook", tarjeta.facebook).strip()
+
+        # URLs de medios alojados en WordPress
+        tarjeta.logo_empresa_url = request.POST.get("logo_empresa_url", "").strip()
+        tarjeta.foto_url = (request.POST.get("foto_url") or request.POST.get("foto") or "").strip()
+        tarjeta.avatar_imagen_url = request.POST.get("avatar_imagen_url", "").strip()
+        tarjeta.video_avatar_url = request.POST.get("video_avatar_url", "").strip()
+        tarjeta.avatar_dialogo = request.POST.get("avatar_dialogo", "").strip()
 
         tarjeta.save()
         guardado = True
@@ -471,6 +467,7 @@ def cliente_reportar_pago_pub(request):
         )
     return redirect("dashboard")
 
+
 @login_required(login_url="/login/")
 def toggle_app_demo_web(request, pk):
     if not request.user.is_staff:
@@ -479,6 +476,7 @@ def toggle_app_demo_web(request, pk):
     app_demo.visible_en_web = not app_demo.visible_en_web
     app_demo.save()
     return redirect("dashboard")
+
 
 @login_required(login_url="/login/")
 def evaluacion_proyectos_view(request, eval_id=None):
