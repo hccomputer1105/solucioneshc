@@ -354,7 +354,9 @@
         font-size: 12.5px;
         line-height: 1.4;
         color: var(--text-main);
-        transition: opacity 0.3s ease, transform 0.3s ease;
+        transition:
+          opacity 0.3s ease,
+          transform 0.3s ease;
       }
 
       /* Flecha apuntando al avatar */
@@ -463,14 +465,17 @@
     <main class="card-shell">
       <!-- CABECERA: LOGO DE EMPRESA O NOMBRE -->
       <div class="card-banner">
-        {% if t.logo_empresa %}
-          <div class="brand-logo-wrap">
-            <img src="{{ t.logo_empresa.url }}" alt="{{ t.empresa|default:t.nombre_completo }}" />
-          </div>
+        {% if t.logo_empresa_url %}
+        <div class="brand-logo-wrap">
+          <img
+            src="{{ t.logo_empresa_url }}"
+            alt="{{ t.empresa|default:t.nombre_completo }}"
+          />
+        </div>
         {% else %}
-          <div class="brand-mini">
-            {{ t.empresa|default:"TARJETA EJECUTIVA" }}
-          </div>
+        <div class="brand-mini">
+          {{ t.empresa|default:"TARJETA EJECUTIVA" }}
+        </div>
         {% endif %}
 
         <button
@@ -483,19 +488,19 @@
 
       <div class="profile-section">
         <div class="avatar-ring">
-          {% if t.foto %}
-            <img src="{{ t.foto.url }}" alt="{{ t.nombre_completo }}" />
+          {% if t.foto_url %}
+          <img src="{{ t.foto_url }}" alt="{{ t.nombre_completo }}" />
           {% else %}
-            <img
-              src="https://ui-avatars.com/api/?name={{ t.nombre_completo|urlencode }}&background=0F172A&color=38BDF8&size=240"
-              alt="{{ t.nombre_completo }}"
-            />
+          <img
+            src="https://ui-avatars.com/api/?name={{ t.nombre_completo|urlencode }}&background=0F172A&color=38BDF8&size=240"
+            alt="{{ t.nombre_completo }}"
+          />
           {% endif %}
         </div>
         <h1>{{ t.nombre_completo }}</h1>
         <p class="role-title">{{ t.cargo }}</p>
         {% if t.lema_especialidades %}
-          <div class="pillars-bar">{{ t.lema_especialidades }}</div>
+        <div class="pillars-bar">{{ t.lema_especialidades }}</div>
         {% endif %}
       </div>
 
@@ -528,63 +533,100 @@
         </a>
 
         {% if t.sitio_web %}
-        <a href="{{ t.sitio_web }}" target="_blank" rel="noopener" class="action-row">
+        <a
+          href="{{ t.sitio_web }}"
+          target="_blank"
+          rel="noopener"
+          class="action-row"
+        >
           <div class="row-icon">WEB</div>
           <div class="row-text">
-            <strong>Conoce Mis Servicios</strong><span>Visitar sitio web oficial</span>
+            <strong>Conoce Mis Servicios</strong
+            ><span>Visitar sitio web oficial</span>
           </div>
         </a>
-        {% endif %}
-
-        {% if t.link_agenda %}
-        <a href="{{ t.link_agenda }}" target="_blank" rel="noopener" class="action-row">
+        {% endif %} {% if t.link_agenda %}
+        <a
+          href="{{ t.link_agenda }}"
+          target="_blank"
+          rel="noopener"
+          class="action-row"
+        >
           <div class="row-icon">CITA</div>
           <div class="row-text">
-            <strong>Agendar Reunión / Consultoría</strong><span>Reservar espacio en calendario</span>
+            <strong>Agendar Reunión / Consultoría</strong
+            ><span>Reservar espacio en calendario</span>
           </div>
         </a>
         {% endif %}
       </div>
 
       <footer class="card-footer">
-        <!-- ASISTENTE VIRTUAL CON AVATAR (VIDEO O IMAGEN) Y DIÁLOGO -->
-        {% if t.video_avatar or t.avatar_imagen or t.avatar_dialogo %}
+        {% if t.video_avatar_url or t.avatar_imagen_url or t.avatar_dialogo %}
         <div class="assistant-banner">
-          {% if t.video_avatar or t.avatar_imagen %}
+          {% if t.video_avatar_url or t.avatar_imagen_url %}
           <div class="corner-avatar-box" title="Asistente Digital">
-            {% if t.video_avatar %}
-              <video
-                src="{{ t.video_avatar.url }}"
-                {% if t.avatar_imagen %}poster="{{ t.avatar_imagen.url }}"{% endif %}
-                class="corner-avatar-media"
-                autoplay
-                loop
-                muted
-                playsinline
-              ></video>
-            {% elif t.avatar_imagen %}
-              <img
-                src="{{ t.avatar_imagen.url }}"
-                alt="Avatar {{ t.nombre_completo }}"
-                class="corner-avatar-media"
-              />
+            {% if t.video_avatar_url %}
+            <video
+              src="{{ t.video_avatar_url }}"
+              {%
+              if
+              t.avatar_imagen_url
+              %}poster="{{ t.avatar_imagen_url }}"
+              {%
+              endif
+              %}
+              class="corner-avatar-media"
+              autoplay
+              loop
+              muted
+              playsinline
+            ></video>
+            {% elif t.avatar_imagen_url %}
+            <img
+              src="{{ t.avatar_imagen_url }}"
+              alt="Avatar {{ t.nombre_completo }}"
+              class="corner-avatar-media"
+            />
             {% endif %}
             <span class="corner-avatar-dot"></span>
           </div>
           {% endif %}
 
           <div class="avatar-speech-box" id="avatar-speech">
-            ¡Hola! Soy el asistente digital de {{ t.nombre_completo }}. ¿En qué podemos ayudarte?
+            ¡Hola! Soy el asistente digital de {{ t.nombre_completo }}. ¿En qué
+            podemos ayudarte?
           </div>
         </div>
         {% endif %}
 
         <!-- REDES SOCIALES -->
         <div class="socials-row">
-          {% if t.linkedin %}<a href="{{ t.linkedin }}" target="_blank" rel="noopener" class="social-pill">LinkedIn</a>{% endif %}
-          {% if t.instagram %}<a href="{{ t.instagram }}" target="_blank" rel="noopener" class="social-pill">Instagram</a>{% endif %}
-          {% if t.youtube %}<a href="{{ t.youtube }}" target="_blank" rel="noopener" class="social-pill">YouTube</a>{% endif %}
-          {% if t.facebook %}<a href="{{ t.facebook }}" target="_blank" rel="noopener" class="social-pill">Facebook</a>{% endif %}
+          {% if t.linkedin %}<a
+            href="{{ t.linkedin }}"
+            target="_blank"
+            rel="noopener"
+            class="social-pill"
+            >LinkedIn</a
+          >{% endif %} {% if t.instagram %}<a
+            href="{{ t.instagram }}"
+            target="_blank"
+            rel="noopener"
+            class="social-pill"
+            >Instagram</a
+          >{% endif %} {% if t.youtube %}<a
+            href="{{ t.youtube }}"
+            target="_blank"
+            rel="noopener"
+            class="social-pill"
+            >YouTube</a
+          >{% endif %} {% if t.facebook %}<a
+            href="{{ t.facebook }}"
+            target="_blank"
+            rel="noopener"
+            class="social-pill"
+            >Facebook</a
+          >{% endif %}
         </div>
 
         <button class="btn-share" onclick="shareCard()">
@@ -657,7 +699,7 @@
           "TEL;TYPE=CELL,VOICE,PREF:{{ t.telefono|escapejs }}",
           "EMAIL;TYPE=WORK,INTERNET:{{ t.correo|escapejs }}",
           {% if t.sitio_web %}"URL:{{ t.sitio_web|escapejs }}",{% endif %}
-          {% if t.foto %}"PHOTO;VALUE=URI;TYPE=JPEG:" + window.location.origin + "{{ t.foto.url }}",{% endif %}
+          {% if t.foto_url %}"PHOTO;VALUE=URI;TYPE=JPEG:" + "PHOTO;VALUE=URI;TYPE=JPEG:{{ t.foto_url|escapejs }}"+ "{{ t.foto_url }}",{% endif %}
           "END:VCARD"
         ].join("\r\n");
 

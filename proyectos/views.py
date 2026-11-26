@@ -296,17 +296,16 @@ def admin_gestionar_tarjeta(request, user_id):
         tarjeta.usar_html_personalizado = bool(request.POST.get("usar_html_personalizado"))
         tarjeta.codigo_html_personalizado = request.POST.get("codigo_html_personalizado", "")
 
-        if request.FILES.get("logo_empresa"):
-            tarjeta.logo_empresa = request.FILES["logo_empresa"]
-        if request.FILES.get("foto"):
-            tarjeta.foto = request.FILES["foto"]
-        if request.FILES.get("avatar_imagen"):
-            tarjeta.avatar_imagen = request.FILES["avatar_imagen"]
-        if request.FILES.get("video_avatar"):
-            tarjeta.video_avatar = request.FILES["video_avatar"]
-
+        tarjeta.empresa = request.POST.get("empresa", "").strip()
+        tarjeta.logo_empresa_url = request.POST.get("logo_empresa_url", "").strip()
+        tarjeta.foto_url = request.POST.get("foto_url", "").strip()
+        tarjeta.avatar_imagen_url = request.POST.get("avatar_imagen_url", "").strip()
+        tarjeta.video_avatar_url = request.POST.get("video_avatar_url", "").strip()
+        tarjeta.avatar_dialogo = request.POST.get("avatar_dialogo", "").strip()
+        # ... resto de campos de texto ...
         tarjeta.save()
         return redirect("dashboard")
+
 
     return render(request, "admin_tarjeta_form.html", {"cliente": cliente, "t": tarjeta})
 
@@ -368,14 +367,12 @@ def cliente_editar_tarjeta(request):
         tarjeta.youtube = request.POST.get("youtube", tarjeta.youtube)
         tarjeta.facebook = request.POST.get("facebook", tarjeta.facebook)
 
-        if request.FILES.get("logo_empresa"):
-            tarjeta.logo_empresa = request.FILES["logo_empresa"]
-        if request.FILES.get("foto"):
-            tarjeta.foto = request.FILES["foto"]
-        if request.FILES.get("avatar_imagen"):
-            tarjeta.avatar_imagen = request.FILES["avatar_imagen"]
-        if request.FILES.get("video_avatar"):
-            tarjeta.video_avatar = request.FILES["video_avatar"]
+        tarjeta.empresa = request.POST.get("empresa", tarjeta.empresa).strip()
+        tarjeta.logo_empresa_url = request.POST.get("logo_empresa_url", tarjeta.logo_empresa_url).strip()
+        tarjeta.foto_url = request.POST.get("foto_url", tarjeta.foto_url).strip()
+        tarjeta.avatar_imagen_url = request.POST.get("avatar_imagen_url", tarjeta.avatar_imagen_url).strip()
+        tarjeta.video_avatar_url = request.POST.get("video_avatar_url", tarjeta.video_avatar_url).strip()
+        tarjeta.avatar_dialogo = request.POST.get("avatar_dialogo", tarjeta.avatar_dialogo).strip()
 
         tarjeta.save()
         guardado = True

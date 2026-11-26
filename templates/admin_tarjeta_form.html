@@ -93,7 +93,7 @@
 
       <div class="grid-2">
         <div class="field"><label>Empresa</label><input type="text" name="empresa" value="{{ t.empresa }}"></div>
-        <div class="field"><label>Foto de Perfil</label><input type="file" name="foto" accept="image/*" style="color:#94A3B8;"></div>
+        <div class="field"><label>Foto de Perfil</label><input type="url" name="foto" accept="image/*" style="color:#94A3B8;"></div>
       </div>
 
       <div class="field"><label>Especialidades / Lema</label><input type="text" name="lema_especialidades" value="{{ t.lema_especialidades }}"></div>
@@ -130,7 +130,7 @@
       <img src="{{ t.logo_empresa.url }}" alt="Logo actual" style="max-height:36px; background:#0b1324; padding:4px 8px; border-radius:8px;">
     </div>
   {% endif %}
-  <input type="file" name="logo_empresa" accept="image/png,image/jpeg,image/webp">
+  <input type="url" name="logo_empresa" accept="image/png,image/jpeg,image/webp">
 </div>
 
 <!-- ASISTENTE VIRTUAL / AVATAR Y DIÁLOGO -->
@@ -139,7 +139,7 @@
   {% if t.avatar_imagen %}
     <small style="display:block; color:#38bdf8; margin-bottom:4px;">Imagen cargada: {{ t.avatar_imagen.name }}</small>
   {% endif %}
-  <input type="file" name="avatar_imagen" accept="image/png,image/jpeg,image/webp">
+  <input type="url" name="avatar_imagen" accept="image/png,image/jpeg,image/webp">
 </div>
 
 <div class="field">
@@ -147,7 +147,7 @@
   {% if t.video_avatar %}
     <small style="display:block; color:#10b981; margin-bottom:4px;">Video cargado: {{ t.video_avatar.name }}</small>
   {% endif %}
-  <input type="file" name="video_avatar" accept="video/mp4,video/webm">
+  <input type="url" name="video_avatar" accept="video/mp4,video/webm">
 </div>
 
 <div class="field">

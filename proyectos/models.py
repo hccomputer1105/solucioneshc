@@ -97,24 +97,29 @@ class TarjetaDigital(models.Model):
     actualizada = models.DateTimeField(auto_now=True)
 
     empresa = models.CharField(max_length=120, blank=True, default="")
-    logo_empresa = models.ImageField(
-        upload_to="tarjetas/logos/",
+    logo_empresa_url = models.URLField(
+        max_length=500,
         blank=True,
-        null=True,
-        help_text="Logo de la empresa (PNG transparente recomendado)"
+        default="",
+        help_text="URL del logo de la empresa en WordPress"
     )
-    foto = models.ImageField(upload_to="tarjetas/fotos/", blank=True, null=True)
-    avatar_imagen = models.ImageField(
-        upload_to="tarjetas/avatares/",
+    foto_url = models.URLField(
+        max_length=500,
         blank=True,
-        null=True,
-        help_text="Imagen PNG/JPG del avatar asistente"
+        default="",
+        help_text="URL de la foto de perfil en WordPress"
     )
-    video_avatar = models.FileField(
-        upload_to="tarjetas/avatares_video/",
+    avatar_imagen_url = models.URLField(
+        max_length=500,
         blank=True,
-        null=True,
-        help_text="Video corto MP4/WebM del avatar en movimiento"
+        default="",
+        help_text="URL de la imagen del avatar en WordPress (opcional)"
+    )
+    video_avatar_url = models.URLField(
+        max_length=500,
+        blank=True,
+        default="",
+        help_text="URL del video MP4/WebM del avatar en WordPress (opcional)"
     )
     avatar_dialogo = models.TextField(
         blank=True,
