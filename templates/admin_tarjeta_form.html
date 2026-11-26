@@ -117,6 +117,44 @@
         <div class="field"><label>Facebook URL</label><input type="url" name="facebook" value="{{ t.facebook }}"></div>
       </div>
 
+      <!-- IDENTIDAD DE EMPRESA (LOGO O NOMBRE) -->
+<div class="field">
+  <label>Nombre de la Empresa</label>
+  <input type="text" name="empresa" value="{{ t.empresa }}" placeholder="Ej. Soluciones Tecnológicas">
+</div>
+
+<div class="field">
+  <label>Logo de la Empresa (Opcional — reemplaza el texto superior si se sube)</label>
+  {% if t.logo_empresa %}
+    <div style="margin-bottom:6px;">
+      <img src="{{ t.logo_empresa.url }}" alt="Logo actual" style="max-height:36px; background:#0b1324; padding:4px 8px; border-radius:8px;">
+    </div>
+  {% endif %}
+  <input type="file" name="logo_empresa" accept="image/png,image/jpeg,image/webp">
+</div>
+
+<!-- ASISTENTE VIRTUAL / AVATAR Y DIÁLOGO -->
+<div class="field">
+  <label>Avatar en Imagen (PNG / JPG — Opcional)</label>
+  {% if t.avatar_imagen %}
+    <small style="display:block; color:#38bdf8; margin-bottom:4px;">Imagen cargada: {{ t.avatar_imagen.name }}</small>
+  {% endif %}
+  <input type="file" name="avatar_imagen" accept="image/png,image/jpeg,image/webp">
+</div>
+
+<div class="field">
+  <label>Avatar en Video en Movimiento (MP4 / WebM corto — Opcional, tiene prioridad sobre la imagen)</label>
+  {% if t.video_avatar %}
+    <small style="display:block; color:#10b981; margin-bottom:4px;">Video cargado: {{ t.video_avatar.name }}</small>
+  {% endif %}
+  <input type="file" name="video_avatar" accept="video/mp4,video/webm">
+</div>
+
+<div class="field">
+  <label>¿Qué dirá tu Avatar? (Escribe hasta 3 frases, una por línea)</label>
+  <textarea name="avatar_dialogo" rows="3" placeholder="¡Hola! Bienvenido a mi tarjeta digital.&#10;Agenda una reunión conmigo con un clic.&#10;Guarda mi contacto directo en tu teléfono.">{{ t.avatar_dialogo }}</textarea>
+</div>
+
       <div class="html-box">
         <label style="display:flex; align-items:center; gap:8px; color:#38BDF8; cursor:pointer; margin-bottom:10px;">
           <input type="checkbox" name="usar_html_personalizado" {% if t.usar_html_personalizado %}checked{% endif %}>

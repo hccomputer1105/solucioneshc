@@ -23,7 +23,7 @@
         --banner-bg: linear-gradient(135deg, #061830 0%, #0ea5e9 160%);
       }
 
-      /* TEMA 2: CORPORATIVO CLARO (BLANCO & AZUL MARINO) */
+      /* TEMA 2: CORPORATIVO CLARO */
       body.theme-corp_light {
         --bg-outer: #e2e8f0;
         --bg-card: #ffffff;
@@ -71,6 +71,7 @@
         padding: 0;
         font-family: "Inter", sans-serif;
       }
+
       body {
         min-height: 100vh;
         background: var(--bg-outer);
@@ -79,60 +80,6 @@
         align-items: center;
         padding: 20px;
         color: var(--text-main);
-      }
-
-      /* CONTENEDOR INFERIOR: REDES + AVATAR LATERAL */
-      .bottom-social-avatar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        margin-bottom: 14px;
-      }
-
-      .social-row-left {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        flex-wrap: wrap;
-      }
-
-      /* AVATAR EN ESQUINA INFERIOR DERECHA */
-      .corner-avatar-box {
-        position: relative;
-        width: 66px;
-        height: 66px;
-        flex-shrink: 0;
-        border-radius: 50%;
-        padding: 3px;
-        background: linear-gradient(135deg, var(--accent), var(--accent-2));
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
-        transition: transform 0.25s ease;
-      }
-
-      .corner-avatar-box:hover {
-        transform: scale(1.08);
-      }
-
-      .corner-avatar-media {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        object-fit: cover;
-        object-position: center top;
-        background: var(--bg-card);
-        display: block;
-      }
-
-      .corner-avatar-dot {
-        position: absolute;
-        bottom: 2px;
-        right: 2px;
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-        background: #10b981;
-        border: 2px solid var(--bg-surface);
       }
 
       .card-shell {
@@ -144,38 +91,74 @@
         box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.55);
         overflow: hidden;
       }
+
+      /* CABECERA CON LOGO O NOMBRE DE EMPRESA */
       .card-banner {
-        height: 130px;
+        height: 138px;
         background: var(--banner-bg);
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
         padding: 16px 20px;
+        gap: 10px;
       }
+
       .brand-mini {
         font-size: 11px;
         font-weight: 800;
-        color: white;
+        letter-spacing: 0.5px;
+        color: #ffffff;
         background: rgba(0, 0, 0, 0.45);
         backdrop-filter: blur(8px);
-        padding: 5px 11px;
+        padding: 6px 12px;
         border-radius: 99px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        max-width: 210px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
+
+      .brand-logo-wrap {
+        background: rgba(6, 13, 26, 0.55);
+        backdrop-filter: blur(8px);
+        padding: 6px 12px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        max-width: 185px;
+        height: 44px;
+      }
+
+      .brand-logo-wrap img {
+        max-height: 32px;
+        max-width: 160px;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        display: block;
+      }
+
       .btn-qr {
         background: rgba(0, 0, 0, 0.55);
-        color: white;
+        color: #ffffff;
         border: 1px solid rgba(255, 255, 255, 0.2);
         border-radius: 10px;
-        padding: 6px 10px;
+        padding: 7px 11px;
         font-size: 12px;
         font-weight: 600;
         cursor: pointer;
+        flex-shrink: 0;
       }
+
       .profile-section {
         padding: 0 24px 22px;
         text-align: center;
         margin-top: -54px;
       }
+
       .avatar-ring {
         width: 108px;
         height: 108px;
@@ -185,6 +168,7 @@
         margin: 0 auto 14px;
         box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
       }
+
       .avatar-ring img {
         width: 100%;
         height: 100%;
@@ -194,16 +178,19 @@
         background: var(--bg-card);
         display: block;
       }
+
       .profile-section h1 {
         font-size: 22px;
         font-weight: 800;
       }
+
       .role-title {
         font-size: 13.5px;
         font-weight: 600;
         color: var(--accent);
         margin-top: 4px;
       }
+
       .pillars-bar {
         margin-top: 12px;
         padding: 8px 12px;
@@ -213,12 +200,14 @@
         font-size: 12px;
         color: var(--text-muted);
       }
+
       .quick-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 10px;
         padding: 0 20px 16px;
       }
+
       .btn-primary {
         background: var(--accent);
         color: var(--btn-text);
@@ -233,6 +222,7 @@
         justify-content: center;
         gap: 6px;
       }
+
       .btn-wa {
         background: rgba(37, 211, 102, 0.14);
         color: #22c55e;
@@ -247,12 +237,14 @@
         justify-content: center;
         gap: 6px;
       }
+
       .links-stack {
         padding: 0 20px 22px;
         display: flex;
         flex-direction: column;
         gap: 10px;
       }
+
       .action-row {
         display: flex;
         align-items: center;
@@ -265,10 +257,12 @@
         text-decoration: none;
         transition: 0.2s;
       }
+
       .action-row:hover {
         border-color: var(--accent);
         transform: translateX(3px);
       }
+
       .row-icon {
         width: 36px;
         height: 36px;
@@ -281,23 +275,109 @@
         font-weight: 800;
         flex-shrink: 0;
       }
+
       .row-text {
         flex: 1;
       }
+
       .row-text strong {
         display: block;
         font-size: 14px;
       }
+
       .row-text span {
         display: block;
         font-size: 12px;
         color: var(--text-muted);
       }
+
+      /* PIE DE TARJETA: ASISTENTE + REDES + COMPARTIR */
       .card-footer {
         background: var(--bg-surface);
         border-top: 1px solid var(--border);
-        padding: 18px 20px;
+        padding: 18px 20px 22px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
       }
+
+      /* TARJETA DEL ASISTENTE CON BURBUJA DE DIÁLOGO */
+      .assistant-banner {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 10px 14px;
+      }
+
+      .corner-avatar-box {
+        position: relative;
+        width: 68px;
+        height: 68px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        padding: 3px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+      }
+
+      .corner-avatar-media {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        object-position: center top;
+        background: var(--bg-surface);
+        display: block;
+      }
+
+      .corner-avatar-dot {
+        position: absolute;
+        bottom: 2px;
+        right: 2px;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #10b981;
+        border: 2px solid var(--bg-card);
+      }
+
+      .avatar-speech-box {
+        position: relative;
+        flex: 1;
+        background: var(--bg-surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 9px 12px;
+        font-size: 12.5px;
+        line-height: 1.4;
+        color: var(--text-main);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      /* Flecha apuntando al avatar */
+      .avatar-speech-box::before {
+        content: "";
+        position: absolute;
+        left: -6px;
+        top: 50%;
+        transform: translateY(-50%) rotate(45deg);
+        width: 10px;
+        height: 10px;
+        background: var(--bg-surface);
+        border-left: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .socials-row {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
       .social-pill {
         padding: 7px 12px;
         border-radius: 10px;
@@ -309,13 +389,15 @@
         font-weight: 600;
         transition: 0.2s;
       }
+
       .social-pill:hover {
         border-color: var(--accent);
         color: var(--accent);
       }
+
       .btn-share {
         width: 100%;
-        padding: 12px;
+        padding: 13px;
         border-radius: 12px;
         background: #25d366;
         color: #052e16;
@@ -324,6 +406,7 @@
         border: none;
         cursor: pointer;
       }
+
       .qr-modal {
         display: none;
         position: fixed;
@@ -334,9 +417,11 @@
         justify-content: center;
         padding: 20px;
       }
+
       .qr-modal.open {
         display: flex;
       }
+
       .qr-box {
         background: var(--bg-card);
         border: 1px solid var(--border);
@@ -346,6 +431,7 @@
         max-width: 310px;
         width: 100%;
       }
+
       .qr-box img {
         width: 190px;
         height: 190px;
@@ -354,6 +440,7 @@
         border-radius: 12px;
         margin: 14px 0;
       }
+
       @media (max-width: 480px) {
         body {
           padding: 0;
@@ -374,10 +461,18 @@
   </head>
   <body class="theme-{{ t.plantilla }}">
     <main class="card-shell">
+      <!-- CABECERA: LOGO DE EMPRESA O NOMBRE -->
       <div class="card-banner">
-        <div class="brand-mini">
-          {{ t.empresa|default:"TARJETA EJECUTIVA" }}
-        </div>
+        {% if t.logo_empresa %}
+          <div class="brand-logo-wrap">
+            <img src="{{ t.logo_empresa.url }}" alt="{{ t.empresa|default:t.nombre_completo }}" />
+          </div>
+        {% else %}
+          <div class="brand-mini">
+            {{ t.empresa|default:"TARJETA EJECUTIVA" }}
+          </div>
+        {% endif %}
+
         <button
           class="btn-qr"
           onclick="document.getElementById('qrModal').classList.toggle('open')"
@@ -389,18 +484,18 @@
       <div class="profile-section">
         <div class="avatar-ring">
           {% if t.foto %}
-          <img src="{{ t.foto.url }}" alt="{{ t.nombre_completo }}" />
+            <img src="{{ t.foto.url }}" alt="{{ t.nombre_completo }}" />
           {% else %}
-          <img
-            src="https://ui-avatars.com/api/?name={{ t.nombre_completo|urlencode }}&background=0F172A&color=38BDF8&size=240"
-            alt="{{ t.nombre_completo }}"
-          />
+            <img
+              src="https://ui-avatars.com/api/?name={{ t.nombre_completo|urlencode }}&background=0F172A&color=38BDF8&size=240"
+              alt="{{ t.nombre_completo }}"
+            />
           {% endif %}
         </div>
         <h1>{{ t.nombre_completo }}</h1>
         <p class="role-title">{{ t.cargo }}</p>
         {% if t.lema_especialidades %}
-        <div class="pillars-bar">{{ t.lema_especialidades }}</div>
+          <div class="pillars-bar">{{ t.lema_especialidades }}</div>
         {% endif %}
       </div>
 
@@ -436,51 +531,25 @@
         <a href="{{ t.sitio_web }}" target="_blank" rel="noopener" class="action-row">
           <div class="row-icon">WEB</div>
           <div class="row-text">
-            <strong>Conoce Mis Servicios</strong
-            ><span>Visitar sitio web oficial</span>
+            <strong>Conoce Mis Servicios</strong><span>Visitar sitio web oficial</span>
           </div>
         </a>
-        {% endif %} {% if t.link_agenda %}
+        {% endif %}
+
+        {% if t.link_agenda %}
         <a href="{{ t.link_agenda }}" target="_blank" rel="noopener" class="action-row">
           <div class="row-icon">CITA</div>
           <div class="row-text">
-            <strong>Agendar Reunión / Consultoría</strong
-            ><span>Reservar espacio en calendario</span>
+            <strong>Agendar Reunión / Consultoría</strong><span>Reservar espacio en calendario</span>
           </div>
         </a>
         {% endif %}
       </div>
 
       <footer class="card-footer">
-        <div class="bottom-social-avatar">
-          <div class="social-row-left">
-            {% if t.linkedin %}<a
-              href="{{ t.linkedin }}"
-              target="_blank"
-              rel="noopener"
-              class="social-pill"
-              >LinkedIn</a
-            >{% endif %} {% if t.instagram %}<a
-              href="{{ t.instagram }}"
-              target="_blank"
-              rel="noopener"
-              class="social-pill"
-              >Instagram</a
-            >{% endif %} {% if t.youtube %}<a
-              href="{{ t.youtube }}"
-              target="_blank"
-              rel="noopener"
-              class="social-pill"
-              >YouTube</a
-            >{% endif %} {% if t.facebook %}<a
-              href="{{ t.facebook }}"
-              target="_blank"
-              rel="noopener"
-              class="social-pill"
-              >Facebook</a
-            >{% endif %}
-          </div>
-
+        <!-- ASISTENTE VIRTUAL CON AVATAR (VIDEO O IMAGEN) Y DIÁLOGO -->
+        {% if t.video_avatar or t.avatar_imagen or t.avatar_dialogo %}
+        <div class="assistant-banner">
           {% if t.video_avatar or t.avatar_imagen %}
           <div class="corner-avatar-box" title="Asistente Digital">
             {% if t.video_avatar %}
@@ -503,6 +572,19 @@
             <span class="corner-avatar-dot"></span>
           </div>
           {% endif %}
+
+          <div class="avatar-speech-box" id="avatar-speech">
+            ¡Hola! Soy el asistente digital de {{ t.nombre_completo }}. ¿En qué podemos ayudarte?
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- REDES SOCIALES -->
+        <div class="socials-row">
+          {% if t.linkedin %}<a href="{{ t.linkedin }}" target="_blank" rel="noopener" class="social-pill">LinkedIn</a>{% endif %}
+          {% if t.instagram %}<a href="{{ t.instagram }}" target="_blank" rel="noopener" class="social-pill">Instagram</a>{% endif %}
+          {% if t.youtube %}<a href="{{ t.youtube }}" target="_blank" rel="noopener" class="social-pill">YouTube</a>{% endif %}
+          {% if t.facebook %}<a href="{{ t.facebook }}" target="_blank" rel="noopener" class="social-pill">Facebook</a>{% endif %}
         </div>
 
         <button class="btn-share" onclick="shareCard()">
@@ -525,8 +607,45 @@
       </div>
     </div>
 
+    <!-- DATOS SEGUROS PARA EL DIÁLOGO DEL AVATAR -->
+    {{ t.avatar_dialogo|json_script:"avatar-dialogo-data" }}
+
     <script>
-      document.getElementById("qr-img").src = "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" + encodeURIComponent(window.location.href);
+      document.getElementById("qr-img").src =
+        "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" +
+        encodeURIComponent(window.location.href);
+
+      // ROTACIÓN DE FRASES DEL AVATAR CONFIGURADAS POR EL CLIENTE O ADMIN
+      (function initAvatarSpeech() {
+        const bubble = document.getElementById("avatar-speech");
+        if (!bubble) return;
+
+        const rawData = JSON.parse(
+          document.getElementById("avatar-dialogo-data")?.textContent || '""'
+        );
+        const frases = rawData
+          .split(/\r?\n/)
+          .map((f) => f.trim())
+          .filter((f) => f.length > 0);
+
+        if (frases.length > 0) {
+          bubble.textContent = frases[0];
+        }
+
+        if (frases.length > 1) {
+          let idx = 0;
+          setInterval(() => {
+            bubble.style.opacity = "0";
+            bubble.style.transform = "translateY(4px)";
+            setTimeout(() => {
+              idx = (idx + 1) % frases.length;
+              bubble.textContent = frases[idx];
+              bubble.style.opacity = "1";
+              bubble.style.transform = "translateY(0)";
+            }, 300);
+          }, 4500);
+        }
+      })();
 
       function downloadVCard() {
         const vcard = [

@@ -271,6 +271,8 @@ def admin_gestionar_tarjeta(request, user_id):
     if request.method == "POST":
         tarjeta.habilitada = bool(request.POST.get("habilitada"))
         tarjeta.plan = request.POST.get("plan", "mensual")
+        tarjeta.empresa = request.POST.get("empresa", "")
+        tarjeta.avatar_dialogo = request.POST.get("avatar_dialogo", "").strip()
 
         fecha_str = request.POST.get("fecha_vencimiento")
         if fecha_str:
@@ -294,6 +296,8 @@ def admin_gestionar_tarjeta(request, user_id):
         tarjeta.usar_html_personalizado = bool(request.POST.get("usar_html_personalizado"))
         tarjeta.codigo_html_personalizado = request.POST.get("codigo_html_personalizado", "")
 
+        if request.FILES.get("logo_empresa"):
+            tarjeta.logo_empresa = request.FILES["logo_empresa"]
         if request.FILES.get("foto"):
             tarjeta.foto = request.FILES["foto"]
         if request.FILES.get("avatar_imagen"):
@@ -347,6 +351,8 @@ def cliente_editar_tarjeta(request):
 
     guardado = False
     if request.method == "POST":
+        tarjeta.empresa = request.POST.get("empresa", tarjeta.empresa)
+        tarjeta.avatar_dialogo = request.POST.get("avatar_dialogo", tarjeta.avatar_dialogo).strip()
         tarjeta.plantilla = request.POST.get("plantilla", tarjeta.plantilla)
         tarjeta.nombre_completo = request.POST.get("nombre_completo", tarjeta.nombre_completo)
         tarjeta.cargo = request.POST.get("cargo", tarjeta.cargo)
@@ -362,6 +368,8 @@ def cliente_editar_tarjeta(request):
         tarjeta.youtube = request.POST.get("youtube", tarjeta.youtube)
         tarjeta.facebook = request.POST.get("facebook", tarjeta.facebook)
 
+        if request.FILES.get("logo_empresa"):
+            tarjeta.logo_empresa = request.FILES["logo_empresa"]
         if request.FILES.get("foto"):
             tarjeta.foto = request.FILES["foto"]
         if request.FILES.get("avatar_imagen"):

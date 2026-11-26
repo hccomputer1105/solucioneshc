@@ -96,6 +96,32 @@ class TarjetaDigital(models.Model):
     codigo_html_personalizado = models.TextField(blank=True, default="")
     actualizada = models.DateTimeField(auto_now=True)
 
+    empresa = models.CharField(max_length=120, blank=True, default="")
+    logo_empresa = models.ImageField(
+        upload_to="tarjetas/logos/",
+        blank=True,
+        null=True,
+        help_text="Logo de la empresa (PNG transparente recomendado)"
+    )
+    foto = models.ImageField(upload_to="tarjetas/fotos/", blank=True, null=True)
+    avatar_imagen = models.ImageField(
+        upload_to="tarjetas/avatares/",
+        blank=True,
+        null=True,
+        help_text="Imagen PNG/JPG del avatar asistente"
+    )
+    video_avatar = models.FileField(
+        upload_to="tarjetas/avatares_video/",
+        blank=True,
+        null=True,
+        help_text="Video corto MP4/WebM del avatar en movimiento"
+    )
+    avatar_dialogo = models.TextField(
+        blank=True,
+        default="",
+        help_text="Escribe hasta 3 frases (una por línea) que dirá el avatar"
+    )
+
     @property
     def dias_restantes(self):
         hoy = timezone.localdate()
@@ -117,6 +143,8 @@ class TarjetaDigital(models.Model):
 
     def __str__(self):
         return f"{self.codigo_suscripcion} - {self.nombre_completo} ({self.dias_restantes} días)"
+
+    
 
 
 class ReportePagoTarjeta(models.Model):
