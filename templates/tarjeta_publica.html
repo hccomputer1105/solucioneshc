@@ -455,6 +455,15 @@
           border-radius: 0;
           border: none;
         }
+        .brand-logo-wrap {
+          max-width: 155px;
+          height: 40px;
+          padding: 5px 10px;
+        }
+        .brand-logo-wrap img {
+          max-height: 28px;
+          max-width: 135px;
+        }
         .quick-grid {
           grid-template-columns: 1fr;
         }
@@ -465,37 +474,44 @@
     <main class="card-shell">
       <!-- CABECERA: LOGO DE EMPRESA O NOMBRE -->
       <div class="card-banner">
-  {% if t.logo_empresa_url %}
-    <div class="brand-logo-wrap">
-      <img src="{{ t.logo_empresa_url }}" alt="{{ t.empresa|default:t.nombre_completo }}" />
-    </div>
-  {% else %}
-    <div class="brand-mini">
-      {{ t.empresa|default:"TARJETA EJECUTIVA" }}
-    </div>
-  {% endif %}
+        {% if t.logo_empresa_url %}
+          <div class="brand-logo-wrap">
+            <img src="{{ t.logo_empresa_url }}" alt="{{ t.empresa|default:t.nombre_completo }}" />
+          </div>
+        {% else %}
+          <div class="brand-mini">
+            {{ t.empresa|default:"TARJETA EJECUTIVA" }}
+          </div>
+        {% endif %}
 
-  <button
-    class="btn-qr"
-    onclick="document.getElementById('qrModal').classList.toggle('open')"
-  >
-    Código QR
-  </button>
-</div>
+        <button
+          class="btn-qr"
+          onclick="document.getElementById('qrModal').classList.toggle('open')"
+        >
+          Código QR
+        </button>
+      </div>
 
+      <!-- PERFIL PRINCIPAL -->
       <div class="profile-section">
-       <div class="avatar-ring">
-  {% if t.foto_url %}
-    <img src="{{ t.foto_url }}" alt="{{ t.nombre_completo }}" />
-  {% elif t.foto %}
-    <img src="{{ t.foto.url }}" alt="{{ t.nombre_completo }}" />
-  {% else %}
-    <img
-      src="https://ui-avatars.com/api/?name={{ t.nombre_completo|urlencode }}&background=0F172A&color=38BDF8&size=240"
-      alt="{{ t.nombre_completo }}"
-    />
-  {% endif %}
-</div>
+        <div class="avatar-ring">
+          {% if t.foto_url %}
+            <img src="{{ t.foto_url }}" alt="{{ t.nombre_completo }}" />
+          {% elif t.foto %}
+            <img src="{{ t.foto.url }}" alt="{{ t.nombre_completo }}" />
+          {% else %}
+            <img
+              src="https://ui-avatars.com/api/?name={{ t.nombre_completo|urlencode }}&background=0F172A&color=38BDF8&size=240"
+              alt="{{ t.nombre_completo }}"
+            />
+          {% endif %}
+        </div>
+        <h1>{{ t.nombre_completo }}</h1>
+        <p class="role-title">{{ t.cargo }}</p>
+        {% if t.lema_especialidades %}
+          <div class="pillars-bar">{{ t.lema_especialidades }}</div>
+        {% endif %}
+      </div>
 
       <div class="quick-grid">
         <button class="btn-primary" onclick="downloadVCard()">
@@ -538,7 +554,9 @@
             ><span>Visitar sitio web oficial</span>
           </div>
         </a>
-        {% endif %} {% if t.link_agenda %}
+        {% endif %}
+
+        {% if t.link_agenda %}
         <a
           href="{{ t.link_agenda }}"
           target="_blank"
@@ -560,27 +578,21 @@
           {% if t.video_avatar_url or t.avatar_imagen_url %}
           <div class="corner-avatar-box" title="Asistente Digital">
             {% if t.video_avatar_url %}
-            <video
-              src="{{ t.video_avatar_url }}"
-              {%
-              if
-              t.avatar_imagen_url
-              %}poster="{{ t.avatar_imagen_url }}"
-              {%
-              endif
-              %}
-              class="corner-avatar-media"
-              autoplay
-              loop
-              muted
-              playsinline
-            ></video>
+              <video
+                src="{{ t.video_avatar_url }}"
+                {% if t.avatar_imagen_url %}poster="{{ t.avatar_imagen_url }}"{% endif %}
+                class="corner-avatar-media"
+                autoplay
+                loop
+                muted
+                playsinline
+              ></video>
             {% elif t.avatar_imagen_url %}
-            <img
-              src="{{ t.avatar_imagen_url }}"
-              alt="Avatar {{ t.nombre_completo }}"
-              class="corner-avatar-media"
-            />
+              <img
+                src="{{ t.avatar_imagen_url }}"
+                alt="Avatar {{ t.nombre_completo }}"
+                class="corner-avatar-media"
+              />
             {% endif %}
             <span class="corner-avatar-dot"></span>
           </div>
@@ -601,19 +613,22 @@
             rel="noopener"
             class="social-pill"
             >LinkedIn</a
-          >{% endif %} {% if t.instagram %}<a
+          >{% endif %}
+          {% if t.instagram %}<a
             href="{{ t.instagram }}"
             target="_blank"
             rel="noopener"
             class="social-pill"
             >Instagram</a
-          >{% endif %} {% if t.youtube %}<a
+          >{% endif %}
+          {% if t.youtube %}<a
             href="{{ t.youtube }}"
             target="_blank"
             rel="noopener"
             class="social-pill"
             >YouTube</a
-          >{% endif %} {% if t.facebook %}<a
+          >{% endif %}
+          {% if t.facebook %}<a
             href="{{ t.facebook }}"
             target="_blank"
             rel="noopener"
@@ -692,7 +707,7 @@
           "TEL;TYPE=CELL,VOICE,PREF:{{ t.telefono|escapejs }}",
           "EMAIL;TYPE=WORK,INTERNET:{{ t.correo|escapejs }}",
           {% if t.sitio_web %}"URL:{{ t.sitio_web|escapejs }}",{% endif %}
-          {% if t.foto_url %}"PHOTO;VALUE=URI;TYPE=JPEG:" + "PHOTO;VALUE=URI;TYPE=JPEG:{{ t.foto_url|escapejs }}"+ "{{ t.foto_url }}",{% endif %}
+          {% if t.foto_url %}"PHOTO;VALUE=URI;TYPE=JPEG:{{ t.foto_url|escapejs }}",{% elif t.foto %}"PHOTO;VALUE=URI;TYPE=JPEG:" + window.location.origin + "{{ t.foto.url }}",{% endif %}
           "END:VCARD"
         ].join("\r\n");
 
